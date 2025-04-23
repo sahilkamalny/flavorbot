@@ -14,20 +14,6 @@ public class ConnDbOps {
         return DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
     }
 
-    // 2) Do we have any users at all?
-    public boolean hasRegisteredUsers() {
-        String sql = "SELECT COUNT(*) FROM users";
-        try (Connection conn = getConnection();
-             Statement  stmt = conn.createStatement();
-             ResultSet  rs   = stmt.executeQuery(sql)) {
-            if (rs.next()) {
-                return rs.getInt(1) > 0;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
 
     // 3) Fetch a single user by username
     public Map<String,Object> getUserByUsername(String username) {
@@ -120,7 +106,7 @@ public class ConnDbOps {
                 + "UPDATE users "
                 + "   SET preferences = ? "
                 + " WHERE userID      = ?";
-        try (Connection        conn = getConnection();
+        try (Connection conn = getConnection();
              PreparedStatement ps   = conn.prepareStatement(sql)) {
             ps.setString(1, prefsJson);
             ps.setInt(2, userId);
