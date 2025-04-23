@@ -1,151 +1,212 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package edu.farmingdale.recipegenerator;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.*;
+import edu.farmingdale.recipegenerator.User;
+import edu.farmingdale.recipegenerator.SessionManager;
 
-/**
- *
- * @author MoaathAlrajab
- */
+
 public class AzureDBConnector {
-    final String MYSQL_SERVER_URL = "jdbc:mysql://csc311.mysql.database.azure.com/";
-    final String DB_URL = MYSQL_SERVER_URL + "Flavor_TEST";
-    final String USERNAME = "flavorbot";
-    final String PASSWORD = "Password124!";
+    private static final String DB_URL      =
+            "jdbc:mysql://csc311.mysql.database.azure.com/flavor_test?useSSL=true";
+    private static final String USERNAME    = "super_admin";
+    private static final String PASSWORD    = "ThisIsAPassword1";
 
-    public  boolean connectToDatabase() {
-        boolean hasRegistredUsers = false;
+    // 1) Single place to get a live Connection
+    private Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+    }
 
 
-        //Class.forName("com.mysql.jdbc.Driver");
-        try {
-            //First, connect to MYSQL server and create the database if not created
-            Connection conn = DriverManager.getConnection(MYSQL_SERVER_URL, USERNAME, PASSWORD);
-            Statement statement = conn.createStatement();
-            statement.executeUpdate("CREATE DATABASE IF NOT EXISTS Flavor_TEST");
-            statement.close();
-            conn.close();
-
-            //Second, connect to the database and create the table "users" if cot created
-            conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
-            statement = conn.createStatement();
-            String sql = "CREATE TABLE IF NOT EXISTS users ("
-                    + "id INT( 10 ) NOT NULL PRIMARY KEY AUTO_INCREMENT,"
-                    + "name VARCHAR(200) NOT NULL,"
-                    + "email VARCHAR(200) NOT NULL UNIQUE,"
-                    + "phone VARCHAR(200),"
-                    + "address VARCHAR(200),"
-                    + "password VARCHAR(200) NOT NULL"
-                    + ")";
-            statement.executeUpdate(sql);
-
-            //check if we have users in the table users
-            statement = conn.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM users");
-
-            if (resultSet.next()) {
-                int numUsers = resultSet.getInt(1);
-                if (numUsers > 0) {
-                    hasRegistredUsers = true;
+    // 3) Fetch a single user by username
+    public Map<String,Object> getUserByUsername(String username) {
+        String sql = ""
+                + "SELECT userID, username, email, hashed_password, preferences "
+                + "  FROM users "
+                + " WHERE username = ?";
+        try (Connection        conn = getConnection();
+             PreparedStatement ps   = conn.prepareStatement(sql)) {
+            ps.setString(1, username);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Map<String,Object> user = new HashMap<>();
+                    user.put("userID",         rs.getInt("userID"));
+                    user.put("username",       rs.getString("username"));
+                    user.put("email",          rs.getString("email"));
+                    user.put("hashed_password",rs.getString("hashed_password"));
+                    user.put("preferences",    rs.getString("preferences"));
+                    return user;
                 }
             }
-
-            statement.close();
-            conn.close();
-
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return hasRegistredUsers;
+        return null;
     }
 
-    public  void queryUserByName(String name) {
-
-
-        try {
-            Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
-            String sql = "SELECT * FROM users WHERE name = ?";
-            PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setString(1, name);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String email = resultSet.getString("email");
-                String phone = resultSet.getString("phone");
-                String address = resultSet.getString("address");
-                System.out.println("ID: " + id + ", Name: " + name + ", Email: " + email + ", Phone: " + phone + ", Address: " + address);
+    // 4) List all users
+    public List<Map<String,Object>> listAllUsers() {
+        String sql = ""
+                + "SELECT userID, username, email, hashed_password, preferences "
+                + "  FROM users";
+        List<Map<String,Object>> users = new ArrayList<>();
+        try (Connection        conn = getConnection();
+             PreparedStatement ps   = conn.prepareStatement(sql);
+             ResultSet          rs   = ps.executeQuery()) {
+            while (rs.next()) {
+                Map<String,Object> u = new HashMap<>();
+                u.put("userID",         rs.getInt("userID"));
+                u.put("username",       rs.getString("username"));
+                u.put("email",          rs.getString("email"));
+                u.put("hashed_password",rs.getString("hashed_password"));
+                u.put("preferences",    rs.getString("preferences"));
+                users.add(u);
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
 
-            preparedStatement.close();
-            conn.close();
+    // 5) Insert a brand‑new user
+    public void insertUser(String username, String email, String hashedPassword) {
+        String sql = ""
+                + "INSERT INTO users(username, email, hashed_password) "
+                + "VALUES (?,?,?)";
+        try (Connection        conn = getConnection();
+             PreparedStatement ps   = conn.prepareStatement(sql)) {
+            ps.setString(1, username);
+            ps.setString(2, email);
+            ps.setString(3, hashedPassword);
+            ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public  void listAllUsers() {
+    // —— Preference Methods —— //
 
-
-
-        try {
-            Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
-            String sql = "SELECT * FROM users ";
-            PreparedStatement preparedStatement = conn.prepareStatement(sql);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String name = resultSet.getString("name");
-                String email = resultSet.getString("email");
-                String phone = resultSet.getString("phone");
-                String address = resultSet.getString("address");
-                System.out.println("ID: " + id + ", Name: " + name + ", Email: " + email + ", Phone: " + phone + ", Address: " + address);
+    // 6) Load the JSON blob of prefs for one user
+    public String getUserPreferences(int userId) {
+        String sql = "SELECT preferences FROM users WHERE userID = ?";
+        try (Connection        conn = getConnection();
+             PreparedStatement ps   = conn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("preferences");
+                }
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "{}";
+    }
 
-            preparedStatement.close();
-            conn.close();
+    public void updateUserPreferences(int userId, String prefsJson) {
+        String sql = ""
+                + "UPDATE users "
+                + "   SET preferences = ? "
+                + " WHERE userID      = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement ps   = conn.prepareStatement(sql)) {
+            ps.setString(1, prefsJson);
+            ps.setInt(2, userId);
+            ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public  void insertUser(String name, String email, String phone, String address, String password) {
+    // —— Fridge‑config Methods (JSON‑blob approach) —— //
 
-
-        try {
-            Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
-            String sql = "INSERT INTO users (name, email, phone, address, password) VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setString(1, name);
-            preparedStatement.setString(2, email);
-            preparedStatement.setString(3, phone);
-            preparedStatement.setString(4, address);
-            preparedStatement.setString(5, password);
-
-            int row = preparedStatement.executeUpdate();
-
-            if (row > 0) {
-                System.out.println("A new user was inserted successfully.");
+    // 8) Create a new “saved fridge” snapshot and return its generated ID
+    public int createFridgeConfig(int userId, String name, String itemsJson) {
+        String sql = ""
+                + "INSERT INTO fridge_configs(user_id, name, items) "
+                + "VALUES (?,?,?)";
+        try (Connection           conn = getConnection();
+             PreparedStatement    ps   = conn.prepareStatement(
+                     sql, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setInt(1, userId);
+            ps.setString(2, name);
+            ps.setString(3, itemsJson);
+            ps.executeUpdate();
+            try (ResultSet keys = ps.getGeneratedKeys()) {
+                if (keys.next()) {
+                    return keys.getInt(1);
+                }
             }
-
-            preparedStatement.close();
-            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return -1;
     }
 
+    // 9) List all fridge‑snapshots for a user (id + name + timestamp)
+    public List<Map<String,Object>> listFridgeConfigs(int userId) {
+        String sql = ""
+                + "SELECT id, name, created_at "
+                + "  FROM fridge_configs "
+                + " WHERE user_id = ?";
+        List<Map<String,Object>> configs = new ArrayList<>();
+        try (Connection        conn = getConnection();
+             PreparedStatement ps   = conn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Map<String,Object> c = new HashMap<>();
+                    c.put("id",         rs.getInt("id"));
+                    c.put("name",       rs.getString("name"));
+                    c.put("created_at", rs.getTimestamp("created_at"));
+                    configs.add(c);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return configs;
+    }
 
+    // 10) Fetch the JSON “items” blob for one saved fridge
+    public String getFridgeConfigItems(int configId) {
+        String sql = "SELECT items FROM fridge_configs WHERE id = ?";
+        try (Connection        conn = getConnection();
+             PreparedStatement ps   = conn.prepareStatement(sql)) {
+            ps.setInt(1, configId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("items");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "[]";
+    }
+
+    public boolean authenticateAndSetSession(String username, String providedPasswordHash) {
+        // 1) fetch DB record as a Map
+        Map<String,Object> userMap = getUserByUsername(username);
+        if (userMap == null) {
+            return false;  // user not found
+        }
+
+        // 2) compare hashes
+        String storedHash = (String) userMap.get("hashed_password");
+        if (!storedHash.equals(providedPasswordHash)) {
+            return false;  // bad password
+        }
+
+        // 3) build a User object and set it in the session
+        User user = new User(
+                (Integer)   userMap.get("userID"),
+                (String)    userMap.get("username"),
+                (String)    userMap.get("email"),
+                storedHash,
+                (String)    userMap.get("preferences")
+        );
+        SessionManager.getInstance().setCurrentUser(user);
+        return true;
+    }
 }

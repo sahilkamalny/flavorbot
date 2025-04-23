@@ -36,17 +36,9 @@ public class HelloApplication extends Application {
         stage.setHeight(screenHeight);
 
         // Connect to the Azure Database
-        AzureDBConnector dbConnector = new AzureDBConnector();
-        boolean isConnected = dbConnector.connectToDatabase();
+
 
         // Show success or error message depending on the connection result
-        if (isConnected) {
-            // Show a success message
-            showAlert("Connection Successful", "Successfully connected to the Azure Database.", AlertType.INFORMATION);
-        } else {
-            // Show an error message
-            showAlert("Connection Failed", "Failed to connect to the Azure Database.", AlertType.ERROR);
-        }
 
         stage.show();
     }
