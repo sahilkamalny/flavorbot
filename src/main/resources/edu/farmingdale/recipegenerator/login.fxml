@@ -6,26 +6,57 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.text.Text?>
-
 <?import javafx.scene.image.Image?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="edu.farmingdale.recipegenerator.LoginController" >
 
-    <ImageView fx:id="backgroundImageView" fitHeight="800" fitWidth="600" preserveRatio="true" />
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="edu.farmingdale.recipegenerator.LoginController"
+            prefWidth="1400" prefHeight="900">
 
-    <!-- Title -->
-    <Text text="Login" layoutX="180" layoutY="60" style="-fx-font-size: 24; -fx-font-weight: bold; -fx-fill: white;" />
+    <!-- Background Image -->
+    <ImageView fx:id="backgroundImageView"
+               AnchorPane.topAnchor="0.0"
+               AnchorPane.bottomAnchor="0.0"
+               AnchorPane.leftAnchor="0.0"
+               AnchorPane.rightAnchor="0.0"
+               preserveRatio="false"
+               smooth="true"
+               cache="true" />
+
+
+
+
+    <!-- App Title -->
+    <Text fx:id="titleText" text="AI Recipe Generator"
+          layoutX="500" layoutY="60"
+          style="-fx-font-family: 'Georgia'; -fx-font-size: 40px; -fx-font-weight: bold;
+             -fx-fill: linear-gradient(to right, #9B4DFF, #ADD8E6);" />
+
+    <!-- Tagline aligned under the "e" of Recipe -->
+    <Text fx:id="titlePhrase" text=" - Your personal chef, powered by AI"
+          layoutX="580" layoutY="110"
+          style="-fx-font-family: 'Georgia'; -fx-font-size: 28px; -fx-font-style: italic; -fx-font-weight: bold;
+             -fx-fill: linear-gradient(to right, #FFD700, #FF8C00);" />
 
     <!-- Username Field -->
-    <TextField fx:id="usernameTextField" layoutX="100" layoutY="130" promptText="Username" style="-fx-pref-width: 250px; -fx-background-color: rgba(255, 255, 255, 0.7); -fx-text-fill: black; -fx-prompt-text-fill: #888; -fx-font-size: 14px;" />
+    <TextField fx:id="usernameTextField" layoutX="45" layoutY="350" promptText="Username"
+               style="-fx-pref-width: 250px; -fx-background-color: rgba(255, 255, 255, 0.7);
+                      -fx-text-fill: black; -fx-prompt-text-fill: #888; -fx-font-size: 14px;" />
 
     <!-- Password Field -->
-    <PasswordField fx:id="passwordField" layoutX="100" layoutY="180" promptText="Password" style="-fx-pref-width: 250px; -fx-background-color: rgba(255, 255, 255, 0.7); -fx-text-fill: black; -fx-prompt-text-fill: #888; -fx-font-size: 14px;" />
+    <PasswordField fx:id="passwordField" layoutX="45" layoutY="400" promptText="Password"
+                   style="-fx-pref-width: 250px; -fx-background-color: rgba(255, 255, 255, 0.7);
+                          -fx-text-fill: black; -fx-prompt-text-fill: #888; -fx-font-size: 14px;" />
 
     <!-- Login Button -->
-    <Button fx:id="loginButton" text="Log In" layoutX="100" layoutY="230" onAction="#handleLoginButtonAction"
-            style="-fx-pref-width: 250px; -fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;" />
+    <Button fx:id="loginButton" text="Log In" layoutX="45" layoutY="450" onAction="#handleLoginButtonAction"
+            style="-fx-font-family: 'Georgia'; -fx-pref-width: 250px; -fx-background-color: #9B4DFF;
+                   -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;" />
 
     <!-- Sign Up Button -->
-    <Button fx:id="signUpButton" text="Sign Up" layoutX="100" layoutY="280" onAction="#handleSignUpButtonAction"
-            style="-fx-pref-width: 250px; -fx-background-color: #FF9800; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;" />
+    <Button fx:id="signUpButton" text="Sign Up" layoutX="45" layoutY="500" onAction="#handleSignUpButtonAction"
+            style="-fx-font-family: 'Georgia'; -fx-pref-width: 250px; -fx-background-color: #FF9800;
+                   -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;" />
+
+    <!-- Page Title -->
+    <Text text="Login" layoutX="130" layoutY="330"
+          style="-fx-font-family: 'Georgia' ; -fx-font-size: 24; -fx-font-weight: bold; -fx-fill: #9B4DFF;" />
 </AnchorPane>
