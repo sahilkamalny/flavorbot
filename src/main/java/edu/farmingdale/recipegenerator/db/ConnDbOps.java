@@ -2,6 +2,9 @@ package edu.farmingdale.recipegenerator.db;
 
 import java.sql.*;
 import java.util.*;
+import edu.farmingdale.recipegenerator.User;
+import edu.farmingdale.recipegenerator.SessionManager;
+
 
 public class ConnDbOps {
     private static final String DB_URL      =
@@ -100,7 +103,6 @@ public class ConnDbOps {
         return "{}";
     }
 
-    // 7) Overwrite that JSON blob (upsert style)
     public void updateUserPreferences(int userId, String prefsJson) {
         String sql = ""
                 + "UPDATE users "
@@ -181,5 +183,30 @@ public class ConnDbOps {
             e.printStackTrace();
         }
         return "[]";
+    }
+
+    public boolean authenticateAndSetSession(String username, String providedPasswordHash) {
+        // 1) fetch DB record as a Map
+        Map<String,Object> userMap = getUserByUsername(username);
+        if (userMap == null) {
+            return false;  // user not found
+        }
+
+        // 2) compare hashes
+        String storedHash = (String) userMap.get("hashed_password");
+        if (!storedHash.equals(providedPasswordHash)) {
+            return false;  // bad password
+        }
+
+        // 3) build a User object and set it in the session
+        User user = new User(
+                (Integer)   userMap.get("userID"),
+                (String)    userMap.get("username"),
+                (String)    userMap.get("email"),
+                storedHash,
+                (String)    userMap.get("preferences")
+        );
+        SessionManager.getInstance().setCurrentUser(user);
+        return true;
     }
 }
