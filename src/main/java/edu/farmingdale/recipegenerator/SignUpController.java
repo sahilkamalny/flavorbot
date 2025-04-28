@@ -18,6 +18,12 @@ import java.util.Objects;
 public class SignUpController {
 
     @FXML
+    public TextField emailTextField;
+
+    @FXML
+    public Button loginButton;
+
+    @FXML
     private TextField usernameField;
 
     @FXML
@@ -134,7 +140,7 @@ public class SignUpController {
             stage.close();
 
             // Load the main scene (hello-view.fxml)
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/farmingdale/recipegenerator/hello-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/farmingdale/recipegenerator/login.fxml"));
             Scene mainScene = new Scene(loader.load());
 
             // Get the primary screen's bounds
@@ -168,4 +174,5 @@ public class SignUpController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
 }
