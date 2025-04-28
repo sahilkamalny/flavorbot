@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<VBox spacing="10" alignment="CENTER" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="edu.farmingdale.recipegenerator.PreferencesController">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Select Your Preferences:" style="-fx-font-size: 18;"/>
+
+    <Label text="Favorite Food Style:"/>
+    <ComboBox fx:id="foodStyleComboBox">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="Italian"/>
+                <String fx:value="Mexican"/>
+                <String fx:value="American"/>
+                <String fx:value="Asian"/>
+                <String fx:value="Indian"/>
+            </FXCollections>
+        </items>
+    </ComboBox>
+
+    <Label text="Available Ingredients:"/>
+    <TextArea fx:id="ingredientsTextArea" promptText="List your ingredients separated by commas"/>
+
+    <Button text="Continue" onAction="#handleContinueButtonAction"/>
+</VBox>

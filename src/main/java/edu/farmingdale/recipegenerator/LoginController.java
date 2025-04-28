@@ -121,7 +121,7 @@ public class LoginController {
 
         // For now, we are skipping the authentication logic
         // Open the main window (fridge management window)
-        openMainWindow();
+        openPreferencesWindow();
     }
 
     @FXML
@@ -136,6 +136,22 @@ public class LoginController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    private void openPreferencesWindow() {
+        try {
+            Stage stage = (Stage) loginButton.getScene().getWindow();
+            stage.close(); // Close login window
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/farmingdale/recipegenerator/preferences.fxml"));
+            Stage preferencesStage = new Stage();
+            preferencesStage.setScene(new Scene(loader.load()));
+            preferencesStage.setTitle("Food Preferences");
+            preferencesStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("Error", "Could not load the preferences window.", AlertType.ERROR);
+        }
     }
 
     private void openMainWindow() {
