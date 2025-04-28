@@ -59,7 +59,7 @@
                    -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;" />
 
     <!-- Login Button -->
-    <Button fx:id="loginButton" text="Already have an account? Log In" layoutX="45" layoutY="600" onAction="#handleSignUpButtonAction"
+    <Button fx:id="loginButton" text="Already have an account? Log In" layoutX="45" layoutY="600" onAction="#handleAlreadyHaveAccountButtonAction"
             style="-fx-font-family: 'Georgia'; -fx-pref-width: 250px; -fx-background-color: #FF9800;
                    -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;" />
 

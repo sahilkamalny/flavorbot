@@ -166,6 +166,11 @@ public class SignUpController {
         }
     }
 
+    @FXML
+    private void handleAlreadyHaveAccountButtonAction() {
+        openMainWindow();
+    }
+
 
     private void showAlert(String title, String message, Alert.AlertType type) {
         Alert alert = new Alert(type);
