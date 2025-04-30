@@ -1,7 +1,5 @@
 package edu.farmingdale.recipegenerator;
 
-import edu.farmingdale.recipegenerator.User;
-
 public class SessionManager {
     // --- 1) single shared instance ---
     private static final SessionManager INSTANCE = new SessionManager();
