@@ -1,35 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<?import javafx.collections.FXCollections?>
-<?import java.lang.String?>
-<VBox spacing="10" alignment="CENTER" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="edu.farmingdale.recipegenerator.PreferencesController">
+<AnchorPane fx:id="anchorPane" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="edu.farmingdale.recipegenerator.PreferencesController">
+    <ImageView fx:id="backgroundImageView" opacity="0.32" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" />
 
-    <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
-    </padding>
+    <!-- Main Layout with HBox -->
+    <HBox fillHeight="true" spacing="40" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
 
-    <Label text="Select Your Preferences:" style="-fx-font-size: 18;"/>
+        <!-- Left Section (User Preferences) -->
+        <VBox alignment="TOP_CENTER" blendMode="DARKEN" prefWidth="400" spacing="20" style="-fx-padding: 30 40 30 40;" HBox.hgrow="ALWAYS">
+            <!-- Title -->
+            <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Select Your Preferences" />
 
-    <Label text="Favorite Food Style:"/>
-    <ComboBox fx:id="foodStyleComboBox">
-        <items>
-            <FXCollections fx:factory="observableArrayList">
-                <String fx:value="Italian"/>
-                <String fx:value="Mexican"/>
-                <String fx:value="American"/>
-                <String fx:value="Asian"/>
-                <String fx:value="Indian"/>
-            </FXCollections>
-        </items>
-    </ComboBox>
+            <!-- Food Style Section -->
+            <VBox fillWidth="true" spacing="10">
+                <Label style="-fx-font-size: 14px;" text="Favorite Food Style:" />
+                <ComboBox fx:id="foodStyleComboBox" maxWidth="400" prefWidth="300" />
+            </VBox>
 
-    <Label text="Available Ingredients:"/>
-    <TextArea fx:id="ingredientsTextArea" promptText="List your ingredients separated by commas"/>
+            <!-- Dietary Preferences Section -->
+            <VBox fillWidth="true" spacing="10">
+                <Label style="-fx-font-size: 14px;" text="Dietary Preferences:" />
+                <ComboBox fx:id="dietaryPreferencesComboBox" maxWidth="400" prefWidth="300" />
+            </VBox>
 
-    <Button text="Continue" onAction="#handleContinueButtonAction"/>
-</VBox>
+            <!-- Spice Level Section -->
+            <VBox fillWidth="true" spacing="10">
+                <Label style="-fx-font-size: 14px;" text="Spice Level:" />
+                <Slider fx:id="spiceLevelSlider" max="10" min="0" />
+            </VBox>
+
+            <!-- Meal Type Section -->
+            <VBox fillWidth="true" spacing="10">
+                <Label style="-fx-font-size: 14px;" text="Meal Type:" />
+                <ComboBox fx:id="mealTypeComboBox" maxWidth="400" prefWidth="300" />
+            </VBox>
+
+            <!-- Continue Button -->
+            <Button onAction="#handleContinueButtonAction" style="-fx-font-size: 14px;" text="Continue" />
+        </VBox>
+
+        <!-- Right Section (Ingredients Available Grid) -->
+        <VBox prefWidth="600" spacing="20" HBox.hgrow="ALWAYS">
+            <!-- Ingredients Available Section -->
+            <VBox blendMode="DARKEN" fillWidth="true" spacing="10">
+                <Label style="-fx-font-size: 14px;" text="Ingredients You Have Available:" />
+                <TextField fx:id="ingredientsAvailableField" promptText="e.g., Tomato, Onion" />
+                <Button onAction="#handleAddIngredient" style="-fx-font-size: 14px;" text="Add Ingredient" />
+            </VBox>
+
+            <!-- TableView for Ingredients -->
+            <TableView fx:id="ingredientsTableView" prefHeight="300" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="ingredientColumn" prefWidth="200" text="Ingredient">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="ingredient" />
+                        </cellValueFactory>
+                    </TableColumn>
+                </columns>
+            </TableView>
+        </VBox>
+
+    </HBox>
+</AnchorPane>
