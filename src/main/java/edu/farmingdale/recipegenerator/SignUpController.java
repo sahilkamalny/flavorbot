@@ -13,9 +13,19 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.sql.SQLException;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class SignUpController {
+
+    private static final Pattern USERNAME_PATTERN =
+            Pattern.compile("^[A-Za-z0-9_]{3,25}$");
+    private static final Pattern EMAIL_PATTERN =
+            Pattern.compile("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
+    private static final Pattern PASSWORD_PATTERN =
+            // At least 8 chars, 1 uppercase, 1 lowercase, 1 digit, 1 special
+            Pattern.compile("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&]).{8,}$");
 
     @FXML
     public TextField emailTextField;
@@ -112,27 +122,66 @@ public class SignUpController {
 
     @FXML
     private void handleSignUpButtonAction() {
+        String email = emailTextField.getText().trim();
         String username = usernameField.getText().trim();
-        String password = passwordField.getText().trim();
-        String confirmPassword = confirmPasswordField.getText().trim();
+        String password = passwordField.getText();
+        String confirmPassword = confirmPasswordField.getText();
 
-        if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-            showAlert("Input Error", "Please fill in all fields.", Alert.AlertType.ERROR);
+        // 1) Basic non-empty check
+        if (username.isEmpty() || email.isEmpty()
+                || password.isEmpty() || confirmPassword.isEmpty()) {
+            showAlert("Input Error",
+                    "Please fill in all fields.",
+                    Alert.AlertType.ERROR);
             return;
         }
 
+        // 2) Username format
+        if (!USERNAME_PATTERN.matcher(username).matches()) {
+            showAlert("Invalid Username",
+                    "Username must be 3–25 characters and contain only letters, digits, or underscores.",
+                    Alert.AlertType.ERROR);
+            return;
+        }
+
+        // 3) Email format
+        if (!EMAIL_PATTERN.matcher(email).matches()) {
+            showAlert("Invalid Email",
+                    "Please enter a valid email address.",
+                    Alert.AlertType.ERROR);
+            return;
+        }
+
+        // 4) Password strength
+        if (!PASSWORD_PATTERN.matcher(password).matches()) {
+            showAlert("Weak Password",
+                    "Password must be at least 8 characters long and include uppercase, lowercase, a digit, and a special character.",
+                    Alert.AlertType.ERROR);
+            return;
+        }
+
+        // 5) Password confirmation
         if (!password.equals(confirmPassword)) {
-            showAlert("Password Mismatch", "Passwords do not match.", Alert.AlertType.ERROR);
+            showAlert("Password Mismatch",
+                    "Passwords do not match.",
+                    Alert.AlertType.ERROR);
             return;
         }
+
+        // 6) Attempt to insert into the database
         AzureDBConnector connector = new AzureDBConnector();
-        connector.insertUser(username, password, confirmPassword);
-
-        // Show success alert
-        showAlert("Success", "Account created successfully!", Alert.AlertType.INFORMATION);
-
-        // Open the main application window
-        openMainWindow();
+        try {
+            connector.insertUser(username, email, password);
+            showAlert("Success",
+                    "Account created successfully!",
+                    Alert.AlertType.INFORMATION);
+            openMainWindow();
+        } catch (Exception ex) {
+            ex.printStackTrace();    // optional logging
+            showAlert("Unexpected Error",
+                    "An unexpected error occurred: " + ex.getMessage(),
+                    Alert.AlertType.ERROR);
+        }
     }
 
     private void openMainWindow() {

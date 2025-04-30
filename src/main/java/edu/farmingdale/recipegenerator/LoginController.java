@@ -17,6 +17,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class LoginController {
@@ -114,17 +115,38 @@ public class LoginController {
         String username = usernameTextField.getText().trim();
         String password = passwordField.getText().trim();
 
+        // 1) Check for empty fields
         if (username.isEmpty() || password.isEmpty()) {
-            showAlert("Login Error", "Please enter both username and password.", AlertType.ERROR);
+            showAlert("Login Error", "Please enter both username and password.", Alert.AlertType.ERROR);
             return;
         }
 
-        // For now, we are skipping the authentication logic
-        // Open the main window (fridge management window)
         AzureDBConnector connector = new AzureDBConnector();
-        System.out.println(connector.authenticateAndSetSession(username, password));
+        boolean authenticated;
 
-        openPreferencesWindow();
+        try {
+            // 2) Attempt authentication
+            authenticated = connector.authenticateAndSetSession(username, password);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            showAlert("Unexpected Error",
+                    "An unexpected error occurred:\n" + ex.getMessage(),
+                    Alert.AlertType.ERROR);
+            return;
+        }
+
+        // 3) Check authentication result
+        if (authenticated) {
+            // Success: proceed to preferences
+            openPreferencesWindow();
+        } else {
+            // Failure: inform the user
+            showAlert("Authentication Failed",
+                    "Invalid username or password. Please try again.",
+                    Alert.AlertType.WARNING);
+            // Optionally clear password field
+            passwordField.clear();
+        }
     }
 
     @FXML
