@@ -143,19 +143,30 @@ public class LoginController {
 
     private void openPreferencesWindow() {
         try {
-            Stage stage = (Stage) loginButton.getScene().getWindow();
-            stage.close(); // Close login window
+            Stage loginStage = (Stage) loginButton.getScene().getWindow();
+            loginStage.close();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/farmingdale/recipegenerator/preferences.fxml"));
-            Stage preferencesStage = new Stage();
-            preferencesStage.setScene(new Scene(loader.load()));
-            preferencesStage.setTitle("Food Preferences");
-            preferencesStage.show();
+            Scene preferencesScene = new Scene(loader.load());
+
+            Stage prefStage = new Stage();
+            prefStage.setTitle("User Preferences");
+
+            // Set full screen size
+            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+            prefStage.setX(screenBounds.getMinX());
+            prefStage.setY(screenBounds.getMinY());
+            prefStage.setWidth(screenBounds.getWidth());
+            prefStage.setHeight(screenBounds.getHeight());
+
+            prefStage.setScene(preferencesScene);
+            prefStage.show();
         } catch (Exception e) {
             e.printStackTrace();
-            showAlert("Error", "Could not load the preferences window.", AlertType.ERROR);
+            showAlert("Error", "Could not load preferences window.", Alert.AlertType.ERROR);
         }
     }
+
 
     private void openMainWindow() {
         try {

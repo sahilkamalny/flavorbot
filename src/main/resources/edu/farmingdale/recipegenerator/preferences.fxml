@@ -3,20 +3,22 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
-
 <?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
-<VBox spacing="10" alignment="CENTER" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="edu.farmingdale.recipegenerator.PreferencesController">
+
+<VBox spacing="15" alignment="TOP_CENTER" fillWidth="true"
+      xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="edu.farmingdale.recipegenerator.PreferencesController"
+      prefWidth="800" prefHeight="600">
 
     <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
+        <Insets top="20" right="30" bottom="20" left="30"/>
     </padding>
 
-    <Label text="Select Your Preferences:" style="-fx-font-size: 18;"/>
+    <Label text="Select Your Preferences:" style="-fx-font-size: 22; -fx-font-weight: bold;"/>
 
-    <Label text="Favorite Food Style:"/>
-    <ComboBox fx:id="foodStyleComboBox">
+    <Label text="Favorite Food Style:" style="-fx-font-size: 14;"/>
+    <ComboBox fx:id="foodStyleComboBox" maxWidth="400" prefWidth="300">
         <items>
             <FXCollections fx:factory="observableArrayList">
                 <String fx:value="Italian"/>
@@ -28,8 +30,9 @@
         </items>
     </ComboBox>
 
-    <Label text="Available Ingredients:"/>
-    <TextArea fx:id="ingredientsTextArea" promptText="List your ingredients separated by commas"/>
+    <Label text="Available Ingredients:" style="-fx-font-size: 14;"/>
+    <TextArea fx:id="ingredientsTextArea" promptText="List your ingredients separated by commas"
+              prefRowCount="5" maxWidth="600" prefWidth="500" VBox.vgrow="ALWAYS" wrapText="true"/>
 
-    <Button text="Continue" onAction="#handleContinueButtonAction"/>
+    <Button text="Continue" onAction="#handleContinueButtonAction" prefWidth="150"/>
 </VBox>
