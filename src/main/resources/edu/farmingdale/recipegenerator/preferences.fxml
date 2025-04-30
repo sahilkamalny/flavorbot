@@ -1,38 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
-<?import javafx.collections.FXCollections?>
-<?import java.lang.String?>
+<?import javafx.scene.text.*?>
 
-<VBox spacing="15" alignment="TOP_CENTER" fillWidth="true"
-      xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="edu.farmingdale.recipegenerator.PreferencesController"
-      prefWidth="800" prefHeight="600">
+<AnchorPane xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx/8.0.171"
+            fx:controller="edu.farmingdale.recipegenerator.PreferencesController">
 
-    <padding>
-        <Insets top="20" right="30" bottom="20" left="30"/>
-    </padding>
+    <VBox alignment="TOP_CENTER" spacing="20" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
+          AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" fillWidth="true">
+        <padding>
+            <Insets top="30" right="40" bottom="30" left="40"/>
+        </padding>
 
-    <Label text="Select Your Preferences:" style="-fx-font-size: 22; -fx-font-weight: bold;"/>
+        <!-- Title -->
+        <Label text="Select Your Preferences" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
 
-    <Label text="Favorite Food Style:" style="-fx-font-size: 14;"/>
-    <ComboBox fx:id="foodStyleComboBox" maxWidth="400" prefWidth="300">
-        <items>
-            <FXCollections fx:factory="observableArrayList">
-                <String fx:value="Italian"/>
-                <String fx:value="Mexican"/>
-                <String fx:value="American"/>
-                <String fx:value="Asian"/>
-                <String fx:value="Indian"/>
-            </FXCollections>
-        </items>
-    </ComboBox>
+        <!-- Food Style Section -->
+        <VBox spacing="10" fillWidth="true">
+            <Label text="Favorite Food Style:" style="-fx-font-size: 14px;"/>
+            <ComboBox fx:id="foodStyleComboBox" prefWidth="300"/>
+        </VBox>
 
-    <Label text="Available Ingredients:" style="-fx-font-size: 14;"/>
-    <TextArea fx:id="ingredientsTextArea" promptText="List your ingredients separated by commas"
-              prefRowCount="5" maxWidth="600" prefWidth="500" VBox.vgrow="ALWAYS" wrapText="true"/>
+        <!-- Ingredient Input Section -->
+        <GridPane hgap="10" vgap="10">
+            <Label text="Ingredient:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <TextField fx:id="ingredientField" promptText="e.g., Tomato" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-    <Button text="Continue" onAction="#handleContinueButtonAction" prefWidth="150"/>
-</VBox>
+            <Label text="Quantity:" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+            <TextField fx:id="quantityField" promptText="e.g., 2 cups" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+
+            <Button text="Add" onAction="#handleAddIngredient" GridPane.rowIndex="0" GridPane.columnIndex="4"/>
+        </GridPane>
+
+        <!-- TableView for Ingredients -->
+        <TableView fx:id="ingredientsTable" prefHeight="200" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="ingredientColumn" text="Ingredient" prefWidth="200"/>
+                <TableColumn fx:id="quantityColumn" text="Quantity" prefWidth="200"/>
+            </columns>
+        </TableView>
+
+        <!-- Continue Button -->
+        <Button text="Continue" onAction="#handleContinueButtonAction" style="-fx-font-size: 14px;"/>
+    </VBox>
+</AnchorPane>

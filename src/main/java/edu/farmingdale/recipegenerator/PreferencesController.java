@@ -1,12 +1,13 @@
 package edu.farmingdale.recipegenerator;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 
 public class PreferencesController {
 
@@ -14,19 +15,55 @@ public class PreferencesController {
     private ComboBox<String> foodStyleComboBox;
 
     @FXML
-    private TextArea ingredientsTextArea;
+    private TextField ingredientField;
+
+    @FXML
+    private TextField quantityField;
+
+    @FXML
+    private TableView<Ingredient> ingredientsTable;
+
+    @FXML
+    private TableColumn<Ingredient, String> ingredientColumn;
+
+    @FXML
+    private TableColumn<Ingredient, String> quantityColumn;
+
+    private final ObservableList<Ingredient> ingredientList = FXCollections.observableArrayList();
+
+    @FXML
+    public void initialize() {
+        ingredientColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+
+        ingredientsTable.setItems(ingredientList);
+    }
+
+    @FXML
+    private void handleAddIngredient() {
+        String name = ingredientField.getText().trim();
+        String quantity = quantityField.getText().trim();
+
+        if (name.isEmpty() || quantity.isEmpty()) {
+            showAlert("Input Error", "Please enter both ingredient name and quantity.");
+            return;
+        }
+
+        ingredientList.add(new Ingredient(name, quantity));
+        ingredientField.clear();
+        quantityField.clear();
+    }
 
     @FXML
     private void handleContinueButtonAction() {
         String selectedFoodStyle = foodStyleComboBox.getValue();
-        String ingredients = ingredientsTextArea.getText().trim();
 
-        if (selectedFoodStyle == null || selectedFoodStyle.isEmpty() || ingredients.isEmpty()) {
-            showAlert("Error", "Please select a food style and enter your ingredients.");
+        if (selectedFoodStyle == null || selectedFoodStyle.isEmpty() || ingredientList.isEmpty()) {
+            showAlert("Error", "Please select a food style and add at least one ingredient.");
             return;
         }
 
-        // You can save user preferences here if you want (e.g., in a model)
+        // Save preferences if needed
 
         openMainWindow();
     }
@@ -53,5 +90,24 @@ public class PreferencesController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    // Simple POJO for ingredient
+    public static class Ingredient {
+        private final String name;
+        private final String quantity;
+
+        public Ingredient(String name, String quantity) {
+            this.name = name;
+            this.quantity = quantity;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getQuantity() {
+            return quantity;
+        }
     }
 }
