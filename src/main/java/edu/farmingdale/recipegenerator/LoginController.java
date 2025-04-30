@@ -152,14 +152,9 @@ public class LoginController {
             Stage prefStage = new Stage();
             prefStage.setTitle("User Preferences");
 
-            // Set full screen size
-            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-            prefStage.setX(screenBounds.getMinX());
-            prefStage.setY(screenBounds.getMinY());
-            prefStage.setWidth(screenBounds.getWidth());
-            prefStage.setHeight(screenBounds.getHeight());
-
+            // Let JavaFX handle fullscreen properly
             prefStage.setScene(preferencesScene);
+            prefStage.setMaximized(true); // This keeps better proportions
             prefStage.show();
         } catch (Exception e) {
             e.printStackTrace();
