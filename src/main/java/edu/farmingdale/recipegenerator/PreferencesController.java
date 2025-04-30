@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -30,15 +31,24 @@ public class PreferencesController {
     private TextField ingredientsAvailableField;
 
     @FXML
-    private TableView<Ingredient> ingredientsTableView;
-    @FXML
-    private TableColumn<Ingredient, String> ingredientColumn;
+    private TableView<Ingredient> ingredientsTable;
+
     @FXML
     private AnchorPane anchorPane; // The AnchorPane from the FXML
     @FXML
     ImageView backgroundImageView;
 
-    private ObservableList<Ingredient> ingredientList;
+    @FXML
+    private GridPane ingredientsGrid;
+
+    @FXML
+    private TableColumn<Ingredient, String> ingredientNameColumn;
+    @FXML
+    private TableColumn<Ingredient, String> ingredientQuantityColumn;
+    @FXML
+    private TableColumn<Ingredient, String> ingredientCategoryColumn;
+
+    private final ObservableList<Ingredient> ingredientData = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
@@ -55,9 +65,9 @@ public class PreferencesController {
         mealTypeComboBox.getItems().addAll("Breakfast", "Lunch", "Dinner", "Snack");
 
         // Initialize TableView
-        ingredientList = FXCollections.observableArrayList();
-        ingredientColumn.setCellValueFactory(cellData -> cellData.getValue().ingredientProperty());
-        ingredientsTableView.setItems(ingredientList);
+        ObservableList<Ingredient> ingredientList = FXCollections.observableArrayList();
+        ingredientNameColumn.setCellValueFactory(cellData -> cellData.getValue().ingredientProperty());
+        ingredientsTable.setItems(ingredientList);
 
         // Set the background image and make it resize proportionally
         Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/b4.jpg")));
@@ -75,14 +85,33 @@ public class PreferencesController {
 
         anchorPane.heightProperty().addListener((obs, oldVal, newVal) ->
                 backgroundImageView.setFitHeight(newVal.doubleValue()));
+
+        ingredientNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        ingredientQuantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        ingredientCategoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
+
+        ingredientsTable.setItems(ingredientData);
     }
 
 
+    private int column = 0;
+    private int row = 0;
+
     @FXML
     private void handleAddIngredient() {
-        String input = ingredientsAvailableField.getText().trim();
-        if (!input.isEmpty()) {
-            ingredientList.add(new Ingredient(input));
+        String ingredient = ingredientsAvailableField.getText().trim();
+        if (!ingredient.isEmpty()) {
+            Label ingredientLabel = new Label(ingredient);
+            ingredientLabel.setStyle("-fx-background-color: rgba(255, 255, 255, 0.7); -fx-padding: 8 12; -fx-background-radius: 10; -fx-text-fill: black;");
+
+            ingredientsGrid.add(ingredientLabel, column, row);
+
+            column++;
+            if (column == 4) { // adjust grid width as needed
+                column = 0;
+                row++;
+            }
+
             ingredientsAvailableField.clear();
         }
     }

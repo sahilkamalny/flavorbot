@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 
 <AnchorPane fx:id="anchorPane" xmlns:fx="http://javafx.com/fxml/1"
             xmlns="http://javafx.com/javafx/23.0.1"
             fx:controller="edu.farmingdale.recipegenerator.PreferencesController"
-            style="-fx-background-color: #000000;">
-    <ImageView fx:id="backgroundImageView" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
-               AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0"/>
+            style="-fx-background-color: #000000; -fx-padding: 10 10 10 10;">
 
+    <!-- Background Image -->
+    <ImageView fx:id="backgroundImageView" AnchorPane.bottomAnchor="0"
+               AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
+               AnchorPane.topAnchor="0" preserveRatio="true" fitWidth="1000"/>
+
+    <!-- Main Layout -->
     <HBox fillHeight="true" spacing="40"
           AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
           AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0"
-          style="-fx-padding: 40;">
+          style="-fx-padding: 40 40 40 40;">
 
         <!-- Left Panel -->
         <VBox alignment="TOP_CENTER" prefWidth="400" spacing="20" HBox.hgrow="ALWAYS">
@@ -26,32 +30,32 @@
             <VBox spacing="10">
                 <Label text="Favorite Food Style:" style="-fx-text-fill: white;" />
                 <ComboBox fx:id="foodStyleComboBox"
-                          style="-fx-background-color: #f0f0f0;"/>
+                          style="-fx-background-color: #f0f0f0;" />
             </VBox>
 
             <!-- Dietary Preferences -->
             <VBox spacing="10">
                 <Label text="Dietary Preferences:" style="-fx-text-fill: white;" />
                 <ComboBox fx:id="dietaryPreferencesComboBox"
-                          style="-fx-background-color: #f0f0f0;"/>
+                          style="-fx-background-color: #f0f0f0;" />
             </VBox>
 
             <!-- Spice Level -->
             <VBox spacing="10">
                 <Label text="Spice Level:" style="-fx-text-fill: white;" />
-                <Slider fx:id="spiceLevelSlider" max="10" min="0"/>
+                <Slider fx:id="spiceLevelSlider" max="10" min="0" />
             </VBox>
 
             <!-- Meal Type -->
             <VBox spacing="10">
                 <Label text="Meal Type:" style="-fx-text-fill: white;" />
                 <ComboBox fx:id="mealTypeComboBox"
-                          style="-fx-background-color: #f0f0f0;"/>
+                          style="-fx-background-color: #f0f0f0;" />
             </VBox>
 
             <Button text="Continue"
                     onAction="#handleContinueButtonAction"
-                    style="-fx-font-size: 14px; -fx-background-color: #ffffff; -fx-text-fill: black;"/>
+                    style="-fx-font-size: 14px; -fx-background-color: #ffffff; -fx-text-fill: black;" />
         </VBox>
 
         <!-- Right Panel -->
@@ -62,18 +66,28 @@
                        style="-fx-text-fill: white;" />
                 <TextField fx:id="ingredientsAvailableField"
                            promptText="Search or add an ingredient"
-                           style="-fx-background-color: #f0f0f0;"/>
+                           style="-fx-background-color: #f0f0f0;" />
                 <Button text="Add Ingredient"
                         onAction="#handleAddIngredient"
-                        style="-fx-background-color: #ffffff; -fx-text-fill: black;"/>
+                        style="-fx-background-color: #ffffff; -fx-text-fill: black;" />
             </VBox>
 
-            <!-- Ingredients Table -->
-            <TableView fx:id="ingredientsTableView" prefHeight="300" VBox.vgrow="ALWAYS">
+            <!-- TableView of Ingredients -->
+            <TableView fx:id="ingredientsTable" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent; -fx-background: transparent;">
                 <columns>
-                    <TableColumn fx:id="ingredientColumn" prefWidth="200" text="Ingredient">
+                    <TableColumn fx:id="ingredientNameColumn" text="Ingredient Name" prefWidth="300">
                         <cellValueFactory>
-                            <PropertyValueFactory property="ingredient"/>
+                            <PropertyValueFactory property="name" />
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="ingredientQuantityColumn" text="Quantity" prefWidth="150">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="quantity" />
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="ingredientCategoryColumn" text="Category" prefWidth="150">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="category" />
                         </cellValueFactory>
                     </TableColumn>
                 </columns>
@@ -81,4 +95,3 @@
         </VBox>
     </HBox>
 </AnchorPane>
-
