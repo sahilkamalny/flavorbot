@@ -125,6 +125,8 @@ public class SignUpController {
             showAlert("Password Mismatch", "Passwords do not match.", Alert.AlertType.ERROR);
             return;
         }
+        AzureDBConnector connector = new AzureDBConnector();
+        connector.insertUser(username, password, confirmPassword);
 
         // Show success alert
         showAlert("Success", "Account created successfully!", Alert.AlertType.INFORMATION);

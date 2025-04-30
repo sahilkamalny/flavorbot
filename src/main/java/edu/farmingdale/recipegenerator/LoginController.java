@@ -121,6 +121,9 @@ public class LoginController {
 
         // For now, we are skipping the authentication logic
         // Open the main window (fridge management window)
+        AzureDBConnector connector = new AzureDBConnector();
+        System.out.println(connector.authenticateAndSetSession(username, password));
+
         openPreferencesWindow();
     }
 
