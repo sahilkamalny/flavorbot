@@ -46,7 +46,7 @@ public class LoginController {
     @FXML
     private void initialize() {
         try {
-            Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/b4.jpg")));
+            Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/b6.png")));
             backgroundImageView.setImage(backgroundImage);
         } catch (Exception e) {
             e.printStackTrace();
