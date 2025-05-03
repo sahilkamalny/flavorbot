@@ -8,74 +8,80 @@
 <AnchorPane fx:id="anchorPane" xmlns:fx="http://javafx.com/fxml/1"
             xmlns="http://javafx.com/javafx/23.0.1"
             fx:controller="edu.farmingdale.recipegenerator.PreferencesController"
-            style="-fx-background-color: #000000; -fx-padding: 10 10 10 10;">
+            style="-fx-background-color: #1e1e1e; -fx-padding: 20;">
 
-    <!-- Background Image -->
-    <ImageView fx:id="backgroundImageView" AnchorPane.bottomAnchor="0"
+    <!-- Optional Background Image -->
+    <ImageView fx:id="backgroundImageView"
+               AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
                AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
-               AnchorPane.topAnchor="0" preserveRatio="true" fitWidth="1000"/>
+               preserveRatio="false" fitWidth="1000"
+               opacity="0.1" />
 
-    <!-- Main Layout -->
-    <HBox fillHeight="true" spacing="40"
-          AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
-          AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0"
-          style="-fx-padding: 40 40 40 40;">
+    <HBox spacing="30" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
+          AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
+          style="-fx-padding: 30;">
 
         <!-- Left Panel -->
-        <VBox alignment="TOP_CENTER" prefWidth="400" spacing="20" HBox.hgrow="ALWAYS">
+        <VBox alignment="TOP_CENTER" spacing="25" prefWidth="380"
+              style="-fx-background-color: #2a2a2a; -fx-background-radius: 10; -fx-padding: 25; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 10, 0, 0, 5);">
+
             <Label text="Select Your Preferences"
-                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;" />
+                   style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" />
 
-            <!-- Food Style -->
-            <VBox spacing="10">
-                <Label text="Favorite Food Style:" style="-fx-text-fill: white;" />
+            <!-- Preference Controls -->
+            <VBox spacing="15">
+                <Label text="Favorite Food Style:" style="-fx-text-fill: #cccccc;" />
                 <ComboBox fx:id="foodStyleComboBox"
-                          style="-fx-background-color: #f0f0f0;" />
+                          promptText="Select food style"
+                          style="-fx-background-radius: 6; -fx-padding: 4;" />
             </VBox>
 
-            <!-- Dietary Preferences -->
-            <VBox spacing="10">
-                <Label text="Dietary Preferences:" style="-fx-text-fill: white;" />
+            <VBox spacing="15">
+                <Label text="Dietary Preferences:" style="-fx-text-fill: #cccccc;" />
                 <ComboBox fx:id="dietaryPreferencesComboBox"
-                          style="-fx-background-color: #f0f0f0;" />
+                          promptText="Select dietary preference"
+                          style="-fx-background-radius: 6; -fx-padding: 4;" />
             </VBox>
 
-            <!-- Spice Level -->
-            <VBox spacing="10">
-                <Label text="Spice Level:" style="-fx-text-fill: white;" />
-                <Slider fx:id="spiceLevelSlider" max="10" min="0" />
+            <VBox spacing="15">
+                <Label text="Spice Level:" style="-fx-text-fill: #cccccc;" />
+                <Slider fx:id="spiceLevelSlider" min="0" max="10"
+                        style="-fx-control-inner-background: #444444;" />
             </VBox>
 
-            <!-- Meal Type -->
-            <VBox spacing="10">
-                <Label text="Meal Type:" style="-fx-text-fill: white;" />
+            <VBox spacing="15">
+                <Label text="Meal Type:" style="-fx-text-fill: #cccccc;" />
                 <ComboBox fx:id="mealTypeComboBox"
-                          style="-fx-background-color: #f0f0f0;" />
+                          promptText="Select meal type"
+                          style="-fx-background-radius: 6; -fx-padding: 4;" />
             </VBox>
 
             <Button text="Continue"
                     onAction="#handleContinueButtonAction"
-                    style="-fx-font-size: 14px; -fx-background-color: #ffffff; -fx-text-fill: black;" />
+                    style="-fx-font-size: 14px; -fx-background-color: #00c853; -fx-text-fill: white; -fx-background-radius: 6;" />
         </VBox>
 
         <!-- Right Panel -->
-        <VBox prefWidth="600" spacing="20" HBox.hgrow="ALWAYS">
-            <!-- Ingredient Search Section -->
+        <VBox spacing="20" prefWidth="600"
+              style="-fx-background-color: #2a2a2a; -fx-background-radius: 10; -fx-padding: 25; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 10, 0, 0, 5);">
+
+            <!-- Ingredient Input -->
             <VBox spacing="10">
                 <Label text="Ingredients You Have Available:"
-                       style="-fx-text-fill: white;" />
+                       style="-fx-text-fill: #ffffff; -fx-font-size: 16px;" />
                 <TextField fx:id="ingredientsAvailableField"
                            promptText="Search or add an ingredient"
-                           style="-fx-background-color: #f0f0f0;" />
+                           style="-fx-background-radius: 6; -fx-padding: 6;" />
                 <Button text="Add Ingredient"
                         onAction="#handleAddIngredient"
-                        style="-fx-background-color: #ffffff; -fx-text-fill: black;" />
+                        style="-fx-background-color: #03a9f4; -fx-text-fill: white; -fx-background-radius: 6;" />
             </VBox>
 
-            <!-- TableView of Ingredients -->
-            <TableView fx:id="ingredientsTable" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent; -fx-background: transparent;">
+            <!-- Ingredients Table -->
+            <TableView fx:id="ingredientsTable" VBox.vgrow="ALWAYS"
+                       style="-fx-background-radius: 6; -fx-background-color: #333333; -fx-table-cell-border-color: transparent;">
                 <columns>
-                    <TableColumn fx:id="ingredientNameColumn" text="Ingredient Name" prefWidth="300">
+                    <TableColumn fx:id="ingredientNameColumn" text="Ingredient Name" prefWidth="280">
                         <cellValueFactory>
                             <PropertyValueFactory property="name" />
                         </cellValueFactory>
