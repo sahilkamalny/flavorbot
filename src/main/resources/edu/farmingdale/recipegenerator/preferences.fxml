@@ -58,40 +58,40 @@
                     style="-fx-font-size: 14px; -fx-background-color: #ffffff; -fx-text-fill: black;" />
         </VBox>
 
-        <!-- Right Panel -->
-        <VBox prefWidth="600" spacing="20" HBox.hgrow="ALWAYS">
-            <!-- Ingredient Search Section -->
-            <VBox spacing="10">
-                <Label text="Ingredients You Have Available:"
-                       style="-fx-text-fill: white;" />
-                <TextField fx:id="ingredientsAvailableField"
-                           promptText="Search or add an ingredient"
-                           style="-fx-background-color: #f0f0f0;" />
-                <Button text="Add Ingredient"
-                        onAction="#handleAddIngredient"
-                        style="-fx-background-color: #ffffff; -fx-text-fill: black;" />
-            </VBox>
+<!--        &lt;!&ndash; Right Panel &ndash;&gt;-->
+<!--        <VBox prefWidth="600" spacing="20" HBox.hgrow="ALWAYS">-->
+<!--            &lt;!&ndash; Ingredient Search Section &ndash;&gt;-->
+<!--            <VBox spacing="10">-->
+<!--                <Label text="Ingredients You Have Available:"-->
+<!--                       style="-fx-text-fill: white;" />-->
+<!--                <TextField fx:id="ingredientsAvailableField"-->
+<!--                           promptText="Search or add an ingredient"-->
+<!--                           style="-fx-background-color: #f0f0f0;" />-->
+<!--                <Button text="Add Ingredient"-->
+<!--                        onAction="#handleAddIngredient"-->
+<!--                        style="-fx-background-color: #ffffff; -fx-text-fill: black;" />-->
+<!--            </VBox>-->
 
-            <!-- TableView of Ingredients -->
-            <TableView fx:id="ingredientsTable" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent; -fx-background: transparent;">
-                <columns>
-                    <TableColumn fx:id="ingredientNameColumn" text="Ingredient Name" prefWidth="300">
-                        <cellValueFactory>
-                            <PropertyValueFactory property="name" />
-                        </cellValueFactory>
-                    </TableColumn>
-                    <TableColumn fx:id="ingredientQuantityColumn" text="Quantity" prefWidth="150">
-                        <cellValueFactory>
-                            <PropertyValueFactory property="quantity" />
-                        </cellValueFactory>
-                    </TableColumn>
-                    <TableColumn fx:id="ingredientCategoryColumn" text="Category" prefWidth="150">
-                        <cellValueFactory>
-                            <PropertyValueFactory property="category" />
-                        </cellValueFactory>
-                    </TableColumn>
-                </columns>
-            </TableView>
-        </VBox>
+<!--            &lt;!&ndash; TableView of Ingredients &ndash;&gt;-->
+<!--            <TableView fx:id="ingredientsTable" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent; -fx-background: transparent;">-->
+<!--                <columns>-->
+<!--                    <TableColumn fx:id="ingredientNameColumn" text="Ingredient Name" prefWidth="300">-->
+<!--                        <cellValueFactory>-->
+<!--                            <PropertyValueFactory property="name" />-->
+<!--                        </cellValueFactory>-->
+<!--                    </TableColumn>-->
+<!--                    <TableColumn fx:id="ingredientQuantityColumn" text="Quantity" prefWidth="150">-->
+<!--                        <cellValueFactory>-->
+<!--                            <PropertyValueFactory property="quantity" />-->
+<!--                        </cellValueFactory>-->
+<!--                    </TableColumn>-->
+<!--                    <TableColumn fx:id="ingredientCategoryColumn" text="Category" prefWidth="150">-->
+<!--                        <cellValueFactory>-->
+<!--                            <PropertyValueFactory property="category" />-->
+<!--                        </cellValueFactory>-->
+<!--                    </TableColumn>-->
+<!--                </columns>-->
+<!--            </TableView>-->
+<!--        </VBox>-->
     </HBox>
 </AnchorPane>

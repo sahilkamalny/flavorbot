@@ -64,10 +64,10 @@ public class PreferencesController {
         spiceLevelSlider.setSnapToTicks(true);
         mealTypeComboBox.getItems().addAll("Breakfast", "Lunch", "Dinner", "Snack");
 
-        // Initialize TableView
-        ObservableList<Ingredient> ingredientList = FXCollections.observableArrayList();
-        ingredientNameColumn.setCellValueFactory(cellData -> cellData.getValue().ingredientProperty());
-        ingredientsTable.setItems(ingredientList);
+//        // Initialize TableView
+//        ObservableList<Ingredient> ingredientList = FXCollections.observableArrayList();
+//        ingredientNameColumn.setCellValueFactory(cellData -> cellData.getValue().ingredientProperty());
+//        ingredientsTable.setItems(ingredientList);
 
         // Set the background image and make it resize proportionally
         Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/b4.jpg")));
@@ -86,35 +86,35 @@ public class PreferencesController {
         anchorPane.heightProperty().addListener((obs, oldVal, newVal) ->
                 backgroundImageView.setFitHeight(newVal.doubleValue()));
 
-        ingredientNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        ingredientQuantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        ingredientCategoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
-
-        ingredientsTable.setItems(ingredientData);
+//        ingredientNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+//        ingredientQuantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+//        ingredientCategoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
+//
+//        ingredientsTable.setItems(ingredientData);
     }
 
 
     private int column = 0;
     private int row = 0;
 
-    @FXML
-    private void handleAddIngredient() {
-        String ingredient = ingredientsAvailableField.getText().trim();
-        if (!ingredient.isEmpty()) {
-            Label ingredientLabel = new Label(ingredient);
-            ingredientLabel.setStyle("-fx-background-color: rgba(255, 255, 255, 0.7); -fx-padding: 8 12; -fx-background-radius: 10; -fx-text-fill: black;");
-
-            ingredientsGrid.add(ingredientLabel, column, row);
-
-            column++;
-            if (column == 4) { // adjust grid width as needed
-                column = 0;
-                row++;
-            }
-
-            ingredientsAvailableField.clear();
-        }
-    }
+//    @FXML
+//    private void handleAddIngredient() {
+//        String ingredient = ingredientsAvailableField.getText().trim();
+//        if (!ingredient.isEmpty()) {
+//            Label ingredientLabel = new Label(ingredient);
+//            ingredientLabel.setStyle("-fx-background-color: rgba(255, 255, 255, 0.7); -fx-padding: 8 12; -fx-background-radius: 10; -fx-text-fill: black;");
+//
+//            ingredientsGrid.add(ingredientLabel, column, row);
+//
+//            column++;
+//            if (column == 4) { // adjust grid width as needed
+//                column = 0;
+//                row++;
+//            }
+//
+//            ingredientsAvailableField.clear();
+//        }
+//    }
 
     @FXML
     private void handleContinueButtonAction() {

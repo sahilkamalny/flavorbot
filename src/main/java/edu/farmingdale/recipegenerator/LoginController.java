@@ -138,7 +138,7 @@ public class LoginController {
         // 3) Check authentication result
         if (authenticated) {
             // Success: proceed to preferences
-            openPreferencesWindow();
+            openMainWindow();
         } else {
             // Failure: inform the user
             showAlert("Authentication Failed",

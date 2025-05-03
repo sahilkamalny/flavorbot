@@ -236,4 +236,20 @@ public class AzureDBConnector {
         SessionManager.getInstance().setCurrentUser(updated);
         return true;
     }
+
+    public boolean usernameExists(String username) {
+        String sql = "SELECT 1 FROM users WHERE username = ? LIMIT 1";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, username);
+            try (ResultSet rs = ps.executeQuery()) {
+                // if we get any row back, the username is taken
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // you may want to rethrow or handle more gracefully
+            return false;
+        }
+    }
 }

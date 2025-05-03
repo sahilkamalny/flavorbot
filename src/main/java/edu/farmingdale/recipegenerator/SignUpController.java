@@ -170,12 +170,20 @@ public class SignUpController {
 
         // 6) Attempt to insert into the database
         AzureDBConnector connector = new AzureDBConnector();
+        if(connector.usernameExists(username)) {
+            showAlert("Error",
+                    "Username already exists.",
+                    Alert.AlertType.ERROR);
+            usernameField.clear();
+            return;
+        }
         try {
             connector.insertUser(username, email, password);
             showAlert("Success",
                     "Account created successfully!",
                     Alert.AlertType.INFORMATION);
-            openMainWindow();
+            connector.authenticateAndSetSession(username, password);
+            openPreferencesWindow();
         } catch (Exception ex) {
             ex.printStackTrace();    // optional logging
             showAlert("Unexpected Error",
@@ -217,6 +225,26 @@ public class SignUpController {
         }
     }
 
+    private void openPreferencesWindow() {
+        try {
+            Stage loginStage = (Stage) loginButton.getScene().getWindow();
+            loginStage.close();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/farmingdale/recipegenerator/preferences.fxml"));
+            Scene preferencesScene = new Scene(loader.load());
+
+            Stage prefStage = new Stage();
+            prefStage.setTitle("User Preferences");
+
+            // Let JavaFX handle fullscreen properly
+            prefStage.setScene(preferencesScene);
+            prefStage.setMaximized(true); // This keeps better proportions
+            prefStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("Error", "Could not load preferences window.", Alert.AlertType.ERROR);
+        }
+    }
     @FXML
     private void handleAlreadyHaveAccountButtonAction() {
         openMainWindow();
