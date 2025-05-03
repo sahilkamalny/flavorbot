@@ -139,7 +139,6 @@ public class LoginController {
         if (authenticated) {
             // Success: proceed to preferences
             openPreferencesWindow();
-            System.out.println(SessionManager.getInstance().getCurrentUser());
         } else {
             // Failure: inform the user
             showAlert("Authentication Failed",

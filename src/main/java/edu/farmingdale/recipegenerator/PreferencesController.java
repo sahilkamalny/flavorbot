@@ -118,11 +118,31 @@ public class PreferencesController {
 
     @FXML
     private void handleContinueButtonAction() {
+        // Retrieve user selections
         String selectedFoodStyle = foodStyleComboBox.getValue();
         String selectedDietaryPreference = dietaryPreferencesComboBox.getValue();
         String selectedMealType = mealTypeComboBox.getValue();
+        int spiceLevel = (int) spiceLevelSlider.getValue();
 
+        // Validate selections
+        if (selectedFoodStyle == null || selectedDietaryPreference == null || selectedMealType == null) {
+            showAlert("Missing Selection", "Please select food style, dietary preference, and meal type.");
+            return;
+        }
 
+        // Build JSON with only required preferences
+        String json = String.format(
+                "{\"foodStyle\":\"%s\",\"dietaryPreference\":\"%s\",\"mealType\":\"%s\",\"spiceLevel\":%d}",
+                selectedFoodStyle, selectedDietaryPreference, selectedMealType, spiceLevel
+        );
+
+        // Update preferences in database
+        AzureDBConnector connector = new AzureDBConnector();
+        connector.updateUserPreferences(
+                SessionManager.getInstance().getCurrentUser().getUserID(), json
+        );
+
+        // Open next window
         openMainWindow();
     }
 
