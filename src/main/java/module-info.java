@@ -4,6 +4,7 @@ module edu.farmingdale.recipegenerator {
     requires java.net.http;
     requires org.json;
     requires java.sql;
+    requires mysql.connector.j;
 
 
     opens edu.farmingdale.recipegenerator to javafx.fxml;

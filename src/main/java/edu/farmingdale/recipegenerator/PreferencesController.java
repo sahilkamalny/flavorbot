@@ -1,5 +1,6 @@
 package edu.farmingdale.recipegenerator;
 
+import com.mysql.cj.xdevapi.JsonArray;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,6 +14,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.Objects;
 
@@ -52,50 +55,54 @@ public class PreferencesController {
 
     @FXML
     public void initialize() {
-        // Populate combo boxes
+        // 1) Parse the prefs JSON as an object, not an array
+        String json = SessionManager.getInstance()
+                .getCurrentUser()
+                .getPreferencesJson();
+        JSONObject prefs = new JSONObject(json);
+
+        // 2) Populate your controls
         foodStyleComboBox.getItems().addAll("Italian", "Chinese", "Mexican", "Indian", "American");
         dietaryPreferencesComboBox.getItems().addAll("Vegetarian", "Vegan", "Gluten-Free", "None");
+        mealTypeComboBox.getItems().addAll("Breakfast", "Lunch", "Dinner", "Snack");
+
         spiceLevelSlider.setMin(0);
         spiceLevelSlider.setMax(10);
-        spiceLevelSlider.setValue(5); // Default value
         spiceLevelSlider.setShowTickLabels(true);
         spiceLevelSlider.setShowTickMarks(true);
         spiceLevelSlider.setMajorTickUnit(1);
         spiceLevelSlider.setSnapToTicks(true);
-        mealTypeComboBox.getItems().addAll("Breakfast", "Lunch", "Dinner", "Snack");
 
-//        // Initialize TableView
-//        ObservableList<Ingredient> ingredientList = FXCollections.observableArrayList();
-//        ingredientNameColumn.setCellValueFactory(cellData -> cellData.getValue().ingredientProperty());
-//        ingredientsTable.setItems(ingredientList);
+        // 3) Read out the saved values
+        String savedFoodStyle = prefs.optString("foodStyle", null);
+        String savedDietaryPreference = prefs.optString("dietaryPreference", null);
+        String savedMealType = prefs.optString("mealType", null);
+        int savedSpiceLevel = prefs.optInt("spiceLevel", 5);
 
-        // Set the background image and make it resize proportionally
-        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/b4.jpg")));
+        // 4) Apply them to the UI
+        if (savedFoodStyle != null) {
+            foodStyleComboBox.getSelectionModel().select(savedFoodStyle);
+        }
+        if (savedDietaryPreference != null) {
+            dietaryPreferencesComboBox.getSelectionModel().select(savedDietaryPreference);
+        }
+        if (savedMealType != null) {
+            mealTypeComboBox.getSelectionModel().select(savedMealType);
+        }
+        spiceLevelSlider.setValue(savedSpiceLevel);
 
+        // 5) (Optional) load background image as before
+        Image image = new Image(Objects.requireNonNull(
+                getClass().getResourceAsStream("/images/b4.jpg")));
         backgroundImageView.setImage(image);
-
-        // Make the image resize with the window
-        backgroundImageView.setPreserveRatio(true); // Maintain aspect ratio
+        backgroundImageView.setPreserveRatio(true);
         backgroundImageView.setFitWidth(anchorPane.getWidth());
         backgroundImageView.setFitHeight(anchorPane.getHeight());
-
-        // Bind the ImageView width and height to the AnchorPane's size
-        anchorPane.widthProperty().addListener((obs, oldVal, newVal) ->
-                backgroundImageView.setFitWidth(newVal.doubleValue()));
-
-        anchorPane.heightProperty().addListener((obs, oldVal, newVal) ->
-                backgroundImageView.setFitHeight(newVal.doubleValue()));
-
-//        ingredientNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-//        ingredientQuantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-//        ingredientCategoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
-//
-//        ingredientsTable.setItems(ingredientData);
+        anchorPane.widthProperty().addListener((obs, o, n) ->
+                backgroundImageView.setFitWidth(n.doubleValue()));
+        anchorPane.heightProperty().addListener((obs, o, n) ->
+                backgroundImageView.setFitHeight(n.doubleValue()));
     }
-
-
-    private int column = 0;
-    private int row = 0;
 
 //    @FXML
 //    private void handleAddIngredient() {

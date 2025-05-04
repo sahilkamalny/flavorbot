@@ -1,45 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.image.*?>
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="edu.farmingdale.recipegenerator.MainController">
 
-<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml"
-            fx:controller="edu.farmingdale.recipegenerator.HelloController"
-            prefWidth="1024.0" prefHeight="720.0">
+    <!-- Top: Title Bar -->
+    <top>
+        <HBox style="-fx-background-color: #336699;">
+            <Label text="Recipe Generator"
+                   style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;"/>
+            <Button fx:id="preferencesButton" onAction="#openPreferencesWindow" text="Preferences"
+                    style="-fx-background-color: #2980b9; -fx-text-fill: white;"/>
+        </HBox>
+    </top>
 
-    <!-- Left side controls -->
-    <Label fx:id="welcomeText" layoutX="30.0" layoutY="20.0" text="Welcome to Recipe Generator!" style="-fx-font-size: 18px;" />
+    <!-- Center: Ingredient Input and List -->
+    <center>
+        <VBox>
+            <HBox>
+                <TextField fx:id="ingredientField" promptText="Enter ingredient..." HBox.hgrow="ALWAYS"/>
+                <Button fx:id="addIngredientButton" text="Add"
+                        style="-fx-background-color: #66cc66; -fx-text-fill: white;"/>
+            </HBox>
+            <ListView fx:id="ingredientListView" VBox.vgrow="ALWAYS"/>
+        </VBox>
+    </center>
 
-    <Label layoutX="30.0" layoutY="70.0" text="Item Name:"/>
-    <TextField fx:id="nameTextField" layoutX="120.0" layoutY="65.0" prefWidth="200.0" />
+    <!-- Bottom: Generate Button -->
+    <bottom>
+        <HBox alignment="CENTER_RIGHT">
+            <Button fx:id="generateButton" text="Generate Recipe"
+                    style="-fx-background-color: #ff9933; -fx-text-fill: white;"/>
+        </HBox>
+    </bottom>
 
-    <Label layoutX="30.0" layoutY="110.0" text="Quantity:"/>
-    <TextField fx:id="quantityTextField" layoutX="120.0" layoutY="105.0" prefWidth="200.0" />
-
-    <Label layoutX="30.0" layoutY="150.0" text="Weight:"/>
-    <TextField fx:id="weightTextField" layoutX="120.0" layoutY="145.0" prefWidth="200.0" />
-
-    <Button fx:id="addButton" layoutX="30.0" layoutY="190.0" text="Add Item" prefWidth="140.0" onAction="#addToTableView"/>
-    <Button fx:id="generateButton" layoutX="180.0" layoutY="190.0" text="Generate Recipe" prefWidth="140.0" onAction="#generateButtonMethod"/>
-
-    <Label fx:id="alertLabel" layoutX="30.0" layoutY="230.0" textFill="red" />
-
-    <!-- Fridge visual pane -->
-    <AnchorPane fx:id="fridgePane" layoutX="30.0" layoutY="270.0" prefWidth="320.0" prefHeight="270.0" style="-fx-background-color: #f0f0f0; -fx-border-color: #ccc;">
-        <ImageView fx:id="fridgeImageView" layoutX="20.0" layoutY="20.0"/>
-    </AnchorPane>
-
-    <!-- TableView on the right -->
-    <TableView fx:id="tableView" layoutX="370.0" layoutY="20.0" prefWidth="600.0" prefHeight="400.0">
-        <columns>
-            <TableColumn fx:id="nameColumn" text="Item Name" prefWidth="200.0"/>
-            <TableColumn fx:id="quantityColumn" text="Quantity" prefWidth="200.0"/>
-            <TableColumn fx:id="weightColumn" text="Weight" prefWidth="200.0"/>
-        </columns>
-    </TableView>
-
-    <!-- Response TextArea below table -->
-    <TextArea fx:id="responseTextArea" layoutX="370.0" layoutY="440.0" prefWidth="600.0" prefHeight="130.0"/>
-
-</AnchorPane>
+</BorderPane>
