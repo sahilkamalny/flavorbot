@@ -8,6 +8,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -22,13 +26,36 @@ public class MainController {
     private Button preferencesButton;
     @FXML
     private TextField ingredientField;
+    @FXML
+    private ImageView backimageView;
+    @FXML
+    private ImageView backgroundImage;
+
+    @FXML
+    private BorderPane mainPane;
 
     @FXML
     public void initialize() {
         // Clear any existing items
         ingredientListView.getItems().clear();
 
-        // Wire up button handlers (in case not set in FXML)
+        try {
+            Image image = new Image(getClass().getResourceAsStream("/images/b5.png"));
+            backgroundImage.setImage(image);
+            backgroundImage.setPreserveRatio(true);
+            backgroundImage.setSmooth(true);
+        } catch (Exception e) {
+            System.out.println("Background image load failed: " + e.getMessage());
+        }
+
+        // Once scene is available, bind image to window size
+        mainPane.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                backgroundImage.fitWidthProperty().bind(newScene.widthProperty());
+                backgroundImage.fitHeightProperty().bind(newScene.heightProperty());
+            }
+        });
+        // Wire up button handlers
         addIngredientButton.setOnAction(e -> handleAddIngredient());
         preferencesButton.setOnAction(e -> openPreferencesWindow());
         generateButton.setOnAction(e -> {
