@@ -88,7 +88,7 @@ public class MainController {
      */
     @FXML
     private void handleGenerateRecipe() throws Exception {
-        OpenAI.getTextResponse("");
+        //OpenAI.getTextResponse("");
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Generate Recipe");
