@@ -34,8 +34,9 @@
                     <Pane>
                         <VBox spacing="10" style="-fx-padding: 10;">
                             <HBox spacing="10">
-                                <TextField fx:id="ingredientField" promptText="Enter ingredient..." HBox.hgrow="ALWAYS" styleClass="text-field" />
-                                <Button fx:id="addIngredientButton" text="Add" styleClass="button add-ingredient-button" />
+                                <TextField fx:id="ingredientField" promptText="Enter ingredient..." HBox.hgrow="ALWAYS" styleClass="text-field"
+                                prefHeight="50" prefWidth="600"/>
+                                <Button fx:id="addIngredientButton" text="Add" styleClass="button" />
                             </HBox>
                             <ListView fx:id="ingredientListView"
                                       maxHeight="400"
@@ -58,7 +59,7 @@
         <!-- Bottom -->
         <bottom>
             <HBox alignment="CENTER_RIGHT" spacing="10" style="-fx-padding: 10;">
-                <Button fx:id="generateButton" text="Generate Recipe" styleClass="button generate-button" />
+                <Button fx:id="generateButton" text="Generate Recipe" styleClass="button" />
             </HBox>
         </bottom>
     </BorderPane>
