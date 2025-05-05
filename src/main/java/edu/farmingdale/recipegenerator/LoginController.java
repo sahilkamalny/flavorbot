@@ -46,7 +46,7 @@ public class LoginController {
     @FXML
     private void initialize() {
         try {
-            Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/b4.jpg")));
+            Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/b6.png")));
             backgroundImageView.setImage(backgroundImage);
         } catch (Exception e) {
             e.printStackTrace();
@@ -138,8 +138,7 @@ public class LoginController {
         // 3) Check authentication result
         if (authenticated) {
             // Success: proceed to preferences
-            openPreferencesWindow();
-            System.out.println(SessionManager.getInstance().getCurrentUser());
+            openMainWindow();
         } else {
             // Failure: inform the user
             showAlert("Authentication Failed",
@@ -193,8 +192,19 @@ public class LoginController {
 
             // Load the main scene (your fridge management window)
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/farmingdale/recipegenerator/hello-view.fxml"));
+
+            // Get the screen bounds
+            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+            double screenWidth = screenBounds.getWidth();
+            double screenHeight = screenBounds.getHeight();
+
+            // window size to a percentage of screen size
+            double windowWidth = screenWidth * 1; // 100% of screen width
+            double windowHeight = screenHeight * 0.95; // 95% of screen height
+
             Stage newStage = new Stage();
-            newStage.setScene(new Scene(loader.load()));
+            newStage.setScene(new Scene(loader.load(),windowWidth,windowHeight));
+            newStage.setTitle("Flavor Bot");
             newStage.show();
         } catch (Exception e) {
             e.printStackTrace();

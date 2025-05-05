@@ -3,6 +3,7 @@ package edu.farmingdale.recipegenerator;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.Screen;
 import javafx.geometry.Rectangle2D;
@@ -10,11 +11,14 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
 import java.io.IOException;
+import java.util.Objects;
 
-public class HelloApplication extends Application {
+public class    HelloApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/icon.png")));
+        stage.getIcons().add(icon);
         // Get screen bounds
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         double screenWidth = screenBounds.getWidth();
@@ -28,17 +32,12 @@ public class HelloApplication extends Application {
         //scene.getStylesheets().add(getClass().getResource("/Styling/style.css").toExternalForm());
 
         // Set up the stage
-        stage.setTitle("Login");
+        stage.setTitle("Flavor Bot");
         stage.setScene(scene);
         stage.setX(screenBounds.getMinX());
         stage.setY(screenBounds.getMinY());
         stage.setWidth(screenWidth);
         stage.setHeight(screenHeight);
-
-        // Connect to the Azure Database
-
-
-        // Show success or error message depending on the connection result
 
         stage.show();
     }

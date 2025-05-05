@@ -116,6 +116,7 @@ public class AzureDBConnector {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        refreshSession();
     }
 
     // —— Fridge‑config Methods (JSON‑blob approach) —— //
@@ -208,5 +209,47 @@ public class AzureDBConnector {
         );
         SessionManager.getInstance().setCurrentUser(user);
         return true;
+    }
+
+    public boolean refreshSession() {
+        // 1) Grab the current user from session
+        User current = SessionManager.getInstance().getCurrentUser();
+        if (current == null) {
+            return false;     // no session to refresh
+        }
+
+        // 2) Fetch the fresh record by userID
+        String userID = current.getUsername();
+        Map<String,Object> userMap = getUserByUsername(userID);
+        if (userMap == null) {
+            return false;     // user no longer exists?
+        }
+
+        // 3) Rebuild and replace the User object
+        User updated = new User(
+                (Integer) userMap.get("userID"),
+                (String)  userMap.get("username"),
+                (String)  userMap.get("email"),
+                (String)  userMap.get("hashed_password"),
+                (String)  userMap.get("preferences")
+        );
+        SessionManager.getInstance().setCurrentUser(updated);
+        return true;
+    }
+
+    public boolean usernameExists(String username) {
+        String sql = "SELECT 1 FROM users WHERE username = ? LIMIT 1";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, username);
+            try (ResultSet rs = ps.executeQuery()) {
+                // if we get any row back, the username is taken
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // you may want to rethrow or handle more gracefully
+            return false;
+        }
     }
 }

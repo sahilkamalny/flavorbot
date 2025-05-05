@@ -54,3 +54,15 @@
     -fx-border-radius: 8;
     -fx-padding: 8;
 }
+
+#hBoxholder{
+    /*-fx-background-color: #acc6f6;*/
+}
+
+#mainVbox{
+    -fx-background-color: rgba(143, 214, 255, 0.65);
+    -fx-border-radius: 35;
+    -fx-background-radius: 35;
+    -fx-alignment: center;
+
+}

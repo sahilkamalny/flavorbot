@@ -25,7 +25,7 @@ public class SignUpController {
             Pattern.compile("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
     private static final Pattern PASSWORD_PATTERN =
             // At least 8 chars, 1 uppercase, 1 lowercase, 1 digit, 1 special
-            Pattern.compile("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&]).{8,}$");
+            Pattern.compile("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&.]).{8,}$");
 
     @FXML
     public TextField emailTextField;
@@ -170,12 +170,23 @@ public class SignUpController {
 
         // 6) Attempt to insert into the database
         AzureDBConnector connector = new AzureDBConnector();
+        if(connector.usernameExists(username)) {
+            showAlert("Error",
+                    "Username already exists.",
+                    Alert.AlertType.ERROR);
+            usernameField.clear();
+            return;
+        }
         try {
             connector.insertUser(username, email, password);
             showAlert("Success",
                     "Account created successfully!",
                     Alert.AlertType.INFORMATION);
+            connector.authenticateAndSetSession(username, password);
+
+//            openPreferencesWindow();
             openMainWindow();
+
         } catch (Exception ex) {
             ex.printStackTrace();    // optional logging
             showAlert("Unexpected Error",
@@ -214,6 +225,31 @@ public class SignUpController {
         } catch (Exception e) {
             e.printStackTrace();
             showAlert("Error", "Could not load the main window.", Alert.AlertType.ERROR);
+        }
+    }
+
+    private void openPreferencesWindow() {
+        try {
+            Stage loginStage = (Stage) loginButton.getScene().getWindow();
+            loginStage.close();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/farmingdale/recipegenerator/preferences.fxml"));
+            Scene preferencesScene = new Scene(loader.load());
+
+            //This will change the text on the button
+            PreferencesController controller = loader.getController();
+            boolean fromSignup = true;
+            controller.setContextFromSignup(fromSignup);
+
+            Stage prefStage = new Stage();
+            prefStage.setTitle("User Preferences");
+            prefStage.setScene(preferencesScene);
+            prefStage.setMaximized(true);
+            prefStage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("Error", "Could not load preferences window.", Alert.AlertType.ERROR);
         }
     }
 
