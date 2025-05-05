@@ -169,14 +169,15 @@ public class PreferencesController {
 
     private void openMainWindow() {
         try {
-            Stage currentStage = (Stage) foodStyleComboBox.getScene().getWindow();
-            currentStage.close();
+            Stage stage = (Stage) foodStyleComboBox.getScene().getWindow();
+            stage.close();  // Close the login window
 
+            // Load the main scene (your fridge management window)
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/farmingdale/recipegenerator/hello-view.fxml"));
-            Stage mainStage = new Stage();
-            mainStage.setScene(new Scene(loader.load()));
-            mainStage.setTitle("Fridge Management");
-            mainStage.show();
+            Stage newStage = new Stage();
+            newStage.setScene(new Scene(loader.load(),1600,850));
+            newStage.setTitle("Flavor Bot");
+            newStage.show();
         } catch (Exception e) {
             e.printStackTrace();
             showAlert("Error", "Could not load the main window.");
