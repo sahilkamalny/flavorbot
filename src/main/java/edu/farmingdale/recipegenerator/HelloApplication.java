@@ -33,6 +33,8 @@ public class    HelloApplication extends Application {
 
         // Set up the stage
         stage.setTitle("Flavor Bot");
+
+
         stage.setScene(scene);
         stage.setX(screenBounds.getMinX());
         stage.setY(screenBounds.getMinY());
