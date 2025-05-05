@@ -1,6 +1,7 @@
 package edu.farmingdale.recipegenerator;
 
 import com.mysql.cj.xdevapi.JsonArray;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -21,20 +22,28 @@ import java.util.Objects;
 
 public class PreferencesController {
 
+
+    @FXML
+    Button updateButton;
     @FXML
     private ComboBox<String> foodStyleComboBox;
     @FXML
     private ComboBox<String> dietaryPreferencesComboBox;
-    @FXML
-    private Slider spiceLevelSlider;
+//    @FXML
+//    private Slider spiceLevelSlider;
     @FXML
     private ComboBox<String> mealTypeComboBox;
+    @FXML
+    private ComboBox<Integer> spiceLevelSlider;
 
     @FXML
     private TextField ingredientsAvailableField;
 
     @FXML
     private TableView<Ingredient> ingredientsTable;
+
+    @FXML
+    private HBox hBoxholder;
 
     @FXML
     private AnchorPane anchorPane; // The AnchorPane from the FXML
@@ -65,13 +74,14 @@ public class PreferencesController {
         foodStyleComboBox.getItems().addAll("Italian", "Chinese", "Mexican", "Indian", "American");
         dietaryPreferencesComboBox.getItems().addAll("Vegetarian", "Vegan", "Gluten-Free", "None");
         mealTypeComboBox.getItems().addAll("Breakfast", "Lunch", "Dinner", "Snack");
+        spiceLevelSlider.getItems().addAll(1,2,3,4,5,6,7,8,9,10);
 
-        spiceLevelSlider.setMin(0);
-        spiceLevelSlider.setMax(10);
-        spiceLevelSlider.setShowTickLabels(true);
-        spiceLevelSlider.setShowTickMarks(true);
-        spiceLevelSlider.setMajorTickUnit(1);
-        spiceLevelSlider.setSnapToTicks(true);
+//        spiceLevelSlider.setMin(0);
+//        spiceLevelSlider.setMax(10);
+//        spiceLevelSlider.setShowTickLabels(true);
+//        spiceLevelSlider.setShowTickMarks(true);
+//        spiceLevelSlider.setMajorTickUnit(1);
+//        spiceLevelSlider.setSnapToTicks(true);
 
         // 3) Read out the saved values
         String savedFoodStyle = prefs.optString("foodStyle", null);
@@ -93,15 +103,19 @@ public class PreferencesController {
 
         // 5) (Optional) load background image as before
         Image image = new Image(Objects.requireNonNull(
-                getClass().getResourceAsStream("/images/b4.jpg")));
+                getClass().getResourceAsStream("/images/preferences.png")));
+
         backgroundImageView.setImage(image);
-        backgroundImageView.setPreserveRatio(true);
+//        backgroundImageView.setPreserveRatio(true);
         backgroundImageView.setFitWidth(anchorPane.getWidth());
         backgroundImageView.setFitHeight(anchorPane.getHeight());
+
         anchorPane.widthProperty().addListener((obs, o, n) ->
                 backgroundImageView.setFitWidth(n.doubleValue()));
         anchorPane.heightProperty().addListener((obs, o, n) ->
                 backgroundImageView.setFitHeight(n.doubleValue()));
+
+
     }
 
 //    @FXML
@@ -177,6 +191,14 @@ public class PreferencesController {
         alert.showAndWait();
     }
 
+    //This method will change the text on the updateButton Button if the screen is loaded from the sigUp page
+    //If user is logged in it will save "Update" instead of "Save"
+    public void setContextFromSignup(boolean fromSignup) {
+        if (fromSignup) {
+            updateButton.setText("Save Preferences");
+        }
+    }
+
     // Inner Ingredient class
     public static class Ingredient {
         private final StringProperty ingredient;
@@ -197,4 +219,5 @@ public class PreferencesController {
             return ingredient;
         }
     }
+
 }

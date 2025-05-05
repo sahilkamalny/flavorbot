@@ -193,7 +193,7 @@ public class LoginController {
             // Load the main scene (your fridge management window)
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/farmingdale/recipegenerator/hello-view.fxml"));
             Stage newStage = new Stage();
-            newStage.setScene(new Scene(loader.load()));
+            newStage.setScene(new Scene(loader.load(),1600,850));
             newStage.show();
         } catch (Exception e) {
             e.printStackTrace();

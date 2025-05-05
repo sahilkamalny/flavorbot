@@ -29,7 +29,13 @@ public class MainController {
         // Wire up button handlers (in case not set in FXML)
         addIngredientButton.setOnAction(e -> handleAddIngredient());
         preferencesButton.setOnAction(e -> openPreferencesWindow());
-        generateButton.setOnAction(e -> handleGenerateRecipe());
+        generateButton.setOnAction(e -> {
+            try {
+                handleGenerateRecipe();
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        });
     }
 
     /**
@@ -49,7 +55,8 @@ public class MainController {
      * Placeholder: handle recipe generation logic or display a simple alert.
      */
     @FXML
-    private void handleGenerateRecipe() {
+    private void handleGenerateRecipe() throws Exception {
+        OpenAI.getTextResponse("");
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Generate Recipe");
         alert.setHeaderText(null);
@@ -64,16 +71,17 @@ public class MainController {
     private void openPreferencesWindow() {
         try {
             Stage currentStage = (Stage) preferencesButton.getScene().getWindow();
+
             currentStage.close();
 
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/edu/farmingdale/recipegenerator/preferences.fxml")
             );
-            Scene scene = new Scene(loader.load());
+            Scene scene = new Scene(loader.load(),1300 ,900);
             Stage prefStage = new Stage();
             prefStage.setTitle("User Preferences");
             prefStage.setScene(scene);
-            prefStage.setMaximized(true);
+//            prefStage.setMaximized(true);
             prefStage.show();
         } catch (Exception e) {
             e.printStackTrace();
