@@ -5,11 +5,14 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -169,15 +172,27 @@ public class PreferencesController {
 
     private void openMainWindow() {
         try {
-            Stage stage = (Stage) foodStyleComboBox.getScene().getWindow();
+            Stage stage = (Stage) mealTypeComboBox.getScene().getWindow();
             stage.close();  // Close the login window
 
             // Load the main scene (your fridge management window)
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/farmingdale/recipegenerator/hello-view.fxml"));
+            Parent root = loader.load();
+
+            // Get the screen bounds
+            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+            double screenWidth = screenBounds.getWidth();
+            double screenHeight = screenBounds.getHeight();
+
+            // Add the external CSS stylesheet
+            Scene scene = new Scene(root, screenWidth * 1, screenHeight * 0.95);
+            scene.getStylesheets().add(getClass().getResource("/Styling/frosted-glass.css").toExternalForm());
+
             Stage newStage = new Stage();
-            newStage.setScene(new Scene(loader.load(),1600,850));
+            newStage.setScene(scene);
             newStage.setTitle("Flavor Bot");
             newStage.show();
+
         } catch (Exception e) {
             e.printStackTrace();
             showAlert("Error", "Could not load the main window.");
