@@ -40,21 +40,24 @@ public class MainController {
         ingredientListView.getItems().clear();
 
         try {
+            // Load the background image
             Image image = new Image(getClass().getResourceAsStream("/images/b5.png"));
             backgroundImage.setImage(image);
             backgroundImage.setPreserveRatio(true);
             backgroundImage.setSmooth(true);
+
+            // Ensure the image maintains the aspect ratio and fits the window size
+            mainPane.sceneProperty().addListener((obs, oldScene, newScene) -> {
+                if (newScene != null) {
+                    backgroundImage.fitWidthProperty().bind(newScene.widthProperty());
+                    backgroundImage.fitHeightProperty().bind(newScene.heightProperty());
+                }
+            });
+
         } catch (Exception e) {
             System.out.println("Background image load failed: " + e.getMessage());
         }
 
-        // Once scene is available, bind image to window size
-        mainPane.sceneProperty().addListener((obs, oldScene, newScene) -> {
-            if (newScene != null) {
-                backgroundImage.fitWidthProperty().bind(newScene.widthProperty());
-                backgroundImage.fitHeightProperty().bind(newScene.heightProperty());
-            }
-        });
         // Wire up button handlers
         addIngredientButton.setOnAction(e -> handleAddIngredient());
         preferencesButton.setOnAction(e -> openPreferencesWindow());

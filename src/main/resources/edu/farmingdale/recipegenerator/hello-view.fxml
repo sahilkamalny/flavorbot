@@ -11,10 +11,10 @@
 
     <!-- Background image -->
     <ImageView fx:id="backgroundImage"
-               fitWidth="800"
+               fitWidth="1920"
+               fitHeight="1080"
                preserveRatio="true"
                smooth="true"
-               StackPane.alignment="CENTER"
                opacity="0.3" /> <!-- Adjust opacity -->
 
     <!-- Frosted Glass Content Pane -->
@@ -22,9 +22,7 @@
                 prefHeight="570.0"
                 prefWidth="705.0"
                 style="-fx-background-color: rgba(255,255,255,0.6); -fx-background-radius: 15;">
-        <effect>
-            <GaussianBlur radius="15"/>
-        </effect>
+
 
         <!-- Top -->
         <top>
