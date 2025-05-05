@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
 
 <StackPane xmlns="http://javafx.com/javafx/23.0.1"
            xmlns:fx="http://javafx.com/fxml/1"
@@ -11,16 +11,13 @@
 
     <!-- Background image -->
     <ImageView fx:id="backgroundImage"
-               preserveRatio="true"
-               opacity="0.8"
-               StackPane.alignment="CENTER" />
+               preserveRatio="false"
+               fitWidth="Infinity"
+               fitHeight="Infinity"
+               StackPane.alignment="CENTER"/>
 
     <!-- Frosted Glass Content Pane -->
-    <BorderPane fx:id="mainPane"
-                prefHeight="570.0"
-                prefWidth="705.0"
-                styleClass="main-pane">
-
+    <BorderPane fx:id="mainPane" styleClass="main-pane">
         <!-- Top -->
         <top>
             <HBox fx:id="topBar" spacing="10" styleClass="hbox-top">
@@ -29,18 +26,33 @@
             </HBox>
         </top>
 
-        <!-- Center -->
+        <!-- Center: SplitPane for left (Ingredients) and right (Recipe Output) -->
         <center>
-            <VBox spacing="10">
-                <HBox spacing="10">
-                    <TextField fx:id="ingredientField" promptText="Enter ingredient..." HBox.hgrow="ALWAYS" styleClass="text-field" />
-                    <Button fx:id="addIngredientButton" text="Add" styleClass="button add-ingredient-button" />
-                </HBox>
-                <ListView fx:id="ingredientListView"
-                          maxHeight="400"
-                          VBox.vgrow="ALWAYS"
-                          styleClass="ingredient-list-view" />
-            </VBox>
+            <SplitPane dividerPositions="0.5">
+                <!-- Left side: Ingredients input and list -->
+                <items>
+                    <Pane>
+                        <VBox spacing="10" style="-fx-padding: 10;">
+                            <HBox spacing="10">
+                                <TextField fx:id="ingredientField" promptText="Enter ingredient..." HBox.hgrow="ALWAYS" styleClass="text-field" />
+                                <Button fx:id="addIngredientButton" text="Add" styleClass="button add-ingredient-button" />
+                            </HBox>
+                            <ListView fx:id="ingredientListView"
+                                      maxHeight="400"
+                                      VBox.vgrow="ALWAYS"
+                                      styleClass="ingredient-list-view" />
+                        </VBox>
+                    </Pane>
+
+                    <!-- Right side: Transparent text area for the recipe -->
+                    <Pane>
+                        <VBox spacing="10" style="-fx-padding: 10;">
+                            <TextArea fx:id="recipeTextArea" promptText="Generated Recipe will appear here..." editable="false"
+                                      wrapText="true" styleClass="recipe-text-area" />
+                        </VBox>
+                    </Pane>
+                </items>
+            </SplitPane>
         </center>
 
         <!-- Bottom -->

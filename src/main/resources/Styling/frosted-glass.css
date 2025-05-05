@@ -62,12 +62,81 @@
     -fx-border-width: 2;
     -fx-background-color: rgba(255, 255, 255, 0.2);
 }
+/* Make SplitPane background fully transparent */
+.split-pane {
+    -fx-background-color: transparent !important;
+    -fx-border-color: transparent !important;
+}
 
-/* ListView transparent */
+/* Hide the divider */
+.split-pane .split-pane-divider {
+    -fx-background-color: transparent !important;
+    -fx-border-color: transparent !important;
+    -fx-padding: 0 !important;
+    -fx-pref-width: 0 !important;
+    -fx-pref-height: 0 !important;
+}
+
+/* Left side: Ingredients input and list */
 .ingredient-list-view {
+    -fx-background-color: transparent !important;
+    -fx-control-inner-background: transparent !important;
+    -fx-border-color: transparent !important;
+    -fx-text-fill: white !important;
+    -fx-cell-hover-color: transparent !important;
+}
+
+/* Recipe Text Area transparent background */
+.recipe-text-area {
+    -fx-background-color: transparent !important;
+    -fx-text-fill: white !important;
+    -fx-border-color: transparent !important;
+    -fx-background-insets: 0 !important;
+}
+/* Make the background image cover the entire screen */
+#backgroundImage {
     -fx-background-color: transparent;
-    -fx-control-inner-background: transparent;
-    -fx-background-insets: 0;
+    -fx-background-size: cover;
+}
+
+/* Title (FlavorBot) - large font and appealing colors */
+#titleLabel {
+    -fx-font-size: 48px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFD700;  /* Gold color for a vibrant look */
+    -fx-text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);  /* Add shadow for contrast */
+}
+
+/* General button styles */
+.button {
+    -fx-font-size: 16px;
+    -fx-padding: 10px 20px;
+    -fx-background-color: #1E90FF;  /* Blue background */
     -fx-text-fill: white;
-    -fx-cell-hover-color: transparent;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-font-weight: bold;
+}
+
+/* Hover effect for buttons */
+.button:hover {
+    -fx-background-color: #4682B4;  /* Lighter blue when hovered */
+}
+
+/* Button styles for each specific button */
+.preferences-button {
+    -fx-background-color: #32CD32;  /* Green background */
+}
+
+.generate-pdf-button {
+    -fx-background-color: #FFD700;  /* Gold background */
+}
+
+.about-button {
+    -fx-background-color: #FF6347;  /* Tomato background */
+}
+
+/* Add some padding between the buttons */
+HBox {
+    -fx-padding: 20px;
 }
