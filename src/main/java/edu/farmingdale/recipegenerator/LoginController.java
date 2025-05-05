@@ -192,8 +192,18 @@ public class LoginController {
 
             // Load the main scene (your fridge management window)
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/farmingdale/recipegenerator/hello-view.fxml"));
+
+            // Get the screen bounds
+            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+            double screenWidth = screenBounds.getWidth();
+            double screenHeight = screenBounds.getHeight();
+
+            // window size to a percentage of screen size
+            double windowWidth = screenWidth * 1; // 100% of screen width
+            double windowHeight = screenHeight * 0.95; // 95% of screen height
+
             Stage newStage = new Stage();
-            newStage.setScene(new Scene(loader.load(),1600,850));
+            newStage.setScene(new Scene(loader.load(),windowWidth,windowHeight));
             newStage.setTitle("Flavor Bot");
             newStage.show();
         } catch (Exception e) {

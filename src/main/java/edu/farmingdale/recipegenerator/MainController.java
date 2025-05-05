@@ -2,11 +2,13 @@ package edu.farmingdale.recipegenerator;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class MainController {
@@ -57,6 +59,7 @@ public class MainController {
     @FXML
     private void handleGenerateRecipe() throws Exception {
         OpenAI.getTextResponse("");
+
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Generate Recipe");
         alert.setHeaderText(null);
@@ -77,7 +80,16 @@ public class MainController {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/edu/farmingdale/recipegenerator/preferences.fxml")
             );
-            Scene scene = new Scene(loader.load(),1300 ,900);
+            // Get the screen bounds
+            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+            double screenWidth = screenBounds.getWidth();
+            double screenHeight = screenBounds.getHeight();
+
+            // window size to a percentage of screen size
+            double windowWidth = screenWidth * 0.8; // 80% of screen width
+            double windowHeight = screenHeight * 0.95; // 80% of screen height
+
+            Scene scene = new Scene(loader.load(),windowWidth,windowHeight);
             Stage prefStage = new Stage();
             prefStage.setTitle("User Preferences");
             prefStage.setScene(scene);
