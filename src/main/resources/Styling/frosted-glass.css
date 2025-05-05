@@ -9,43 +9,41 @@
 /* Top bar (HBox) */
 .hbox-top {
     -fx-background-color: #1e3a5f;
-    -fx-padding: 10;
+    -fx-padding: 20;
     -fx-spacing: 10;
+    -fx-alignment: center_left; /* Align content from the left */
 }
 
 /* Labels */
 .label-title {
-    -fx-text-fill: white;
-    -fx-font-size: 18px;
+    -fx-font-size: 48px;
     -fx-font-weight: bold;
+    -fx-text-fill: #FF5733; /* Vibrant orange */
+    -fx-padding: 10;
 }
 
-/* Buttons */
+/* General button style matching FlavorBot design */
 .button {
-    -fx-background-color: #3b82f6;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
     -fx-text-fill: white;
-    -fx-background-radius: 5;
+    -fx-background-color: #FF5733; /* FlavorBot orange */
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-padding: 10 20;
     -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 5, 0.3, 1, 1);
 }
 
 .button:hover {
-    -fx-background-color: #60a5fa;
+    -fx-background-color: #ff784e; /* Lighter orange */
 }
 
-.add-ingredient-button {
-    -fx-background-color: #22c55e;
-}
-
+/* Specific buttons reuse main style */
+.preferences-button,
+.add-ingredient-button,
 .generate-button {
-    -fx-background-color: #f97316;
-}
-
-.preferences-button {
-    -fx-background-color: #2563eb;
-}
-
-.preferences-button:hover {
-    -fx-background-color: #3b82f6; /* Match general hover */
+    /* Already styled by .button */
 }
 
 /* Text field */
@@ -58,26 +56,12 @@
 }
 
 .text-field:focused {
-    -fx-border-color: #3b82f6;
+    -fx-border-color: #FF5733;
     -fx-border-width: 2;
     -fx-background-color: rgba(255, 255, 255, 0.2);
 }
-/* Make SplitPane background fully transparent */
-.split-pane {
-    -fx-background-color: transparent !important;
-    -fx-border-color: transparent !important;
-}
 
-/* Hide the divider */
-.split-pane .split-pane-divider {
-    -fx-background-color: transparent !important;
-    -fx-border-color: transparent !important;
-    -fx-padding: 0 !important;
-    -fx-pref-width: 0 !important;
-    -fx-pref-height: 0 !important;
-}
-
-/* Left side: Ingredients input and list */
+/* ListView transparent */
 .ingredient-list-view {
     -fx-background-color: transparent !important;
     -fx-control-inner-background: transparent !important;
@@ -86,57 +70,35 @@
     -fx-cell-hover-color: transparent !important;
 }
 
-/* Recipe Text Area transparent background */
+/* TextArea transparent */
 .recipe-text-area {
     -fx-background-color: transparent !important;
     -fx-text-fill: white !important;
     -fx-border-color: transparent !important;
     -fx-background-insets: 0 !important;
 }
-/* Make the background image cover the entire screen */
+
+/* SplitPane */
+.split-pane {
+    -fx-background-color: transparent !important;
+    -fx-border-color: transparent !important;
+}
+
+.split-pane .split-pane-divider {
+    -fx-background-color: transparent !important;
+    -fx-border-color: transparent !important;
+    -fx-padding: 0 !important;
+    -fx-pref-width: 0 !important;
+    -fx-pref-height: 0 !important;
+}
+
+/* Background image */
 #backgroundImage {
     -fx-background-color: transparent;
     -fx-background-size: cover;
 }
 
-/* Title (FlavorBot) - large font and appealing colors */
-#titleLabel {
-    -fx-font-size: 48px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #FFD700;  /* Gold color for a vibrant look */
-    -fx-text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);  /* Add shadow for contrast */
-}
-
-/* General button styles */
-.button {
-    -fx-font-size: 16px;
-    -fx-padding: 10px 20px;
-    -fx-background-color: #1E90FF;  /* Blue background */
-    -fx-text-fill: white;
-    -fx-border-radius: 10px;
-    -fx-background-radius: 10px;
-    -fx-font-weight: bold;
-}
-
-/* Hover effect for buttons */
-.button:hover {
-    -fx-background-color: #4682B4;  /* Lighter blue when hovered */
-}
-
-/* Button styles for each specific button */
-.preferences-button {
-    -fx-background-color: #32CD32;  /* Green background */
-}
-
-.generate-pdf-button {
-    -fx-background-color: #FFD700;  /* Gold background */
-}
-
-.about-button {
-    -fx-background-color: #FF6347;  /* Tomato background */
-}
-
-/* Add some padding between the buttons */
+/* HBox general spacing */
 HBox {
-    -fx-padding: 20px;
+    -fx-spacing: 10;
 }

@@ -22,7 +22,7 @@
         <top>
             <HBox fx:id="topBar" spacing="10" styleClass="hbox-top">
                 <Label text="FlavorBot" styleClass="label-title" />
-                <Button fx:id="preferencesButton" text="Preferences" styleClass="button preferences-button" />
+                <Button fx:id="preferencesButton" text="Preferences" styleClass="preferences-button" />
             </HBox>
         </top>
 
