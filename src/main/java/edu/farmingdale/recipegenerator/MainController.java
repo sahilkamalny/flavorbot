@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -35,24 +36,23 @@ public class MainController {
     private BorderPane mainPane;
 
     @FXML
+    private StackPane stackPane;
+
+    @FXML
     public void initialize() {
         // Clear any existing items
         ingredientListView.getItems().clear();
 
         try {
             // Load the background image
-            Image image = new Image(getClass().getResourceAsStream("/images/b5.png"));
+            Image image = new Image(getClass().getResourceAsStream("/images/b6.png"));
             backgroundImage.setImage(image);
             backgroundImage.setPreserveRatio(true);
             backgroundImage.setSmooth(true);
 
-            // Ensure the image maintains the aspect ratio and fits the window size
-            mainPane.sceneProperty().addListener((obs, oldScene, newScene) -> {
-                if (newScene != null) {
-                    backgroundImage.fitWidthProperty().bind(newScene.widthProperty());
-                    backgroundImage.fitHeightProperty().bind(newScene.heightProperty());
-                }
-            });
+
+            backgroundImage.fitWidthProperty().bind(stackPane.widthProperty());
+            backgroundImage.fitHeightProperty().bind(stackPane.heightProperty());
 
         } catch (Exception e) {
             System.out.println("Background image load failed: " + e.getMessage());

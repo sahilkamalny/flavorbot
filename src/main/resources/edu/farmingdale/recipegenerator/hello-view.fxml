@@ -3,57 +3,50 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.effect.GaussianBlur?>
 
 <StackPane xmlns="http://javafx.com/javafx/23.0.1"
            xmlns:fx="http://javafx.com/fxml/1"
+           fx:id="stackPane"
            fx:controller="edu.farmingdale.recipegenerator.MainController">
 
     <!-- Background image -->
     <ImageView fx:id="backgroundImage"
-               fitWidth="1920"
-               fitHeight="1080"
                preserveRatio="true"
-               smooth="true"
-               opacity="0.3" /> <!-- Adjust opacity -->
+               opacity="0.8"
+               StackPane.alignment="CENTER" />
 
     <!-- Frosted Glass Content Pane -->
     <BorderPane fx:id="mainPane"
                 prefHeight="570.0"
                 prefWidth="705.0"
-                style="-fx-background-color: rgba(255,255,255,0.6); -fx-background-radius: 15;">
-
+                styleClass="main-pane">
 
         <!-- Top -->
         <top>
-            <HBox style="-fx-background-color: #336699; -fx-padding: 10;">
-                <Label style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;" text="FlavorBot" />
-                <Button fx:id="preferencesButton"
-                        style="-fx-background-color: #2980b9; -fx-text-fill: white;"
-                        text="Preferences">
-                </Button>
+            <HBox fx:id="topBar" spacing="10" styleClass="hbox-top">
+                <Label text="FlavorBot" styleClass="label-title" />
+                <Button fx:id="preferencesButton" text="Preferences" styleClass="button preferences-button" />
             </HBox>
         </top>
 
         <!-- Center -->
         <center>
-            <VBox >
+            <VBox spacing="10">
                 <HBox spacing="10">
-                    <TextField fx:id="ingredientField" promptText="Enter ingredient..." HBox.hgrow="ALWAYS" />
-                    <Button fx:id="addIngredientButton"
-                            style="-fx-background-color: #66cc66; -fx-text-fill: white;"
-                            text="Add" />
+                    <TextField fx:id="ingredientField" promptText="Enter ingredient..." HBox.hgrow="ALWAYS" styleClass="text-field" />
+                    <Button fx:id="addIngredientButton" text="Add" styleClass="button add-ingredient-button" />
                 </HBox>
-                <ListView fx:id="ingredientListView" VBox.vgrow="ALWAYS" />
+                <ListView fx:id="ingredientListView"
+                          maxHeight="400"
+                          VBox.vgrow="ALWAYS"
+                          styleClass="ingredient-list-view" />
             </VBox>
         </center>
 
         <!-- Bottom -->
         <bottom>
-            <HBox alignment="CENTER_RIGHT" >
-                <Button fx:id="generateButton"
-                        style="-fx-background-color: #ff9933; -fx-text-fill: white;"
-                        text="Generate Recipe" />
+            <HBox alignment="CENTER_RIGHT" spacing="10" style="-fx-padding: 10;">
+                <Button fx:id="generateButton" text="Generate Recipe" styleClass="button generate-button" />
             </HBox>
         </bottom>
     </BorderPane>
