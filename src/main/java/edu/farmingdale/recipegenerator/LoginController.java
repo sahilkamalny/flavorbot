@@ -4,6 +4,7 @@ import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -184,7 +185,6 @@ public class LoginController {
         }
     }
 
-
     private void openMainWindow() {
         try {
             Stage stage = (Stage) loginButton.getScene().getWindow();
@@ -192,25 +192,28 @@ public class LoginController {
 
             // Load the main scene (your fridge management window)
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/farmingdale/recipegenerator/hello-view.fxml"));
+            Parent root = loader.load();
 
             // Get the screen bounds
             Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
             double screenWidth = screenBounds.getWidth();
             double screenHeight = screenBounds.getHeight();
 
-            // window size to a percentage of screen size
-            double windowWidth = screenWidth * 1; // 100% of screen width
-            double windowHeight = screenHeight * 0.95; // 95% of screen height
+            // Add the external CSS stylesheet
+            Scene scene = new Scene(root, screenWidth * 1, screenHeight * 0.98);
+            scene.getStylesheets().add(getClass().getResource("/Styling/frosted-glass.css").toExternalForm());
 
             Stage newStage = new Stage();
-            newStage.setScene(new Scene(loader.load(),windowWidth,windowHeight));
+            newStage.setScene(scene);
             newStage.setTitle("Flavor Bot");
             newStage.show();
+
         } catch (Exception e) {
             e.printStackTrace();
             showAlert("Error", "Could not load the main window.", AlertType.ERROR);
         }
     }
+
 
     private void openSignUpWindow() {
         try {

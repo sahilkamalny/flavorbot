@@ -236,11 +236,6 @@ public class SignUpController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/farmingdale/recipegenerator/preferences.fxml"));
             Scene preferencesScene = new Scene(loader.load());
 
-            //This will change the text on the button
-            PreferencesController controller = loader.getController();
-            boolean fromSignup = true;
-            controller.setContextFromSignup(fromSignup);
-
             Stage prefStage = new Stage();
             prefStage.setTitle("User Preferences");
             prefStage.setScene(preferencesScene);

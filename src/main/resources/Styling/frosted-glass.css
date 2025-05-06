@@ -1,0 +1,106 @@
+/* Root pane (BorderPane) frosted effect background */
+.main-pane {
+    -fx-background-color: rgba(30, 30, 30, 0.6); /* Dark glassy effect */
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.4), 20, 0.0, 0, 5);
+    -fx-padding: 10;
+}
+
+/* Top bar (HBox) */
+.hbox-top {
+    -fx-background-color: #1e3a5f;
+    -fx-padding: 20;
+    -fx-spacing: 10;
+    -fx-alignment: center_left; /* Align content from the left */
+}
+
+/* Labels */
+.label-title {
+    -fx-font-size: 48px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FF5733; /* Vibrant orange */
+    -fx-padding: 10;
+}
+
+/* General button style matching FlavorBot design */
+.button {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-color: #FF5733; /* FlavorBot orange */
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-padding: 10 20;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 5, 0.3, 1, 1);
+}
+
+.button:hover {
+    -fx-background-color: #ff784e; /* Lighter orange */
+}
+
+/* Specific buttons reuse main style */
+.preferences-button,
+.add-ingredient-button,
+.generate-button {
+    /* Already styled by .button */
+}
+
+/* Text field */
+.text-field {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-text-fill: white;
+    -fx-background-insets: 0;
+    -fx-border-color: #555;
+    -fx-border-radius: 5;
+}
+
+.text-field:focused {
+    -fx-border-color: #FF5733;
+    -fx-border-width: 2;
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* ListView transparent */
+.ingredient-list-view {
+    -fx-background-color: transparent !important;
+    -fx-control-inner-background: transparent !important;
+    -fx-border-color: transparent !important;
+    -fx-text-fill: white !important;
+    -fx-cell-hover-color: transparent !important;
+}
+
+/* TextArea transparent */
+.recipe-text-area {
+    -fx-background-color: transparent !important;
+    -fx-text-fill: black !important;
+    -fx-font-weight: bold !important;
+    -fx-font-size: 15px !important;
+    -fx-border-color: transparent !important;
+    -fx-background-insets: 0 !important;
+}
+
+/* SplitPane */
+.split-pane {
+    -fx-background-color: transparent !important;
+    -fx-border-color: transparent !important;
+}
+
+.split-pane .split-pane-divider {
+    -fx-background-color: transparent !important;
+    -fx-border-color: transparent !important;
+    -fx-padding: 0 !important;
+    -fx-pref-width: 0 !important;
+    -fx-pref-height: 0 !important;
+}
+
+/* Background image */
+#backgroundImage {
+    -fx-background-color: transparent;
+    -fx-background-size: cover;
+}
+
+/* HBox general spacing */
+HBox {
+    -fx-spacing: 10;
+}
