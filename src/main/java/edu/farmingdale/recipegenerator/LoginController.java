@@ -200,7 +200,7 @@ public class LoginController {
             double screenHeight = screenBounds.getHeight();
 
             // Add the external CSS stylesheet
-            Scene scene = new Scene(root, screenWidth * 1, screenHeight * 0.95);
+            Scene scene = new Scene(root, screenWidth * 1, screenHeight * 0.98);
             scene.getStylesheets().add(getClass().getResource("/Styling/frosted-glass.css").toExternalForm());
 
             Stage newStage = new Stage();
