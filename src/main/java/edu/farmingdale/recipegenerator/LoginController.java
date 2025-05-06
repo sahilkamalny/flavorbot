@@ -187,8 +187,7 @@ public class LoginController {
 
     private void openMainWindow() {
         try {
-            Stage stage = (Stage) loginButton.getScene().getWindow();
-            stage.close();  // Close the login window
+
 
             // Load the main scene (your fridge management window)
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/farmingdale/recipegenerator/hello-view.fxml"));
@@ -207,6 +206,7 @@ public class LoginController {
             newStage.setScene(scene);
             newStage.setTitle("Flavor Bot");
             newStage.show();
+            ((Stage) loginButton.getScene().getWindow()).close();
 
         } catch (Exception e) {
             e.printStackTrace();
