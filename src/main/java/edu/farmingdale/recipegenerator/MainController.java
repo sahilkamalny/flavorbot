@@ -4,10 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -28,7 +25,8 @@ public class MainController {
     @FXML
     private TextField ingredientField;
     @FXML
-    private ImageView backimageView;
+    private TextArea recipeTextArea;
+
     @FXML
     private ImageView backgroundImage;
 
@@ -38,8 +36,12 @@ public class MainController {
     @FXML
     private StackPane stackPane;
 
+    private AzureDBConnector connector;
+
+
     @FXML
     public void initialize() {
+        connector = new AzureDBConnector();
         // Clear any existing items
         ingredientListView.getItems().clear();
 
@@ -88,13 +90,42 @@ public class MainController {
      */
     @FXML
     private void handleGenerateRecipe() throws Exception {
-        //OpenAI.getTextResponse("");
+
+        String preferences = connector.getUserPreferences(SessionManager.getInstance().getCurrentUser().getUserID());
+
+        StringBuilder ingredientsList = new StringBuilder();
+        for (String ingredient : ingredientListView.getItems()) {
+            ingredientsList.append(ingredient).append(", ");
+        }
+
+        if (ingredientsList.length() > 0) {
+            ingredientsList.setLength(ingredientsList.length() - 2); // Remove last comma
+        }
+
+        // Create the prompt for the OpenAI API (you can adjust this format as needed)
+        String prompt = "You are a professional chef. Using the following ingredients: "
+                + ingredientsList.toString() + ", and based on the user's preferences: "
+                + preferences + ", please generate a recipe. The recipe should include:\n"
+                + "The name of the dish (If it is possible)\n"
+                + "1. A list of ingredients.\n"
+                + "2. Clear, step-by-step instructions on how to prepare the recipe, with specific actions for each step.\n"
+                + "3. Cooking tips or suggestions where necessary.\n"
+                + "4. Serving suggestions to make the dish even better.\n"
+                + "Make sure to format the recipe with each step clearly numbered and include any necessary cooking times.";
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Generate Recipe");
         alert.setHeaderText(null);
-        alert.setContentText("Generating recipe for: " + ingredientListView.getItems());
+        alert.setContentText("Generating recipe.....");
         alert.showAndWait();
+
+        // Call OpenAI's API to get the recipe
+        String recipe = OpenAI.getTextResponse(prompt, preferences);
+
+        recipeTextArea.setStyle("-fx-font-weight: bold; -fx-font-size: 15px; -fx-text-fill: black;");
+
+        recipeTextArea.setText(recipe);
+
     }
 
     /**
