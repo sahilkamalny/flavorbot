@@ -9,7 +9,8 @@
 .label#titleLabel {
     -fx-font-size: 48px;
     -fx-font-weight: bold;
-    -fx-text-fill: #1e3a5f; /* Vibrant orange */
+    /*-fx-text-fill: #1e3a5f;*/
+    -fx-text-fill: #FFFFFF;
     -fx-padding: 10;
 }
 .combo-box .text {
@@ -18,7 +19,7 @@
 /* ComboBox styling */
 .combo-box {
     -fx-background-color: #1e3a5f; /* Dark blue for ComboBox background */
-    -fx-text-fill: #FF5733; /* Orange text for ComboBox */
+    -fx-text-fill: #f6f4f4; /* Orange text for ComboBox */
     -fx-border-color: #888888;
     -fx-border-radius: 5;
     -fx-background-radius: 5;
@@ -29,11 +30,21 @@
 .combo-box:hover {
     -fx-border-color: #FF5733; /* Matching hover color to vibrant orange */
 }
+.combo-box .cell {
+    -fx-text-fill: #e6e6e6;       /*!* Text color *! ***  This changes the text on the ComoBox's default text *** */
+    -fx-font-size: 14px;          /* Font size */
+    -fx-font-weight: bold;        /* Font weight */
+    -fx-background-color: #1e3a5f;
+}
+
+.combo-box .label {
+    -fx-text-fill: #ffffff;       /* Ensures text inside button area is styled */
+}
 
 /* TextArea styling */
 .text-area {
     -fx-background-color: #1e3a5f; /* Dark blue for TextArea background */
-    -fx-text-fill: #FF5733; /* Orange text for TextArea */
+    -fx-text-fill: #1e0d0c; /* Orange text for TextArea */
     -fx-border-color: #888888;
     -fx-border-radius: 5;
     -fx-background-radius: 5;

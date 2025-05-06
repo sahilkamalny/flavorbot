@@ -252,4 +252,82 @@ public class AzureDBConnector {
             return false;
         }
     }
+
+    public List<String> getFridgeItems(int userId) {
+        String sql = "SELECT name FROM fridge_configs WHERE user_id = ?";
+        List<String> items = new ArrayList<>();
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    items.add(rs.getString("name"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return items;
+    }
+
+    public boolean addFridgeItem(int userId, String name) {
+
+        String sql = "INSERT INTO fridge_configs (user_id, name, created_at) VALUES (?, ?, ?)";
+        try (Connection conn = getConnection();
+
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, userId);
+            ps.setString(2, name);
+            ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+
+            int rowsAffected = ps.executeUpdate();
+
+            return rowsAffected > 0; // true if it worked
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean deleteFridgeItemByName(int userId, String name) {
+        String sql = "DELETE FROM fridge_configs WHERE user_id = ? AND name = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, userId);
+            ps.setString(2, name);
+
+            int rowsAffected = ps.executeUpdate();
+
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean updateFridgeItemByName(int userId, String oldName, String newName) {
+        String sql = "UPDATE fridge_configs SET name = ?, created_at = ? WHERE user_id = ? AND name = ?";
+        Timestamp newCreatedAt = new Timestamp(System.currentTimeMillis());
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, newName);
+            ps.setTimestamp(2, newCreatedAt);
+            ps.setInt(3, userId);
+            ps.setString(4, oldName);
+
+            int rowsAffected = ps.executeUpdate();
+
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

@@ -15,10 +15,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.TextFlow?>
 
-<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.farmingdale.recipegenerator.MainController">
+<StackPane fx:id="stackPane" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.farmingdale.recipegenerator.MainController">
 
     <!-- Background image -->
-    <ImageView fx:id="backgroundImage" fitHeight="1080" fitWidth="1920" preserveRatio="false" StackPane.alignment="CENTER" />
+    <ImageView fx:id="backgroundImage" fitHeight="1080.0" fitWidth="1920" smooth="false" />
 
 
     <!-- Frosted Glass Content Pane -->
@@ -26,7 +26,10 @@
         <!-- Top -->
         <top>
             <HBox fx:id="topBar" prefHeight="0.0" prefWidth="1984.0" spacing="10" styleClass="hbox-top">
-                <Label prefHeight="25.0" prefWidth="305.0" styleClass="label-title" text="FlavorBot" />
+                <Label prefHeight="25.0" prefWidth="486.0" styleClass="label-title" text="FlavorBot">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin></Label>
                 <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="1667.0">
                     <children>
                         <Button fx:id="preferencesButton" styleClass="preferences-button" text="Preferences" />
@@ -40,18 +43,28 @@
 
         <!-- Center: SplitPane for left (Ingredients) and right (Recipe Output) -->
         <center>
-            <SplitPane dividerPositions="0.5">
+            <SplitPane dividerPositions="0.4619395203336809">
                 <!-- Left side: Ingredients input and list -->
                 <items>
                     <Pane prefHeight="1008.0" prefWidth="1052.0">
-                        <VBox prefHeight="691.0" prefWidth="714.0" spacing="10" style="-fx-padding: 10;">
-                            <HBox spacing="10">
-                                <TextField fx:id="ingredientField" prefHeight="50" prefWidth="600" promptText="Enter ingredient..." styleClass="text-field" HBox.hgrow="ALWAYS" />
-                                <Button fx:id="addIngredientButton" styleClass="button" text="Add" />
+                        <VBox prefHeight="691.0" prefWidth="887.0" spacing="10" style="-fx-padding: 10;">
+                            <HBox prefHeight="25.0" prefWidth="859.0" spacing="10">
+                                <TextField fx:id="ingredientField" prefHeight="25.0" prefWidth="315.0" promptText="Enter ingredient..." styleClass="text-field" HBox.hgrow="ALWAYS" />
+                                <Button fx:id="addIngredientButton" prefHeight="25.0" prefWidth="180.0" styleClass="button" text="Add">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin></Button>
+                        <Button fx:id="showFridgeButton" mnemonicParsing="false" onAction="#showFridge" prefHeight="25.0" prefWidth="180.0" text="Show Fridge" />
+                        <Button fx:id="openFridgeButton" mnemonicParsing="false" onAction="#openFridge" prefHeight="25.0" prefWidth="180.0" text="Open Fridge">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Button>
                             </HBox>
-                            <AnchorPane prefHeight="729.0" prefWidth="694.0">
+                            <AnchorPane prefHeight="636.0" prefWidth="742.0">
                                 <children>
-                                    <ListView fx:id="ingredientListView" maxHeight="581.0" prefHeight="580.0" prefWidth="647.0" styleClass="ingredient-list-view" />
+                                    <ListView fx:id="ingredientListView" maxHeight="760.0" prefHeight="760.0" prefWidth="375.0" styleClass="ingredient-list-view" />
+                           <ListView fx:id="fridgeView" layoutX="376.0" layoutY="1.0" prefHeight="760.0" prefWidth="375.0" />
                                 </children>
                             </AnchorPane>
                         </VBox>
@@ -59,8 +72,8 @@
 
                     <!-- Right side: Transparent text area for the recipe -->
                     <Pane>
-                        <VBox layoutX="2.0" layoutY="28.0" prefHeight="980.0" prefWidth="922.0" spacing="10" style="-fx-padding: 10;">
-                            <TextFlow fx:id="recipeTextArea" prefHeight="960.0" prefWidth="978.0" stylesheets="@../../../Styling/style.css" />
+                        <VBox layoutX="2.0" prefHeight="1008.0" prefWidth="977.0" spacing="10" style="-fx-padding: 10;">
+                            <TextFlow fx:id="recipeTextArea" prefHeight="988.0" prefWidth="965.0" stylesheets="@../../../Styling/style.css" />
                             <opaqueInsets>
                                 <Insets />
                             </opaqueInsets>
@@ -73,7 +86,7 @@
         <!-- Bottom -->
         <bottom>
             <HBox alignment="CENTER_RIGHT" spacing="10" style="-fx-padding: 10;">
-                <Button fx:id="generateButton" styleClass="button" text="Generate Recipe" />
+                <Button fx:id="generateButton" onAction="#handleGenerateRecipe" styleClass="button" text="Generate Recipe" />
             </HBox>
         </bottom>
     </BorderPane>

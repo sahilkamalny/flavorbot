@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="706.0" prefWidth="538.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.farmingdale.recipegenerator.FridgeController">
+   <children>
+      <ImageView fx:id="imageView" fitHeight="706.0" fitWidth="445.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../../images/fridge.png" />
+         </image>
+      </ImageView>
+      <Text fx:id="welcomeLabel" fill="WHITE" layoutX="52.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to your Fridge" textAlignment="CENTER" wrappingWidth="340.00341796875">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Text>
+      <Button fx:id="questionButton" layoutX="483.0" layoutY="644.0" mnemonicParsing="false" onAction="#questionButton" />
+      <Button fx:id="addButton" layoutX="464.0" layoutY="92.0" mnemonicParsing="false" onAction="#addButton" prefHeight="25.0" prefWidth="53.0" text="Add" />
+      <TextField fx:id="textField" layoutX="448.0" layoutY="36.0" prefHeight="25.0" prefWidth="85.0" promptText="item to add" />
+      <Button fx:id="deleteButton" layoutX="465.0" layoutY="140.0" mnemonicParsing="false" onAction="#deleteButton" text="Delete" />
+      <Button fx:id="modifyButton" layoutX="464.0" layoutY="189.0" mnemonicParsing="false" onAction="#modifyButton" text="Modify" />
+      <ListView fx:id="listView" layoutX="64.0" layoutY="69.0" prefHeight="552.0" prefWidth="356.0" />
+   </children>
+</AnchorPane>

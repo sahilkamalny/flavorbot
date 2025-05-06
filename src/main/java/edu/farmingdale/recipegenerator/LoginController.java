@@ -139,7 +139,7 @@ public class LoginController {
         // 3) Check authentication result
         if (authenticated) {
             // Success: proceed to preferences
-            System.out.println(SessionManager.getInstance().getCurrentUser().getPreferencesJson());
+            //System.out.println(SessionManager.getInstance().getCurrentUser().getPreferencesJson());
             openMainWindow();
         } else {
             // Failure: inform the user
