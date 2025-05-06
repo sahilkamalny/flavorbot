@@ -1,47 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="1080.0" prefWidth="1920.0"
-            style="-fx-background-color: #000000; -fx-padding: 10;"
-            xmlns="http://javafx.com/javafx/23.0.1"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="edu.farmingdale.recipegenerator.PreferencesController"
-            stylesheets="@../../../Styling/preference.css">
+<AnchorPane fx:id="anchorPane" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #000000; -fx-padding: 10;" stylesheets="@../../../Styling/preference.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.farmingdale.recipegenerator.PreferencesController">
 
     <!-- Background Image -->
-    <ImageView fx:id="backgroundImageView"
-               AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
-               AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+    <ImageView fx:id="backgroundImageView" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
 
     <!-- Top Section: Title and Description -->
-    <VBox spacing="10.0" alignment="CENTER"
-          AnchorPane.topAnchor="20.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
+    <VBox alignment="CENTER" spacing="10.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="20.0">
         <children>
-            <Label fx:id="titleLabel" text="Manage Your Preferences"
-                   wrapText="true" />
-            <Label text="Set your dietary, cooking, and food preferences so we can generate better recipes tailored to you."
-                   wrapText="true" maxWidth="1000.0" />
-            <Separator style="-fx-background-color: white;" maxWidth="1000.0"/>
+            <Label fx:id="titleLabel" text="Manage Your Preferences" wrapText="true" />
+            <Label maxWidth="1000.0" text="Set your dietary, cooking, and food preferences so we can generate better recipes tailored to you." wrapText="true" />
+            <Separator maxWidth="1000.0" style="-fx-background-color: white;" />
         </children>
     </VBox>
 
     <!-- Center Form Section -->
-    <HBox fx:id="hBoxholder" spacing="50.0"
-          AnchorPane.topAnchor="180.0" AnchorPane.leftAnchor="100.0"
-          AnchorPane.rightAnchor="100.0" AnchorPane.bottomAnchor="120.0"
-          alignment="CENTER" styleClass="hbox">
+    <HBox fx:id="hBoxholder" alignment="CENTER" spacing="50.0" styleClass="hbox" AnchorPane.bottomAnchor="120.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="180.0">
         <children>
 
             <!-- First Column Labels -->
-            <VBox spacing="20.0" maxWidth="300.0" styleClass="vbox">
+            <VBox maxWidth="300.0" spacing="20.0" styleClass="vbox">
                 <children>
-                    <Label text="Dietary Preferences:" styleClass="label"/>
+                    <Label styleClass="label" text="Dietary Preferences:" />
                     <Label text="Meal Type:" />
                     <Label text="Spice Level:" />
                     <Label text="Cooking Skills:" />
@@ -51,24 +38,21 @@
             </VBox>
 
             <!-- First Column Inputs -->
-            <VBox spacing="20.0" maxWidth="400.0" fillWidth="true" styleClass="vbox">
+            <VBox fillWidth="true" maxWidth="400.0" spacing="20.0" styleClass="vbox">
                 <children>
-                    <ComboBox fx:id="dietaryPreferencesComboBox" prefHeight="40.0" maxWidth="Infinity" styleClass="combo-box" />
-                    <ComboBox fx:id="mealTypeComboBox" prefHeight="40.0" maxWidth="Infinity" styleClass="combo-box" />
-                    <ComboBox fx:id="spiceLevelSlider" prefHeight="40.0" maxWidth="Infinity" styleClass="combo-box" />
-                    <ComboBox fx:id="skillsComboBox" prefHeight="40.0" maxWidth="Infinity" styleClass="combo-box" />
-                    <ComboBox fx:id="foodStyleComboBox" prefHeight="40.0" maxWidth="Infinity" styleClass="combo-box" />
-                    <TextArea fx:id="allergiesTextArea"
-                              promptText="E.g., Lactose, Gluten, Fish"
-                              wrapText="true" maxWidth="Infinity" prefHeight="100.0" opacity="0.9"
-                              styleClass="text-area">
+                    <ComboBox fx:id="dietaryPreferencesComboBox" maxWidth="Infinity" prefHeight="40.0" styleClass="combo-box" />
+                    <ComboBox fx:id="mealTypeComboBox" maxWidth="Infinity" prefHeight="40.0" styleClass="combo-box" />
+                    <ComboBox fx:id="spiceLevelSlider" maxWidth="Infinity" prefHeight="40.0" styleClass="combo-box" />
+                    <ComboBox fx:id="skillsComboBox" maxWidth="Infinity" prefHeight="40.0" styleClass="combo-box" />
+                    <ComboBox fx:id="foodStyleComboBox" maxWidth="Infinity" prefHeight="40.0" styleClass="combo-box" />
+                    <TextArea fx:id="allergiesTextArea" maxWidth="Infinity" opacity="0.9" prefHeight="100.0" promptText="E.g., Lactose, Gluten, Fish" styleClass="text-area" wrapText="true">
                         <font><Font size="15.0" /></font>
                     </TextArea>
                 </children>
             </VBox>
 
             <!-- Second Column Labels -->
-            <VBox spacing="220.0" maxWidth="300.0" styleClass="vbox">
+            <VBox maxWidth="300.0" spacing="220.0" styleClass="vbox">
                 <children>
                     <Label text="Portion Size:" />
                     <Label text="Number of Servings:" />
@@ -80,24 +64,21 @@
             </VBox>
 
             <!-- Second Column Inputs -->
-            <VBox spacing="20.0" maxWidth="400.0" fillWidth="true" styleClass="vbox">
+            <VBox fillWidth="true" maxWidth="400.0" spacing="20.0" styleClass="vbox">
                 <children>
-                    <ComboBox fx:id="portionSizeComboBox" prefHeight="40.0" maxWidth="Infinity" styleClass="combo-box" />
-                    <ComboBox fx:id="numServingComboBox" prefHeight="40.0" maxWidth="Infinity" styleClass="combo-box" />
-                    <ComboBox fx:id="cokingTimeComboBox" prefHeight="40.0" maxWidth="Infinity" styleClass="combo-box" />
-                    <ComboBox fx:id="flavorComboBox" prefHeight="40.0" maxWidth="Infinity" styleClass="combo-box" />
-                    <ComboBox fx:id="messComboBox" prefHeight="40.0" maxWidth="Infinity" styleClass="combo-box" />
-                    <TextArea fx:id="notesTextArea"
-                              promptText="E.g., Low calorie, High protein"
-                              wrapText="true" maxWidth="Infinity" prefHeight="100.0" opacity="0.9"
-                              styleClass="text-area">
+                    <ComboBox fx:id="portionSizeComboBox" maxWidth="Infinity" prefHeight="40.0" styleClass="combo-box" />
+                    <ComboBox fx:id="numServingComboBox" maxWidth="Infinity" prefHeight="40.0" styleClass="combo-box" />
+                    <ComboBox fx:id="cokingTimeComboBox" maxWidth="Infinity" prefHeight="40.0" styleClass="combo-box" />
+                    <ComboBox fx:id="flavorComboBox" maxWidth="Infinity" prefHeight="40.0" styleClass="combo-box" />
+                    <ComboBox fx:id="messComboBox" maxWidth="Infinity" prefHeight="40.0" styleClass="combo-box" />
+                    <TextArea fx:id="notesTextArea" maxWidth="Infinity" opacity="0.9" prefHeight="100.0" promptText="E.g., Low calorie, High protein" styleClass="text-area" wrapText="true">
                         <font><Font size="15.0" /></font>
                     </TextArea>
                 </children>
             </VBox>
         </children>
         <HBox.margin>
-            <Insets top="20" bottom="20"/>
+            <Insets bottom="20" top="20" />
         </HBox.margin>
         <cursor>
             <Cursor fx:constant="DEFAULT" />
@@ -105,9 +86,6 @@
     </HBox>
 
     <!-- Bottom Button -->
-    <Button fx:id="updateButton" text="Update Preferences"
-            onAction="#handleContinueButtonAction"
-            prefHeight="43.0" prefWidth="30.0"
-            AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0"/>
+    <Button fx:id="updateButton" onAction="#handleContinueButtonAction" prefHeight="43.0" prefWidth="30.0" text="Update Preferences" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" />
 
 </AnchorPane>
