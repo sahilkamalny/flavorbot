@@ -16,19 +16,23 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class MainController {
     @FXML
-    private ListView<String> ingredientListView;
+    private ListView<String> ingredientListView,fridgeView;
     @FXML
     private Button generateButton;
     @FXML
     private Button addIngredientButton;
     @FXML
-    private Button preferencesButton;
+    private Button preferencesButton,openFridgeButton,showFridgeButton;
     @FXML
     private TextField ingredientField;
+
 //    @FXML
 //    private TextArea recipeTextArea;
+
     @FXML
     private TextFlow recipeTextArea;
 
@@ -68,13 +72,7 @@ public class MainController {
         // Wire up button handlers
         addIngredientButton.setOnAction(e -> handleAddIngredient());
         preferencesButton.setOnAction(e -> openPreferencesWindow());
-        generateButton.setOnAction(e -> {
-            try {
-                handleGenerateRecipe();
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
-            }
-        });
+
     }
 
     /**
@@ -171,6 +169,26 @@ public class MainController {
             showAlert("Error", "Could not load preferences window.", Alert.AlertType.ERROR);
         }
     }
+    @FXML
+    private void openFridge() throws IOException {
+       Stage stage = new Stage();
+
+       FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/farmingdale/recipegenerator/fridge.fxml"));
+       Scene fridgeScene = new Scene(loader.load());
+       fridgeScene.getStylesheets().add(getClass().getResource("/Styling/fridge.css").toExternalForm());
+
+       stage.setScene(fridgeScene);
+       stage.setTitle("Fridge");
+       stage.show();
+
+    }
+
+    @FXML
+    private void showFridge() {
+
+
+    }
+
 
     /**
      * Generic alert helper.
