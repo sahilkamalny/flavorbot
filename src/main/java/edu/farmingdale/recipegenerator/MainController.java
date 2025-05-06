@@ -3,6 +3,7 @@ package edu.farmingdale.recipegenerator;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -149,21 +150,22 @@ public class MainController {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/edu/farmingdale/recipegenerator/preferences.fxml")
             );
+            Parent root = loader.load();
+
             // Get the screen bounds
             Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
             double screenWidth = screenBounds.getWidth();
             double screenHeight = screenBounds.getHeight();
 
-            // window size to a percentage of screen size
-            double windowWidth = screenWidth * 1;
-            double windowHeight = screenHeight * 0.98;
+            // Add the external CSS stylesheet
+            Scene scene = new Scene(root, screenWidth * 1, screenHeight * 0.98);
+            scene.getStylesheets().add(getClass().getResource("/Styling/preference.css").toExternalForm());
 
-            Scene scene = new Scene(loader.load(),windowWidth,windowHeight);
-            Stage prefStage = new Stage();
-            prefStage.setTitle("User Preferences");
-            prefStage.setScene(scene);
-//            prefStage.setMaximized(true);
-            prefStage.show();
+            Stage newStage = new Stage();
+            newStage.setScene(scene);
+            newStage.setTitle("Flavor Bot");
+            newStage.show();
+
         } catch (Exception e) {
             e.printStackTrace();
             showAlert("Error", "Could not load preferences window.", Alert.AlertType.ERROR);

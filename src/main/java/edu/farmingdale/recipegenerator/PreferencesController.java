@@ -118,7 +118,7 @@ public class PreferencesController {
 
         // 5) (Optional) load background image as before
         Image image = new Image(Objects.requireNonNull(
-                getClass().getResourceAsStream("/images/preferences.png")));
+                getClass().getResourceAsStream("/images/b6.png")));
 
         backgroundImageView.setImage(image);
 //        backgroundImageView.setPreserveRatio(true);
