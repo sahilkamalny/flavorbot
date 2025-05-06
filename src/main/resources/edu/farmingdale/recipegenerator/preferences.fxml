@@ -39,7 +39,7 @@
         <children>
 
             <!-- First Column Labels -->
-            <VBox spacing="30.0" maxWidth="300.0" styleClass="vbox">
+            <VBox spacing="20.0" maxWidth="300.0" styleClass="vbox">
                 <children>
                     <Label text="Dietary Preferences:" styleClass="label"/>
                     <Label text="Meal Type:" />
@@ -51,7 +51,7 @@
             </VBox>
 
             <!-- First Column Inputs -->
-            <VBox spacing="25.0" maxWidth="400.0" fillWidth="true" styleClass="vbox">
+            <VBox spacing="20.0" maxWidth="400.0" fillWidth="true" styleClass="vbox">
                 <children>
                     <ComboBox fx:id="dietaryPreferencesComboBox" prefHeight="40.0" maxWidth="Infinity" styleClass="combo-box" />
                     <ComboBox fx:id="mealTypeComboBox" prefHeight="40.0" maxWidth="Infinity" styleClass="combo-box" />
@@ -68,7 +68,7 @@
             </VBox>
 
             <!-- Second Column Labels -->
-            <VBox spacing="30.0" maxWidth="300.0" styleClass="vbox">
+            <VBox spacing="220.0" maxWidth="300.0" styleClass="vbox">
                 <children>
                     <Label text="Portion Size:" />
                     <Label text="Number of Servings:" />
@@ -80,7 +80,7 @@
             </VBox>
 
             <!-- Second Column Inputs -->
-            <VBox spacing="25.0" maxWidth="400.0" fillWidth="true" styleClass="vbox">
+            <VBox spacing="20.0" maxWidth="400.0" fillWidth="true" styleClass="vbox">
                 <children>
                     <ComboBox fx:id="portionSizeComboBox" prefHeight="40.0" maxWidth="Infinity" styleClass="combo-box" />
                     <ComboBox fx:id="numServingComboBox" prefHeight="40.0" maxWidth="Infinity" styleClass="combo-box" />
@@ -107,6 +107,7 @@
     <!-- Bottom Button -->
     <Button fx:id="updateButton" text="Update Preferences"
             onAction="#handleContinueButtonAction"
-            prefHeight="43.0" prefWidth="200.0"
-            AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="860.0"/>
+            prefHeight="43.0" prefWidth="30.0"
+            AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0"/>
+
 </AnchorPane>
