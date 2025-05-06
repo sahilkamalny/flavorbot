@@ -55,17 +55,26 @@
     -fx-padding: 8;
 }
 
-#hBoxholder{
-    /*-fx-background-color: #acc6f6;*/
-}
 
-#mainVbox{
+#hBoxholder{
     -fx-background-color: rgba(143, 214, 255, 0.65);
     -fx-border-radius: 35;
     -fx-background-radius: 35;
     -fx-alignment: center;
 
 }
+.combo-box {
+    fx-background-color: #ffffff;
+    -fx-border-color: #7dc8ff;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-font-size: 14px;
+    /*-fx-text-fill: black;*/
+    -fx-cursor: hand;
+    -fx-padding: 6 10;
+}
+
+
 /* Root background not needed here, handled by ImageView */
 
 .label {

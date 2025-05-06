@@ -116,8 +116,8 @@ public class MainController {
             double screenHeight = screenBounds.getHeight();
 
             // window size to a percentage of screen size
-            double windowWidth = screenWidth * 0.8; // 80% of screen width
-            double windowHeight = screenHeight * 0.95; // 80% of screen height
+            double windowWidth = screenWidth * 1;
+            double windowHeight = screenHeight * 0.98;
 
             Scene scene = new Scene(loader.load(),windowWidth,windowHeight);
             Stage prefStage = new Stage();

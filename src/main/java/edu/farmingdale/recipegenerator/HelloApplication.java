@@ -26,7 +26,7 @@ public class    HelloApplication extends Application {
 
         // Load FXML
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("login.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
+        Scene scene = new Scene(fxmlLoader.load(),screenWidth,screenHeight);
 
         // Apply external CSS
         //scene.getStylesheets().add(getClass().getResource("/Styling/style.css").toExternalForm());
