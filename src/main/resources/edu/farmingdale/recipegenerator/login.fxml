@@ -42,9 +42,9 @@
         - Your personal chef, powered by AI
     </Text>
 
-    <!-- Login Container Anchored to Right -->
+    <!-- Login Container Anchored to Left -->
     <AnchorPane layoutY="330" prefWidth="300.0" prefHeight="250.0"
-                AnchorPane.rightAnchor="40.0">
+                AnchorPane.leftAnchor="40.0">
 
         <Text layoutX="25.0" layoutY="0.0"
               style="-fx-font-family: 'Georgia'; -fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: #9B4DFF;">
