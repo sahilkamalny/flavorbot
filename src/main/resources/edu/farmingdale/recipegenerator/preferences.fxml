@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -13,103 +14,92 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #000000; -fx-padding: 10 10 10 10;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.farmingdale.recipegenerator.PreferencesController">
+<AnchorPane fx:id="anchorPane" prefHeight="1080.0" prefWidth="1920.0"
+            style="-fx-background-color: #000000; -fx-padding: 10;"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="edu.farmingdale.recipegenerator.PreferencesController"
+            stylesheets="@../../../Styling/preference.css"> <!-- Add the stylesheet reference here -->
 
     <!-- Background Image -->
-    <ImageView fx:id="backgroundImageView" fitHeight="1080.0" fitWidth="1920.0" layoutX="1.0" layoutY="5.0">
-        <image>
-            <Image url="@../../../images/preferences.png" />
-        </image></ImageView>
-    <Label layoutX="835.0" layoutY="30.0" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;" text="Select Your Preferences" />
-    <HBox fx:id="hBoxholder" alignment="CENTER" layoutX="320.0" layoutY="120.0" prefHeight="810.0" prefWidth="1300.0" stylesheets="@../../../Styling/style.css">
+    <ImageView fx:id="backgroundImageView" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+
+    <!-- Centered Title and Description -->
+    <VBox layoutX="460.0" layoutY="40.0" prefWidth="1000.0" alignment="CENTER">
+        <children>
+            <Label text="Manage Your Preferences" style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: white;" />
+            <Label text="Set your dietary, cooking, and food preferences so we can generate better recipes tailored to you."
+                   wrapText="true" prefWidth="800.0"
+                   style="-fx-font-size: 18px; -fx-text-fill: #cccccc; -fx-padding: 10 0 20 0;" />
+            <Separator prefWidth="800.0" style="-fx-background-color: white;" />
+        </children>
+    </VBox>
+
+    <!-- Preferences Form Section -->
+    <HBox fx:id="hBoxholder" layoutX="310.0" layoutY="180.0" prefHeight="810.0" prefWidth="1300.0" alignment="CENTER">
         <children>
             <VBox prefHeight="700.0" prefWidth="200.0" spacing="80.0">
                 <children>
                     <Label fx:id="dietaryPreferencesLabel" prefHeight="35.0" prefWidth="200.0" style="-fx-text-fill: white;" text="Dietary Preferences:" />
                     <Label fx:id="mealTypeLabel" prefHeight="35.0" prefWidth="200.0" style="-fx-text-fill: white;" text="Meal Type:" />
                     <Label fx:id="spiceLevelLabel" prefHeight="35.0" prefWidth="200.0" style="-fx-text-fill: white;" text="Spice Level:" />
-                    <Label fx:id="skillsLabel" prefHeight="35.0" prefWidth="200.0" style="-fx-text-fill: white;" text="Cooking Skills: " />
-                    <Label fx:id="foodStyleLabel" prefHeight="35.0" prefWidth="200.0" style="-fx-text-fill: white;" text="Food Style: " />
-                    <Label fx:id="allergiesLabel" prefHeight="35.0" prefWidth="200.0" style="-fx-text-fill: white;" text="Food Allergies: " />
+                    <Label fx:id="skillsLabel" prefHeight="35.0" prefWidth="200.0" style="-fx-text-fill: white;" text="Cooking Skills:" />
+                    <Label fx:id="foodStyleLabel" prefHeight="35.0" prefWidth="200.0" style="-fx-text-fill: white;" text="Food Style:" />
+                    <Label fx:id="allergiesLabel" prefHeight="35.0" prefWidth="200.0" style="-fx-text-fill: white;" text="Food Allergies:" />
                 </children>
-                <opaqueInsets>
-                    <Insets />
-                </opaqueInsets>
-                <HBox.margin>
-                    <Insets top="20.0" />
-                </HBox.margin>
+                <HBox.margin><Insets top="20.0" /></HBox.margin>
             </VBox>
+
             <VBox prefHeight="700.0" prefWidth="256.0" spacing="70.0">
                 <children>
                     <ComboBox fx:id="dietaryPreferencesComboBox" opacity="0.8" prefHeight="35.0" prefWidth="130.0" />
-                    <ComboBox fx:id="mealTypeComboBox" opacity="0.8" prefHeight="35.0" prefWidth="130.0">
-                        <VBox.margin>
-                            <Insets />
-                        </VBox.margin>
-                    </ComboBox>
+                    <ComboBox fx:id="mealTypeComboBox" opacity="0.8" prefHeight="35.0" prefWidth="130.0" />
                     <ComboBox fx:id="spiceLevelSlider" opacity="0.8" prefHeight="35.0" prefWidth="130.0" />
                     <ComboBox fx:id="skillsComboBox" opacity="0.8" prefHeight="35.0" prefWidth="130.0" />
                     <ComboBox fx:id="foodStyleComboBox" nodeOrientation="LEFT_TO_RIGHT" opacity="0.8" prefHeight="35.0" prefWidth="130.0" />
                     <TextArea fx:id="allergiesTextArea" opacity="0.85" prefHeight="103.0" prefWidth="220.0" promptText="Eg. 1. Lactose  2. Gluten  3. Fish">
-                        <padding>
-                            <Insets top="30.0" />
-                        </padding>
-                        <font>
-                            <Font size="15.0" />
-                        </font>
+                        <padding><Insets top="30.0" /></padding>
+                        <font><Font size="15.0" /></font>
                     </TextArea>
                 </children>
-                <HBox.margin>
-                    <Insets top="15.0" />
-                </HBox.margin>
+                <HBox.margin><Insets top="15.0" /></HBox.margin>
             </VBox>
+
             <VBox prefHeight="700.0" prefWidth="293.0" />
+
             <VBox prefHeight="700.0" prefWidth="200.0" spacing="80.0">
                 <children>
-                    <Label fx:id="portionSizeLabel" prefHeight="35.0" prefWidth="200.0" style="-fx-text-fill: white;" text="Portion Size: " />
-                    <Label fx:id="numServingLabel" prefHeight="35.0" prefWidth="200.0" style="-fx-text-fill: white;" text="Number of Servings: " />
-                    <Label fx:id="cokingTimeLabel" prefHeight="35.0" prefWidth="200.0" style="-fx-text-fill: white;" text="Cooking Time: " />
+                    <Label fx:id="portionSizeLabel" prefHeight="35.0" prefWidth="200.0" style="-fx-text-fill: white;" text="Portion Size:" />
+                    <Label fx:id="numServingLabel" prefHeight="35.0" prefWidth="200.0" style="-fx-text-fill: white;" text="Number of Servings:" />
+                    <Label fx:id="cokingTimeLabel" prefHeight="35.0" prefWidth="200.0" style="-fx-text-fill: white;" text="Cooking Time:" />
                     <Label fx:id="flavorLabel" prefHeight="35.0" prefWidth="200.0" style="-fx-text-fill: white;" text="Flavor:" />
-                    <Label fx:id="messLabel" prefHeight="35.0" prefWidth="200.0" style="-fx-text-fill: white;" text="Kitchen Messiness: " />
+                    <Label fx:id="messLabel" prefHeight="35.0" prefWidth="200.0" style="-fx-text-fill: white;" text="Kitchen Messiness:" />
                     <Label fx:id="notesLabel" prefHeight="35.0" prefWidth="200.0" style="-fx-text-fill: white;" text="Additional Notes:" />
                 </children>
-                <HBox.margin>
-                    <Insets top="20.0" />
-                </HBox.margin>
+                <HBox.margin><Insets top="20.0" /></HBox.margin>
             </VBox>
+
             <VBox prefHeight="700.0" prefWidth="256.0" spacing="70.0">
                 <children>
                     <ComboBox fx:id="portionSizeComboBox" opacity="0.8" prefHeight="35.0" prefWidth="130.0" />
-                    <ComboBox fx:id="numServingComboBox" opacity="0.8" prefHeight="35.0" prefWidth="130.0">
-                        <VBox.margin>
-                            <Insets />
-                        </VBox.margin>
-                    </ComboBox>
+                    <ComboBox fx:id="numServingComboBox" opacity="0.8" prefHeight="35.0" prefWidth="130.0" />
                     <ComboBox fx:id="cokingTimeComboBox" opacity="0.8" prefHeight="35.0" prefWidth="130.0" />
                     <ComboBox fx:id="flavorComboBox" opacity="0.8" prefHeight="35.0" prefWidth="130.0" />
                     <ComboBox fx:id="messComboBox" nodeOrientation="LEFT_TO_RIGHT" opacity="0.8" prefHeight="35.0" prefWidth="130.0" />
-                    <TextArea fx:id="notesTextArea" opacity="0.85" prefHeight="103.0" prefWidth="256.0" promptText="Eg.  Fitness, Low Calories, High protein">
-                        <padding>
-                            <Insets top="30.0" />
-                        </padding>
+                    <TextArea fx:id="notesTextArea" opacity="0.85" prefHeight="103.0" prefWidth="256.0" promptText="Eg. Fitness, Low Calories, High Protein">
+                        <padding><Insets top="30.0" /></padding>
                     </TextArea>
                 </children>
-                <HBox.margin>
-                    <Insets top="15.0" />
-                </HBox.margin>
+                <HBox.margin><Insets top="15.0" /></HBox.margin>
             </VBox>
         </children>
-        <opaqueInsets>
-            <Insets />
-        </opaqueInsets>
-        <cursor>
-            <Cursor fx:constant="DEFAULT" />
-        </cursor>
+        <cursor><Cursor fx:constant="DEFAULT" /></cursor>
     </HBox>
 
-    <Button fx:id="updateButton" layoutX="905.0" layoutY="830.0" onAction="#handleContinueButtonAction" prefHeight="43.0" prefWidth="175.0" style="-fx-font-size: 16px; -fx-background-color: #ffffff; -fx-text-fill: black; -fx-background-radius: 20;" text="Update Preferences">
-        <font>
-            <Font size="10.0" />
-        </font>
-    </Button>
+    <!-- Update Button -->
+    <Button fx:id="updateButton" layoutX="875.0" layoutY="1010.0"
+            onAction="#handleContinueButtonAction"
+            prefHeight="43.0" prefWidth="200.0"
+            style="-fx-font-size: 16px; -fx-background-color: #ffffff; -fx-text-fill: black; -fx-background-radius: 20;"
+            text="Update Preferences" />
 </AnchorPane>

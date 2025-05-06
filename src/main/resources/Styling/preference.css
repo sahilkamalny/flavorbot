@@ -1,0 +1,82 @@
+/* Base label style */
+.label {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+/* Title Label */
+.label#titleLabel {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FF5733; /* Vibrant orange */
+    -fx-padding: 10;
+}
+
+/* ComboBox styling */
+.combo-box {
+    -fx-background-color: #2c2c2c;
+    -fx-text-fill: #ffffff;
+    -fx-border-color: #888888;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-font-size: 14px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 5, 0.3, 1, 1);
+}
+
+.combo-box:hover {
+    -fx-border-color: #FF5733; /* Matching hover color to vibrant orange */
+}
+
+/* TextArea styling */
+.text-area {
+    -fx-background-color: #2c2c2c;
+    -fx-text-fill: #ffffff;
+    -fx-border-color: #888888;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-font-size: 14px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 5, 0.3, 1, 1);
+}
+
+.text-area:focused {
+    -fx-border-color: #FF5733; /* Vibrant orange */
+}
+
+/* Update Button */
+#updateButton {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-background-color: #FF5733; /* FlavorBot orange */
+    -fx-text-fill: white;
+    -fx-background-radius: 25px;
+    -fx-padding: 10px 20px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 5, 0.3, 1, 1);
+}
+
+#updateButton:hover {
+    -fx-background-color: #ff784e; /* Lighter orange for hover */
+}
+
+/* VBox and HBox styling for spacing */
+.vbox, .hbox {
+    -fx-spacing: 10px;
+}
+
+/* Background image view: optional enhancement */
+#backgroundImageView {
+    -fx-opacity: 0.3;
+    -fx-background-size: cover;
+    -fx-background-position: center;
+}
+
+/* Tooltip styling */
+.tooltip {
+    -fx-background-color: #1c1c1c;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 13px;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 5, 0.3, 1, 1);
+}
