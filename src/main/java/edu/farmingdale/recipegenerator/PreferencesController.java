@@ -32,12 +32,17 @@ public class PreferencesController {
     private ComboBox<String> foodStyleComboBox;
     @FXML
     private ComboBox<String> dietaryPreferencesComboBox;
-//    @FXML
-//    private Slider spiceLevelSlider;
     @FXML
     private ComboBox<String> mealTypeComboBox;
     @FXML
-    private ComboBox<Integer> spiceLevelSlider;
+    private TextArea allergiesTextArea,notesTextArea;
+
+    @FXML
+    private ComboBox<String> skillsComboBox,portionSizeComboBox,cokingTimeComboBox,flavorComboBox,messComboBox;
+    @FXML
+    private Label dietaryPreferencesLabel,mealTypeLabel,spiceLevelLabel,skillsLabel,foodStyleLabel,allergiesLabel,portionSizeLabel,numServingLabel,cokingTimeLabel,flavorLabel,messLabel,notesLabel;
+    @FXML
+    private ComboBox<Integer> spiceLevelSlider,numServingComboBox;
 
     @FXML
     private TextField ingredientsAvailableField;
@@ -74,10 +79,17 @@ public class PreferencesController {
         JSONObject prefs = new JSONObject(json);
 
         // 2) Populate your controls
-        foodStyleComboBox.getItems().addAll("Italian", "Chinese", "Mexican", "Indian", "American");
-        dietaryPreferencesComboBox.getItems().addAll("Vegetarian", "Vegan", "Gluten-Free", "None");
-        mealTypeComboBox.getItems().addAll("Breakfast", "Lunch", "Dinner", "Snack");
-        spiceLevelSlider.getItems().addAll(1,2,3,4,5,6,7,8,9,10);
+        foodStyleComboBox.getItems().addAll("None","Italian", "Chinese", "Mexican", "Indian", "American","Japanese");
+        dietaryPreferencesComboBox.getItems().addAll("None","Vegetarian", "Vegan", "Gluten-Free"," Dairy-Free");
+        mealTypeComboBox.getItems().addAll("None","Breakfast", "Lunch", "Dinner", "Snack");
+        spiceLevelSlider.getItems().addAll(0,1,2,3,4,5,6,7,8,9,10);
+        skillsComboBox.getItems().addAll("None","Beginner","Intermediate","Advanced");
+        portionSizeComboBox.getItems().addAll("None","Small","Medium","Large");
+        numServingComboBox.getItems().addAll(1,2,3,4,5,6,7,8,9,10);
+        cokingTimeComboBox.getItems().addAll("None","15min","30min","1hour","2hours");
+        flavorComboBox.getItems().addAll("None","sweet","salty","sour","bitter","umami");
+        messComboBox.getItems().addAll("None","Minimal","Medium","Doesn’t matter");
+
 
 //        spiceLevelSlider.setMin(0);
 //        spiceLevelSlider.setMax(10);
@@ -87,10 +99,10 @@ public class PreferencesController {
 //        spiceLevelSlider.setSnapToTicks(true);
 
         // 3) Read out the saved values
-        String savedFoodStyle = prefs.optString("foodStyle", null);
-        String savedDietaryPreference = prefs.optString("dietaryPreference", null);
-        String savedMealType = prefs.optString("mealType", null);
-        int savedSpiceLevel = prefs.optInt("spiceLevel", 5);
+        String savedFoodStyle = prefs.optString("foodStyle", "None");
+        String savedDietaryPreference = prefs.optString("dietaryPreference", "None");
+        String savedMealType = prefs.optString("mealType", "None");
+        int savedSpiceLevel = prefs.optInt("spiceLevel", 0);
 
         // 4) Apply them to the UI
         if (savedFoodStyle != null) {
@@ -142,22 +154,45 @@ public class PreferencesController {
 
     @FXML
     private void handleContinueButtonAction() {
-        // Retrieve user selections
-        String selectedFoodStyle = foodStyleComboBox.getValue();
-        String selectedDietaryPreference = dietaryPreferencesComboBox.getValue();
-        String selectedMealType = mealTypeComboBox.getValue();
-        int spiceLevel = (int) spiceLevelSlider.getValue();
+        // Retrieve user selections, defaulting to empty string or safe value if null
+        String selectedFoodStyle = foodStyleComboBox.getValue() != null ? foodStyleComboBox.getValue() : "";
+        String selectedDietaryPreference = dietaryPreferencesComboBox.getValue() != null ? dietaryPreferencesComboBox.getValue() : "";
+        String selectedMealType = mealTypeComboBox.getValue() != null ? mealTypeComboBox.getValue() : "";
+        int spiceLevel = spiceLevelSlider.getValue() != null ? spiceLevelSlider.getValue() : 0;
+        String selectedSkills = skillsComboBox.getValue() != null ? skillsComboBox.getValue() : "";
+        String portionSelected = portionSizeComboBox.getValue() != null ? portionSizeComboBox.getValue() : "";
+        String cookingTimeSelected = cokingTimeComboBox.getValue() != null ? cokingTimeComboBox.getValue() : "";
+        String flavorSelected = flavorComboBox.getValue() != null ? flavorComboBox.getValue() : "";
+        String messSelected = messComboBox.getValue() != null ? messComboBox.getValue() : "";
+        int numberOfServingsSelected = numServingComboBox.getValue() != null ? numServingComboBox.getValue() : 1;
+        String allergiesSelected = allergiesTextArea.getText() != null ? allergiesTextArea.getText() : "";
+        String notesSelected = notesTextArea.getText() != null ? notesTextArea.getText() : "";
 
-        // Validate selections
+         //Validate selections
         if (selectedFoodStyle == null || selectedDietaryPreference == null || selectedMealType == null) {
             showAlert("Missing Selection", "Please select food style, dietary preference, and meal type.");
             return;
         }
 
-        // Build JSON with only required preferences
+        // Build full JSON with all preferences
         String json = String.format(
-                "{\"foodStyle\":\"%s\",\"dietaryPreference\":\"%s\",\"mealType\":\"%s\",\"spiceLevel\":%d}",
-                selectedFoodStyle, selectedDietaryPreference, selectedMealType, spiceLevel
+                "{" +
+                        "\"foodStyle\":\"%s\"," +
+                        "\"dietaryPreference\":\"%s\"," +
+                        "\"mealType\":\"%s\"," +
+                        "\"spiceLevel\":%d," +
+                        "\"cookingSkill\":\"%s\"," +
+                        "\"portionSize\":\"%s\"," +
+                        "\"cookingTime\":\"%s\"," +
+                        "\"flavorProfile\":\"%s\"," +
+                        "\"cleanupEffort\":\"%s\"," +
+                        "\"numberOfServings\":%d," +
+                        "\"allergies\":\"%s\"," +
+                        "\"additionalNotes\":\"%s\"" +
+                        "}",
+                selectedFoodStyle, selectedDietaryPreference, selectedMealType, spiceLevel,
+                selectedSkills, portionSelected, cookingTimeSelected, flavorSelected,
+                messSelected, numberOfServingsSelected, allergiesSelected, notesSelected
         );
 
         // Update preferences in database
@@ -169,7 +204,6 @@ public class PreferencesController {
         // Open next window
         openMainWindow();
     }
-
     private void openMainWindow() {
         try {
             Stage stage = (Stage) mealTypeComboBox.getScene().getWindow();
@@ -185,7 +219,7 @@ public class PreferencesController {
             double screenHeight = screenBounds.getHeight();
 
             // Add the external CSS stylesheet
-            Scene scene = new Scene(root, screenWidth * 1, screenHeight * 0.95);
+            Scene scene = new Scene(root, screenWidth * 1, screenHeight * 0.98);
             scene.getStylesheets().add(getClass().getResource("/Styling/frosted-glass.css").toExternalForm());
 
             Stage newStage = new Stage();
@@ -205,14 +239,6 @@ public class PreferencesController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
-    }
-
-    //This method will change the text on the updateButton Button if the screen is loaded from the sigUp page
-    //If user is logged in it will save "Update" instead of "Save"
-    public void setContextFromSignup(boolean fromSignup) {
-        if (fromSignup) {
-            updateButton.setText("Save Preferences");
-        }
     }
 
     // Inner Ingredient class
