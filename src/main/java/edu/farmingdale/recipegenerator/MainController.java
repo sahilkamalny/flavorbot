@@ -10,6 +10,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -24,8 +26,10 @@ public class MainController {
     private Button preferencesButton;
     @FXML
     private TextField ingredientField;
+//    @FXML
+//    private TextArea recipeTextArea;
     @FXML
-    private TextArea recipeTextArea;
+    private TextFlow recipeTextArea;
 
     @FXML
     private ImageView backgroundImage;
@@ -113,18 +117,22 @@ public class MainController {
                 + "4. Serving suggestions to make the dish even better.\n"
                 + "Make sure to format the recipe with each step clearly numbered and include any necessary cooking times.";
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Generate Recipe");
-        alert.setHeaderText(null);
-        alert.setContentText("Generating recipe.....");
-        alert.showAndWait();
+
+//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//        alert.setTitle("FlavorBot is thinking a recipe");
+//        alert.setHeaderText(null);
+//        alert.setContentText("Generating recipe.....");
+//        alert.show();
 
         // Call OpenAI's API to get the recipe
         String recipe = OpenAI.getTextResponse(prompt, preferences);
 
-        recipeTextArea.setStyle("-fx-font-weight: bold; -fx-font-size: 15px; -fx-text-fill: black;");
+//        recipeTextArea.setText(recipe);
 
-        recipeTextArea.setText(recipe);
+        recipeTextArea.getChildren().clear();
+        Text recipeText = new Text(recipe); // 'recipe' is your generated text
+
+        recipeTextArea.getChildren().add(recipeText);
 
     }
 
