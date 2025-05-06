@@ -126,6 +126,16 @@
     -fx-padding: 0;
     -fx-text-fill: white;
 }
+#recipeTextArea {
+    -fx-background-color: transparent;
+
+}
+
+#recipeTextArea Text {
+    -fx-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
 
 .list-cell {
     -fx-background-color: rgba(0, 0, 0, 0.3);

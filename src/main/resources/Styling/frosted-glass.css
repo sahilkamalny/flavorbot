@@ -73,7 +73,9 @@
 /* TextArea transparent */
 .recipe-text-area {
     -fx-background-color: transparent !important;
-    -fx-text-fill: white !important;
+    -fx-text-fill: black !important;
+    -fx-font-weight: bold !important;
+    -fx-font-size: 15px !important;
     -fx-border-color: transparent !important;
     -fx-background-insets: 0 !important;
 }
