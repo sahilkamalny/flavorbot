@@ -72,16 +72,17 @@ public class PreferencesController {
 
     @FXML
     public void initialize() {
-        // 1) Parse the prefs JSON as an object, not an array
+        // 1) Parse the prefs JSON
         String json = SessionManager.getInstance()
                 .getCurrentUser()
                 .getPreferencesJson();
         JSONObject prefs = new JSONObject(json);
 
         // 2) Populate your controls
-        foodStyleComboBox.getItems().addAll("None","Italian", "Chinese", "Mexican", "Indian", "American","Japanese");
-        dietaryPreferencesComboBox.getItems().addAll("None","Vegetarian", "Vegan", "Gluten-Free"," Dairy-Free");
-        mealTypeComboBox.getItems().addAll("None","Breakfast", "Lunch", "Dinner", "Snack");
+        foodStyleComboBox.getItems().addAll("None","Italian","Chinese","Mexican","Indian","American","Japanese");
+        dietaryPreferencesComboBox.getItems().addAll("None","Vegetarian","Vegan","Gluten-Free","Dairy-Free");
+        mealTypeComboBox.getItems().addAll("None","Breakfast","Lunch","Dinner","Snack");
+        // Assuming spiceLevelSlider is actually a ComboBox<Integer>—otherwise use a Slider.setValue(...)
         spiceLevelSlider.getItems().addAll(0,1,2,3,4,5,6,7,8,9,10);
         skillsComboBox.getItems().addAll("None","Beginner","Intermediate","Advanced");
         portionSizeComboBox.getItems().addAll("None","Small","Medium","Large");
@@ -90,67 +91,45 @@ public class PreferencesController {
         flavorComboBox.getItems().addAll("None","sweet","salty","sour","bitter","umami");
         messComboBox.getItems().addAll("None","Minimal","Medium","Doesn’t matter");
 
-
-//        spiceLevelSlider.setMin(0);
-//        spiceLevelSlider.setMax(10);
-//        spiceLevelSlider.setShowTickLabels(true);
-//        spiceLevelSlider.setShowTickMarks(true);
-//        spiceLevelSlider.setMajorTickUnit(1);
-//        spiceLevelSlider.setSnapToTicks(true);
-
-        // 3) Read out the saved values
-        String savedFoodStyle = prefs.optString("foodStyle", "None");
-        String savedDietaryPreference = prefs.optString("dietaryPreference", "None");
-        String savedMealType = prefs.optString("mealType", "None");
-        int savedSpiceLevel = prefs.optInt("spiceLevel", 0);
+        // 3) Read out the saved values (with defaults)
+        String savedFoodStyle         = prefs.optString("foodStyle",        "None");
+        String savedDietaryPreference = prefs.optString("dietaryPreference","None");
+        String savedMealType          = prefs.optString("mealType",         "None");
+        int    savedSpiceLevel        = prefs.optInt   ("spiceLevel",        0);
+        String savedCookingSkill      = prefs.optString("cookingSkill",     "None");
+        String savedPortionSize       = prefs.optString("portionSize",      "None");
+        int    savedNumberOfServings  = prefs.optInt   ("numberOfServings",  1);
+        String savedCookingTime       = prefs.optString("cookingTime",      "None");
+        String savedFlavorProfile     = prefs.optString("flavorProfile",    "None");
+        String savedCleanupEffort     = prefs.optString("cleanupEffort",    "None");
+        String savedAllergies         = prefs.optString("allergies",        "");
+        String savedAdditionalNotes   = prefs.optString("additionalNotes",  "");
 
         // 4) Apply them to the UI
-        if (savedFoodStyle != null) {
-            foodStyleComboBox.getSelectionModel().select(savedFoodStyle);
-        }
-        if (savedDietaryPreference != null) {
-            dietaryPreferencesComboBox.getSelectionModel().select(savedDietaryPreference);
-        }
-        if (savedMealType != null) {
-            mealTypeComboBox.getSelectionModel().select(savedMealType);
-        }
-        spiceLevelSlider.setValue(savedSpiceLevel);
+        foodStyleComboBox.getSelectionModel().select(savedFoodStyle);
+        dietaryPreferencesComboBox.getSelectionModel().select(savedDietaryPreference);
+        mealTypeComboBox.getSelectionModel().select(savedMealType);
+        spiceLevelSlider.getSelectionModel().select(Integer.valueOf(savedSpiceLevel));
+        skillsComboBox.getSelectionModel().select(savedCookingSkill);
+        portionSizeComboBox.getSelectionModel().select(savedPortionSize);
+        numServingComboBox.getSelectionModel().select(Integer.valueOf(savedNumberOfServings));
+        cokingTimeComboBox.getSelectionModel().select(savedCookingTime);
+        flavorComboBox.getSelectionModel().select(savedFlavorProfile);
+        messComboBox.getSelectionModel().select(savedCleanupEffort);
 
-        // 5) (Optional) load background image as before
-        Image image = new Image(Objects.requireNonNull(
+        allergiesTextArea.setText(savedAllergies);
+        notesTextArea.setText(savedAdditionalNotes);
+
+        // 5) (Optional) load & bind your background image
+        Image img = new Image(Objects.requireNonNull(
                 getClass().getResourceAsStream("/images/b6.png")));
-
-        backgroundImageView.setImage(image);
-//        backgroundImageView.setPreserveRatio(true);
-        backgroundImageView.setFitWidth(anchorPane.getWidth());
-        backgroundImageView.setFitHeight(anchorPane.getHeight());
-
-        anchorPane.widthProperty().addListener((obs, o, n) ->
-                backgroundImageView.setFitWidth(n.doubleValue()));
-        anchorPane.heightProperty().addListener((obs, o, n) ->
-                backgroundImageView.setFitHeight(n.doubleValue()));
-
-
+        backgroundImageView.setImage(img);
+        backgroundImageView.setPreserveRatio(false);
+        AnchorPane.setTopAnchor(backgroundImageView, 0.0);
+        AnchorPane.setBottomAnchor(backgroundImageView, 0.0);
+        AnchorPane.setLeftAnchor(backgroundImageView, 0.0);
+        AnchorPane.setRightAnchor(backgroundImageView, 0.0);
     }
-
-//    @FXML
-//    private void handleAddIngredient() {
-//        String ingredient = ingredientsAvailableField.getText().trim();
-//        if (!ingredient.isEmpty()) {
-//            Label ingredientLabel = new Label(ingredient);
-//            ingredientLabel.setStyle("-fx-background-color: rgba(255, 255, 255, 0.7); -fx-padding: 8 12; -fx-background-radius: 10; -fx-text-fill: black;");
-//
-//            ingredientsGrid.add(ingredientLabel, column, row);
-//
-//            column++;
-//            if (column == 4) { // adjust grid width as needed
-//                column = 0;
-//                row++;
-//            }
-//
-//            ingredientsAvailableField.clear();
-//        }
-//    }
 
     @FXML
     private void handleContinueButtonAction() {
