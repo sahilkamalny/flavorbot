@@ -8,6 +8,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 public class OpenAI {
 
@@ -62,6 +63,41 @@ public class OpenAI {
             return text.trim();
         } else {
             throw new Exception("Response does not contain 'choices' field");
+        }
+    }
+    public static List<String> getDefaultIngredients() throws Exception {
+        HttpClient client = HttpClient.newHttpClient();
+        JSONObject body = new JSONObject();
+
+        String prompt = "Generate a list of 20 different, commonly available cooking ingredients. Only list the ingredient names, one per line, without numbering or extra text.";
+
+        body.put("model", "gpt-3.5-turbo");
+        body.put("messages", new JSONArray()
+                .put(new JSONObject().put("role", "user").put("content", prompt))
+        );
+        body.put("max_tokens", 500);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://api.openai.com/v1/chat/completions"))
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + API_KEY)
+                .POST(HttpRequest.BodyPublishers.ofString(body.toString(), StandardCharsets.UTF_8))
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        JSONObject responseBody = new JSONObject(response.body());
+
+        if (responseBody.has("choices")) {
+            String text = responseBody.getJSONArray("choices")
+                    .getJSONObject(0)
+                    .getJSONObject("message")
+                    .getString("content")
+                    .trim();
+
+            // Split the result into a list
+            return List.of(text.split("\\r?\\n"));
+        } else {
+            throw new Exception("OpenAI response missing 'choices'");
         }
     }
 }
