@@ -37,7 +37,7 @@
                         <Button fx:id="preferencesButton" styleClass="preferences-button" text="Preferences" />
                         <Button fx:id="logOut" styleClass="preferences-button" text="Log Out" onAction="#SignInWindow" />
                         <Button fx:id="Exit" styleClass="preferences-button" text="Exit" onAction="#CloseApplication" />
-                        <Hyperlink fx:id="pdfHyperlink" layoutX="-38.0" layoutY="40.0" text="Export Recipe" textAlignment="CENTER" styleClass="preferences-button"/>
+                        <Button fx:id="exportRecipe" layoutX="-38.0" layoutY="40.0" text="Export Recipe" onAction="#exportRecipe" styleClass="preferences-button"/>
 
                     </children>
                     <HBox.margin>

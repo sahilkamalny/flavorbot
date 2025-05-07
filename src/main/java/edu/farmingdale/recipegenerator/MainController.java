@@ -84,7 +84,6 @@ public class MainController {
     @FXML
     public void initialize() {
 
-        hyperlinkTXT();
 
         //Sets the lighbulb icon for the button
         ImageView buttonImageView = new ImageView(new Image(getClass().getResourceAsStream("/images/light-bulb.png")));
@@ -331,6 +330,19 @@ public class MainController {
             event.consume();
         });
     }
+    @FXML
+    private void exportRecipe() {
+        try {
+            // Get the path to the user's Downloads folder
+            String userHome = System.getProperty("user.home");
+            String downloadsPath;
+
+            if (System.getProperty("os.name").toLowerCase().contains("win")) {
+                downloadsPath = userHome + "\\Downloads\\recipe_";
+            } else {
+                downloadsPath = userHome + "/Downloads/recipe_";
+            }
+
 
     /**
      * Initializes the hyperlink action to save the generated recipe as a .txt file in the user's Downloads folder.
@@ -355,21 +367,22 @@ public class MainController {
 
                 String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                 downloadsPath += timestamp + ".txt";
+=======
 
-                try (PrintWriter writer = new PrintWriter(downloadsPath)) {
-                    for (Node node : recipeTextArea.getChildren()) {
-                        if (node instanceof Text text) {
-                            writer.println(text.getText());
-                        }
+
+            try (PrintWriter writer = new PrintWriter(downloadsPath)) {
+                for (Node node : recipeTextArea.getChildren()) {
+                    if (node instanceof Text text) {
+                        writer.println(text.getText());
                     }
-                    // Show success alert
-                    showAlert("TXT Created", "Recipe saved to Downloads as recipe.txt.", Alert.AlertType.INFORMATION);
                 }
-            } catch (Exception ex) {
-                showAlert("Error", "Failed to generate TXT file. " + ex.getMessage(), Alert.AlertType.ERROR);
+                showAlert("TXT Created", "Recipe saved to Downloads as recipe.txt.", Alert.AlertType.INFORMATION);
             }
-        });
+        } catch (Exception ex) {
+            showAlert("Error", "Failed to generate TXT file. " + ex.getMessage(), Alert.AlertType.ERROR);
+        }
     }
+
 
 
     /**
