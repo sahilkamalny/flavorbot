@@ -23,6 +23,11 @@ import org.json.JSONObject;
 
 import java.util.Objects;
 
+/**
+ * Controller class for managing the user's preferences in the Recipe Generator application.
+ * This class allows users to set and save their food preferences, dietary restrictions,
+ * and other cooking preferences, such as skill level, meal type, and spice level.
+ */
 public class PreferencesController {
 
 
@@ -70,6 +75,11 @@ public class PreferencesController {
 
     private final ObservableList<Ingredient> ingredientData = FXCollections.observableArrayList();
 
+
+    /**
+     * Initializes the UI elements with the user's saved preferences and default options.
+     * This method is called automatically when the scene is loaded.
+     */
     @FXML
     public void initialize() {
         // 1) Parse the prefs JSON
@@ -131,6 +141,11 @@ public class PreferencesController {
         AnchorPane.setRightAnchor(backgroundImageView, 0.0);
     }
 
+    /**
+     * Handles the action of the "Continue" button.
+     * This method retrieves the user's selections and updates their preferences in the database.
+     * After the preferences are saved, it opens the main window for the Recipe Generator application.
+     */
     @FXML
     private void handleContinueButtonAction() {
         // Retrieve user selections, defaulting to empty string or safe value if null
@@ -183,6 +198,11 @@ public class PreferencesController {
         // Open next window
         openMainWindow();
     }
+
+    /**
+     * Opens the main window of the Recipe Generator application.
+     * This method loads the FXML for the main window, applies an external CSS, and shows the window.
+     */
     private void openMainWindow() {
         try {
             Stage stage = (Stage) mealTypeComboBox.getScene().getWindow();
@@ -211,7 +231,12 @@ public class PreferencesController {
             showAlert("Error", "Could not load the main window.");
         }
     }
-
+    /**
+     * Displays an alert with the specified title and message.
+     *
+     * @param title The title of the alert.
+     * @param message The message to be displayed.
+     */
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
@@ -220,6 +245,10 @@ public class PreferencesController {
         alert.showAndWait();
     }
 
+    /**
+     * Represents an ingredient in the recipe generator.
+     * This class is used for binding data to the ingredients table in the UI.
+     */
     // Inner Ingredient class
     public static class Ingredient {
         private final StringProperty ingredient;

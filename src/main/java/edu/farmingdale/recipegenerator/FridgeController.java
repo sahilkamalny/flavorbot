@@ -20,6 +20,12 @@ import javafx.stage.Stage;
 
 import java.util.List;
 
+
+/**
+ * Controller class for managing the user's fridge items.
+ * Provides functionality to add, delete, and modify ingredients,
+ * as well as drag-and-drop and help tutorial features.
+ */
 public class FridgeController {
 
     @FXML
@@ -36,6 +42,10 @@ public class FridgeController {
     private AzureDBConnector connector;
     private SessionManager session;
 
+    /**
+     * Initializes the controller after the FXML elements have been loaded.
+     * Sets up drag-and-drop, populates the fridge list, and configures button graphics.
+     */
     @FXML
     private void initialize() {
         dragAndDrop();
@@ -55,6 +65,9 @@ public class FridgeController {
         questionButton.setGraphic(buttonImageView);
 
     }
+    /**
+     * Adds a new item to the fridge list and updates the database.
+     */
     @FXML
     private void addButton(){
 
@@ -70,6 +83,9 @@ public class FridgeController {
 
     }
 
+    /**
+     * Deletes the selected item from the fridge list and database.
+     */
     @FXML
     private void deleteButton(){
 
@@ -85,6 +101,9 @@ public class FridgeController {
         }
     }
 
+    /**
+     * Modifies the selected item in the fridge list and updates the database.
+     */
     @FXML
     private void modifyButton() {
         String newItem = textField.getText();
@@ -107,6 +126,9 @@ public class FridgeController {
 
     }
 
+    /**
+     * Displays a help popup with a tutorial GIF for using the fridge.
+     */
     @FXML
     private void questionButton(){
 
@@ -132,6 +154,9 @@ public class FridgeController {
 
     }
 
+    /**
+     * Refreshes the fridge list with items from the database for the current user.
+     */
     public void UpdateFridge(){
         int userId = session.getCurrentUser().getUserID();
         List<String> updatedList = connector.getFridgeItems(userId);
@@ -139,6 +164,9 @@ public class FridgeController {
 
     }
 
+    /**
+     * Enables drag-and-drop functionality for the fridge item list.
+     */
     public void dragAndDrop(){
         listView.setOnDragDetected(event -> {
             String selectedItem = listView.getSelectionModel().getSelectedItem();
