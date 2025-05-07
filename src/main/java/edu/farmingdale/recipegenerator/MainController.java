@@ -74,7 +74,6 @@ public class MainController {
     @FXML
     public void initialize() {
 
-        hyperlinkTXT();
 
         //Sets the lighbulb icon for the button
         ImageView buttonImageView = new ImageView(new Image(getClass().getResourceAsStream("/images/light-bulb.png")));
@@ -326,40 +325,35 @@ public class MainController {
             event.consume();
         });
     }
+    @FXML
+    private void exportRecipe() {
+        try {
+            // Get the path to the user's Downloads folder
+            String userHome = System.getProperty("user.home");
+            String downloadsPath;
 
-    private void hyperlinkTXT() {
-        pdfHyperlink.setOnAction(e -> {
-            try {
-                // Get the path to the user's Downloads folder
-                String userHome = System.getProperty("user.home");
-                String downloadsPath = "";
-
-                // Check if we're on Windows or Mac/Linux
-                if (System.getProperty("os.name").toLowerCase().contains("win")) {
-                    // Windows "C:/Users/username/Downloads"
-                    downloadsPath = userHome + "\\Downloads\\recipe.txt";
-                } else {
-                    // Mac/Linux
-                    downloadsPath = userHome + "/Downloads/recipe.txt";
-                }
-
-                String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                downloadsPath += timestamp + ".txt";
-
-                try (PrintWriter writer = new PrintWriter(downloadsPath)) {
-                    for (Node node : recipeTextArea.getChildren()) {
-                        if (node instanceof Text text) {
-                            writer.println(text.getText());
-                        }
-                    }
-                    // Show success alert
-                    showAlert("TXT Created", "Recipe saved to Downloads as recipe.txt.", Alert.AlertType.INFORMATION);
-                }
-            } catch (Exception ex) {
-                showAlert("Error", "Failed to generate TXT file. " + ex.getMessage(), Alert.AlertType.ERROR);
+            if (System.getProperty("os.name").toLowerCase().contains("win")) {
+                downloadsPath = userHome + "\\Downloads\\recipe_";
+            } else {
+                downloadsPath = userHome + "/Downloads/recipe_";
             }
-        });
+
+            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            downloadsPath += timestamp + ".txt";
+
+            try (PrintWriter writer = new PrintWriter(downloadsPath)) {
+                for (Node node : recipeTextArea.getChildren()) {
+                    if (node instanceof Text text) {
+                        writer.println(text.getText());
+                    }
+                }
+                showAlert("TXT Created", "Recipe saved to Downloads as recipe.txt.", Alert.AlertType.INFORMATION);
+            }
+        } catch (Exception ex) {
+            showAlert("Error", "Failed to generate TXT file. " + ex.getMessage(), Alert.AlertType.ERROR);
+        }
     }
+
 
 
     /**
