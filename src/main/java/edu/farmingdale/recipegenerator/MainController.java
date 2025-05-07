@@ -271,7 +271,7 @@ public class MainController {
         popup.initModality(Modality.APPLICATION_MODAL);
         popup.setTitle("Dasboard Tutorial");
 
-        Image gifImage = new Image(getClass().getResourceAsStream("/images/dashboardHelp.gif"));
+        Image gifImage = new Image(getClass().getResourceAsStream("/images/Dashboard.gif"));
         ImageView imageView = new ImageView(gifImage);
         imageView.setFitWidth(800);
         imageView.setFitHeight(600);
