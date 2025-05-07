@@ -35,6 +35,10 @@
                 <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="1667.0">
                     <children>
                         <Button fx:id="preferencesButton" styleClass="preferences-button" text="Preferences" />
+                        <Button fx:id="logOut" styleClass="preferences-button" text="Log Out" onAction="#SignInWindow" />
+                        <Button fx:id="Exit" styleClass="preferences-button" text="Exit" onAction="#CloseApplication" />
+                        <Hyperlink fx:id="pdfHyperlink" layoutX="-38.0" layoutY="40.0" text="Export Recipe" textAlignment="CENTER" styleClass="preferences-button"/>
+
                     </children>
                     <HBox.margin>
                         <Insets />
@@ -86,7 +90,7 @@
                         </VBox>
                   <AnchorPane layoutX="1022.0" prefHeight="1007.0" prefWidth="80.0">
                      <children>
-                        <Hyperlink fx:id="pdfHyperlink" layoutX="-38.0" layoutY="40.0" text="Export Recipe" textAlignment="CENTER" />
+
                      </children>
                   </AnchorPane>
                     </Pane>

@@ -1,5 +1,6 @@
 package edu.farmingdale.recipegenerator;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -32,6 +33,10 @@ import java.util.List;
 import java.util.Objects;
 
 public class MainController {
+    @FXML
+    public Button Exit;
+    @FXML
+    public Button logOut;
     @FXML
     private ListView<String> ingredientListView,fridgeView;
     @FXML
@@ -366,5 +371,25 @@ public class MainController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    @FXML
+    public void SignInWindow(ActionEvent actionEvent) {
+        try {
+            Parent signInRoot = FXMLLoader.load(getClass().getResource("/edu/farmingdale/recipegenerator/login.fxml"));
+            Scene signInScene = new Scene(signInRoot);
+
+            // Get current stage
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(signInScene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void CloseApplication(ActionEvent actionEvent) {
+        System.exit(0);
     }
 }
