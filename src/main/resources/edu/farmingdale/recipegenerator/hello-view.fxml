@@ -55,11 +55,11 @@
                            <font>
                               <Font size="16.0" />
                            </font></TextField>
-                                <Button fx:id="addIngredientButton" prefHeight="25.0" prefWidth="180.0" styleClass="button" text="Add">
+                                <Button fx:id="addIngredientButton" prefHeight="25.0" prefWidth="126.0" styleClass="button" text="Add">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin></Button>
-                        <Button fx:id="showFridgeButton" mnemonicParsing="false" onAction="#showFridge" prefHeight="25.0" prefWidth="180.0" text="Default Fridge" />
+                        <Button fx:id="showFridgeButton" mnemonicParsing="false" onAction="#showFridge" prefHeight="25.0" prefWidth="230.0" text="FlavorBot MixMaster" />
                         <Button fx:id="openFridgeButton" mnemonicParsing="false" onAction="#openFridge" prefHeight="25.0" prefWidth="180.0" text="Open Fridge">
                            <HBox.margin>
                               <Insets right="10.0" />

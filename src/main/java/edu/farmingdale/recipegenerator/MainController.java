@@ -31,6 +31,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import static edu.farmingdale.recipegenerator.OpenAI.getDefaultIngredients;
+
 public class MainController {
     @FXML
     private ListView<String> ingredientListView,fridgeView;
@@ -227,36 +229,13 @@ public class MainController {
     }
 
     @FXML
-    private void showFridge() {
-        //only allows the user to add these ingredients once
-        if(fridgeNum > 0){
-            return;
-        }
-        fridgeImageView.setImage(fridgeImg);
-        List<String> commonIngredients = List.of(
-                "Milk",
-                "Eggs",
-                "Orange",
-                "Cheese",
-                "Lettuce",
-                "Tomatoes",
-                "Carrots",
-                "Chicken",
-                "Yogurt",
-                "Beef",
-                "Ham",
-                "Plantain",
-                "Avocados",
-                "Black Beans",
-                "Ricotta Cheese",
-                "Rice",
-                "American Cheese",
-                "Bacon",
-                "Ranch Dressing",
-                "Pickles"
-        );
-        fridgeView.getItems().addAll(commonIngredients);
-        fridgeNum++;
+    private void showFridge() throws Exception {
+        fridgeView.getItems().clear();
+
+        List<String> commonItems = getDefaultIngredients();
+
+        fridgeView.getItems().addAll(commonItems);
+
 
     }
 
@@ -266,10 +245,10 @@ public class MainController {
         popup.initModality(Modality.APPLICATION_MODAL);
         popup.setTitle("Dasboard Tutorial");
 
-        Image gifImage = new Image(getClass().getResourceAsStream("/images/.gif"));
+        Image gifImage = new Image(getClass().getResourceAsStream("/images/dashboardHelp.gif"));
         ImageView imageView = new ImageView(gifImage);
-        imageView.setFitWidth(400);
-        imageView.setFitHeight(500);
+        imageView.setFitWidth(800);
+        imageView.setFitHeight(600);
 //        imageView.setPreserveRatio(true);
 
         VBox layout = new VBox(imageView);
