@@ -34,6 +34,10 @@ import java.util.Objects;
 
 import static edu.farmingdale.recipegenerator.OpenAI.getDefaultIngredients;
 
+/**
+ * The MainController class handles the user interaction for the main window of the Flavor Bot application.
+ * It is responsible for managing ingredients, generating recipes, and opening different windows such as preferences and fridge management.
+ */
 public class MainController {
     @FXML
     public Button Exit;
@@ -73,6 +77,10 @@ public class MainController {
 
 
 
+
+    /**
+     * Initializes the main window by setting up the background image, button actions, and dragging functionality.
+     */
     @FXML
     public void initialize() {
 
@@ -117,7 +125,8 @@ public class MainController {
     }
 
     /**
-     * Reads the text field and adds the ingredient to the list.
+     * Handles the addition of an ingredient to the ingredient list.
+     * It ensures that the ingredient name contains only letters.
      */
     @FXML
     private void handleAddIngredient() {
@@ -135,7 +144,9 @@ public class MainController {
     }
 
     /**
-     * Placeholder: handle recipe generation logic or display a simple alert.
+     * Handles recipe generation logic by passing the ingredients and preferences to OpenAI's API to generate a recipe.
+     * Displays the generated recipe in the recipe text area.
+     * @throws Exception if there is an error during recipe generation.
      */
     @FXML
     private void handleGenerateRecipe() throws Exception {
@@ -182,7 +193,7 @@ public class MainController {
     }
 
     /**
-     * Opens the user preferences window, closing the current main window.
+     * Opens the user preferences window and closes the current main window.
      */
     @FXML
     private void openPreferencesWindow() {
@@ -216,6 +227,10 @@ public class MainController {
             showAlert("Error", "Could not load preferences window.", Alert.AlertType.ERROR);
         }
     }
+    /**
+     * Opens the fridge management window in a new stage.
+     * @throws IOException if there is an error loading the fridge window.
+     */
     @FXML
     private void openFridge() throws IOException {
        Stage stage = new Stage();
@@ -232,6 +247,11 @@ public class MainController {
 
     }
 
+    /**
+     * Displays the ingredients available in the fridge.
+     * Loads default ingredients from the OpenAI service.
+     * @throws Exception if there is an error fetching the ingredients.
+     */
     @FXML
     private void showFridge() throws Exception {
         fridgeView.getItems().clear();
@@ -243,6 +263,9 @@ public class MainController {
 
     }
 
+    /**
+     * Shows a tutorial of the dashboard in a modal window.
+     */
     @FXML
     private void showTutorial(){
         Stage popup = new Stage();
@@ -265,6 +288,9 @@ public class MainController {
         popup.show();
 
     }
+    /**
+     * Sets up drag-and-drop functionality for ingredients between the fridge and the ingredient list.
+     */
     private void setupDragAndDrop() {
 
         // Drag source set Up
@@ -317,8 +343,32 @@ public class MainController {
                 downloadsPath = userHome + "/Downloads/recipe_";
             }
 
-            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-            downloadsPath += timestamp + ".txt";
+
+    /**
+     * Initializes the hyperlink action to save the generated recipe as a .txt file in the user's Downloads folder.
+     * The file will be named "recipe_yyyyMMdd_HHmmss.txt" to include a timestamp for uniqueness.
+     * If the recipe is successfully saved, a success alert is displayed. If an error occurs, an error alert is shown.
+     */
+    private void hyperlinkTXT() {
+        pdfHyperlink.setOnAction(e -> {
+            try {
+                // Get the path to the user's Downloads folder
+                String userHome = System.getProperty("user.home");
+                String downloadsPath = "";
+
+                // Check if we're on Windows or Mac/Linux
+                if (System.getProperty("os.name").toLowerCase().contains("win")) {
+                    // Windows "C:/Users/username/Downloads"
+                    downloadsPath = userHome + "\\Downloads\\recipe.txt";
+                } else {
+                    // Mac/Linux
+                    downloadsPath = userHome + "/Downloads/recipe.txt";
+                }
+
+                String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                downloadsPath += timestamp + ".txt";
+=======
+
 
             try (PrintWriter writer = new PrintWriter(downloadsPath)) {
                 for (Node node : recipeTextArea.getChildren()) {
@@ -336,7 +386,10 @@ public class MainController {
 
 
     /**
-     * Generic alert helper.
+     * Displays a message alert to the user.
+     * @param title the title of the alert.
+     * @param message the content of the alert.
+     * @param type the type of alert to display.
      */
     private void showAlert(String title, String message, Alert.AlertType type) {
         Alert alert = new Alert(type);
@@ -346,6 +399,13 @@ public class MainController {
         alert.showAndWait();
     }
 
+    /**
+     * Handles the action of opening the sign-in window.
+     * This method is triggered when the user clicks on the "Sign In" button or related UI element.
+     * It loads the login FXML and displays it in the current stage, replacing the current scene with the login screen.
+     *
+     * @param actionEvent The action event triggered by the user interaction (e.g., button click).
+     */
     @FXML
     public void SignInWindow(ActionEvent actionEvent) {
         try {
@@ -361,6 +421,13 @@ public class MainController {
         }
     }
 
+    /**
+     * Closes the application when triggered.
+     * This method is invoked when the user clicks on the "Close" button or another UI element designed to close the application.
+     * It terminates the program by calling System.exit(0), which ends the Java Virtual Machine (JVM).
+     *
+     * @param actionEvent The action event triggered by the user interaction (e.g., button click).
+     */
     @FXML
     public void CloseApplication(ActionEvent actionEvent) {
         System.exit(0);

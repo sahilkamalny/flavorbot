@@ -5,19 +5,44 @@ import java.util.*;
 import edu.farmingdale.recipegenerator.User;
 import edu.farmingdale.recipegenerator.SessionManager;
 
-
+/**
+ * AzureDBConnector is responsible for interacting with the Azure MySQL database
+ * used by the Recipe Generator application. It handles user authentication,
+ * preference storage, fridge inventory snapshots, and user management.
+ *
+ * This class uses JDBC to connect to the Azure MySQL database and perform SQL operations.
+ *
+ * Tables involved:
+ * - users
+ * - fridge_configs
+ *
+ * NOTE: Ensure that the `SessionManager` and `User` classes are correctly defined.
+ */
 public class AzureDBConnector {
     private static final String DB_URL      =
             "jdbc:mysql://csc311.mysql.database.azure.com/flavor_test?useSSL=true";
     private static final String USERNAME    = "super_admin";
     private static final String PASSWORD    = "ThisIsAPassword1";
 
+
+    /**
+     * Establishes and returns a live database connection to the Azure MySQL server.
+     *
+     * @return Connection object to the database
+     * @throws SQLException if connection fails
+     */
     // 1) Single place to get a live Connection
     private Connection getConnection() throws SQLException {
         return DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
     }
 
 
+    /**
+     * Retrieves user information by username.
+     *
+     * @param username the username to search
+     * @return Map of user fields or null if not found
+     */
     // 3) Fetch a single user by username
     public Map<String,Object> getUserByUsername(String username) {
         String sql = ""
@@ -44,6 +69,12 @@ public class AzureDBConnector {
         return null;
     }
 
+
+    /**
+     * Lists all users in the database.
+     *
+     * @return List of user maps containing user fields
+     */
     // 4) List all users
     public List<Map<String,Object>> listAllUsers() {
         String sql = ""
@@ -68,6 +99,13 @@ public class AzureDBConnector {
         return users;
     }
 
+    /**
+     * Inserts a new user into the users table.
+     *
+     * @param username       the username
+     * @param email          the user's email
+     * @param hashedPassword the hashed password
+     */
     // 5) Insert a brand‑new user
     public void insertUser(String username, String email, String hashedPassword) {
         String sql = ""
@@ -86,6 +124,12 @@ public class AzureDBConnector {
 
     // —— Preference Methods —— //
 
+    /**
+     * Retrieves the JSON preferences for a given user.
+     *
+     * @param userId ID of the user
+     * @return JSON string of preferences
+     */
     // 6) Load the JSON blob of prefs for one user
     public String getUserPreferences(int userId) {
         String sql = "SELECT preferences FROM users WHERE userID = ?";
@@ -103,6 +147,13 @@ public class AzureDBConnector {
         return "{}";
     }
 
+
+    /**
+     * Updates the user preferences in JSON format.
+     *
+     * @param userId    ID of the user
+     * @param prefsJson JSON string of preferences
+     */
     public void updateUserPreferences(int userId, String prefsJson) {
         String sql = ""
                 + "UPDATE users "
@@ -121,6 +172,12 @@ public class AzureDBConnector {
 
     // —— Fridge‑config Methods (JSON‑blob approach) —— //
 
+    /**
+     * Lists all fridge configurations for a given user.
+     *
+     * @param userId ID of the user
+     * @return List of fridge config maps (id, name, created_at)
+     */
     // 8) Create a new “saved fridge” snapshot and return its generated ID
     public int createFridgeConfig(int userId, String name, String itemsJson) {
         String sql = ""
@@ -144,6 +201,12 @@ public class AzureDBConnector {
         return -1;
     }
 
+    /**
+     * Lists all fridge configurations for a given user.
+     *
+     * @param userId ID of the user
+     * @return List of fridge config maps (id, name, created_at)
+     */
     // 9) List all fridge‑snapshots for a user (id + name + timestamp)
     public List<Map<String,Object>> listFridgeConfigs(int userId) {
         String sql = ""
@@ -169,6 +232,12 @@ public class AzureDBConnector {
         return configs;
     }
 
+    /**
+     * Retrieves the items JSON blob for a given fridge configuration.
+     *
+     * @param configId ID of the fridge configuration
+     * @return JSON string of fridge items
+     */
     // 10) Fetch the JSON “items” blob for one saved fridge
     public String getFridgeConfigItems(int configId) {
         String sql = "SELECT items FROM fridge_configs WHERE id = ?";
@@ -186,6 +255,13 @@ public class AzureDBConnector {
         return "[]";
     }
 
+    /**
+     * Authenticates the user using hashed password and sets the session if valid.
+     *
+     * @param username             the username
+     * @param providedPasswordHash the hashed password to check
+     * @return true if authentication is successful
+     */
     public boolean authenticateAndSetSession(String username, String providedPasswordHash) {
         // 1) fetch DB record as a Map
         Map<String,Object> userMap = getUserByUsername(username);
@@ -212,6 +288,11 @@ public class AzureDBConnector {
 
     }
 
+    /**
+     * Refreshes the current session with the latest data from the database.
+     *
+     * @return true if session is refreshed, false otherwise
+     */
     public boolean refreshSession() {
         // 1) Grab the current user from session
         User current = SessionManager.getInstance().getCurrentUser();
@@ -238,6 +319,12 @@ public class AzureDBConnector {
         return true;
     }
 
+    /**
+     * Checks if a username already exists in the database.
+     *
+     * @param username username to check
+     * @return true if username exists, false otherwise
+     */
     public boolean usernameExists(String username) {
         String sql = "SELECT 1 FROM users WHERE username = ? LIMIT 1";
         try (Connection conn = getConnection();
@@ -254,6 +341,12 @@ public class AzureDBConnector {
         }
     }
 
+    /**
+     * Retrieves all fridge item names for a user.
+     *
+     * @param userId ID of the user
+     * @return List of item names
+     */
     public List<String> getFridgeItems(int userId) {
         String sql = "SELECT name FROM fridge_configs WHERE user_id = ?";
         List<String> items = new ArrayList<>();
@@ -272,6 +365,13 @@ public class AzureDBConnector {
         return items;
     }
 
+    /**
+     * Adds a fridge item (by name) for a user.
+     *
+     * @param userId ID of the user
+     * @param name   item name
+     * @return true if item is added successfully
+     */
     public boolean addFridgeItem(int userId, String name) {
 
         String sql = "INSERT INTO fridge_configs (user_id, name, created_at) VALUES (?, ?, ?)";
@@ -292,6 +392,13 @@ public class AzureDBConnector {
             return false;
         }
     }
+    /**
+     * Deletes a fridge item by name for a user.
+     *
+     * @param userId ID of the user
+     * @param name   item name to delete
+     * @return true if deletion was successful
+     */
     public boolean deleteFridgeItemByName(int userId, String name) {
         String sql = "DELETE FROM fridge_configs WHERE user_id = ? AND name = ?";
 
@@ -310,6 +417,14 @@ public class AzureDBConnector {
             return false;
         }
     }
+    /**
+     * Updates a fridge item name for a user.
+     *
+     * @param userId  ID of the user
+     * @param oldName current item name
+     * @param newName new item name
+     * @return true if update was successful
+     */
     public boolean updateFridgeItemByName(int userId, String oldName, String newName) {
         String sql = "UPDATE fridge_configs SET name = ?, created_at = ? WHERE user_id = ? AND name = ?";
         Timestamp newCreatedAt = new Timestamp(System.currentTimeMillis());

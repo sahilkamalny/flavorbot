@@ -16,7 +16,10 @@ import javafx.util.Duration;
 import java.sql.SQLException;
 import java.util.Objects;
 import java.util.regex.Pattern;
-
+/**
+ * The SignUpController handles the user sign-up process, including form validation and interaction with the database.
+ * It is responsible for managing the sign-up screen, validating user input, and creating a new user account.
+ */
 public class SignUpController {
 
     private static final Pattern USERNAME_PATTERN =
@@ -54,6 +57,10 @@ public class SignUpController {
     @FXML
     private Text titlePhrase;
 
+    /**
+     * Initializes the SignUpController, sets up the background image, title animations,
+     * and ensures the background image fits the scene size.
+     */
     @FXML
     private void initialize() {
         try {
@@ -120,6 +127,10 @@ public class SignUpController {
 
     }
 
+    /**
+     * Handles the sign-up button action by validating user input, checking for errors, and creating a new user account.
+     * If successful, it opens the main window and authenticates the user session.
+     */
     @FXML
     private void handleSignUpButtonAction() {
         String email = emailTextField.getText().trim();
@@ -195,6 +206,10 @@ public class SignUpController {
         }
     }
 
+    /**
+     * Opens the main window (login.fxml) after successful sign-up.
+     * This method closes the sign-up window and opens the main window, setting it to fullscreen.
+     */
     private void openMainWindow() {
         try {
             // Close the current (sign-up) stage
@@ -231,12 +246,23 @@ public class SignUpController {
     }
 
 
+    /**
+     * Handles the "Already have an account?" button action.
+     * This opens the main window without the need for signing up.
+     */
     @FXML
     private void handleAlreadyHaveAccountButtonAction() {
         openMainWindow();
     }
 
 
+    /**
+     * Shows a pop-up alert with the given title, message, and alert type.
+     *
+     * @param title   the title of the alert
+     * @param message the content message of the alert
+     * @param type    the type of alert (ERROR, INFORMATION, etc.)
+     */
     private void showAlert(String title, String message, Alert.AlertType type) {
         Alert alert = new Alert(type);
         alert.setTitle(title);

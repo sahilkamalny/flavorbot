@@ -10,19 +10,24 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+/**
+ * The OpenAI class interacts with the OpenAI API to generate text responses for recipes
+ * and retrieve lists of default ingredients. It is used to send user prompts and receive
+ * detailed responses in the form of recipes or ingredient lists.
+ */
 public class OpenAI {
 
-
+    // API key stored as an environment variable
     private static final String API_KEY = System.getenv("key");
 
-
     /**
-     * Sends a prompt to the OpenAI API and retrieves a text response.
+     * Sends a prompt to the OpenAI API to generate a detailed recipe based on the ingredients and user preferences.
+     * The response includes sections like Ingredients, Preparation, Cooking Steps, Tips, and Serving Suggestions.
      *
-     * @param prompt The text prompt to send to the model.
-     * @param preferences The preferences associated with the user.
-     * @return The response text from the model.
-     * @throws Exception If there is an error with the API request.
+     * @param prompt The list of ingredients provided by the user.
+     * @param preferences The preferences or dietary restrictions associated with the user.
+     * @return A detailed recipe text, including ingredients, steps, tips, and serving suggestions.
+     * @throws Exception If there is an issue with the API request or response.
      */
     public static String getTextResponse(String prompt, String preferences) throws Exception {
         HttpClient client = HttpClient.newHttpClient();
@@ -65,6 +70,13 @@ public class OpenAI {
             throw new Exception("Response does not contain 'choices' field");
         }
     }
+    /**
+     * Sends a prompt to the OpenAI API to generate a list of 20 commonly available cooking ingredients.
+     * The ingredients are returned as a list of strings, one per line.
+     *
+     * @return A list of 20 commonly available cooking ingredients.
+     * @throws Exception If there is an issue with the API request or response.
+     */
     public static List<String> getDefaultIngredients() throws Exception {
         HttpClient client = HttpClient.newHttpClient();
         JSONObject body = new JSONObject();
