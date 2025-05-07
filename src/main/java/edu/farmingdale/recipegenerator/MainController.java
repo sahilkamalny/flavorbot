@@ -25,14 +25,14 @@ import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 import static edu.farmingdale.recipegenerator.OpenAI.getDefaultIngredients;
+import static jdk.javadoc.internal.doclets.formats.html.markup.HtmlStyle.title;
 
 /**
  * The MainController class handles the user interaction for the main window of the Flavor Bot application.
@@ -46,13 +46,13 @@ public class MainController {
     @FXML
     public Button About;
     @FXML
-    private ListView<String> ingredientListView,fridgeView;
+    private ListView<String> ingredientListView, fridgeView;
     @FXML
     private Button generateButton;
     @FXML
     private Button addIngredientButton;
     @FXML
-    private Button preferencesButton,openFridgeButton,showFridgeButton,questionButton;
+    private Button preferencesButton, openFridgeButton, showFridgeButton, questionButton;
     @FXML
     private TextField ingredientField;
 
@@ -60,7 +60,7 @@ public class MainController {
     private TextFlow recipeTextArea;
 
     @FXML
-    private ImageView backgroundImage,fridgeImageView;
+    private ImageView backgroundImage, fridgeImageView;
 
     @FXML
     private BorderPane mainPane;
@@ -71,8 +71,6 @@ public class MainController {
 
     private Image fridgeImg;
     private int fridgeNum;
-
-
 
 
     /**
@@ -143,6 +141,7 @@ public class MainController {
     /**
      * Handles recipe generation logic by passing the ingredients and preferences to OpenAI's API to generate a recipe.
      * Displays the generated recipe in the recipe text area.
+     *
      * @throws Exception if there is an error during recipe generation.
      */
     @FXML
@@ -224,29 +223,32 @@ public class MainController {
             showAlert("Error", "Could not load preferences window.", Alert.AlertType.ERROR);
         }
     }
+
     /**
      * Opens the fridge management window in a new stage.
+     *
      * @throws IOException if there is an error loading the fridge window.
      */
     @FXML
     private void openFridge() throws IOException {
-       Stage stage = new Stage();
-       stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/icon.png"))));
+        Stage stage = new Stage();
+        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/icon.png"))));
 
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/farmingdale/recipegenerator/fridge.fxml"));
-       Scene fridgeScene = new Scene(loader.load());
-       fridgeScene.getStylesheets().add(getClass().getResource("/Styling/fridge.css").toExternalForm());
+        Scene fridgeScene = new Scene(loader.load());
+        fridgeScene.getStylesheets().add(getClass().getResource("/Styling/fridge.css").toExternalForm());
 
-       stage.setScene(fridgeScene);
-       stage.setTitle("Flavor Bot");
-       stage.show();
+        stage.setScene(fridgeScene);
+        stage.setTitle("Flavor Bot");
+        stage.show();
 
     }
 
     /**
      * Displays the ingredients available in the fridge.
      * Loads default ingredients from the OpenAI service.
+     *
      * @throws Exception if there is an error fetching the ingredients.
      */
     @FXML
@@ -264,7 +266,7 @@ public class MainController {
      * Shows a tutorial of the dashboard in a modal window.
      */
     @FXML
-    private void showTutorial(){
+    private void showTutorial() {
         Stage popup = new Stage();
         popup.initModality(Modality.APPLICATION_MODAL);
         popup.setTitle("Dasboard Tutorial");
@@ -285,6 +287,7 @@ public class MainController {
         popup.show();
 
     }
+
     /**
      * Sets up drag-and-drop functionality for ingredients between the fridge and the ingredient list.
      */
@@ -327,18 +330,6 @@ public class MainController {
             event.consume();
         });
     }
-    @FXML
-    private void exportRecipe() {
-        try {
-            // Get the path to the user's Downloads folder
-            String userHome = System.getProperty("user.home");
-            String downloadsPath;
-
-            if (System.getProperty("os.name").toLowerCase().contains("win")) {
-                downloadsPath = userHome + "\\Downloads\\recipe_";
-            } else {
-                downloadsPath = userHome + "/Downloads/recipe_";
-            }
 
 
     /**
@@ -346,47 +337,12 @@ public class MainController {
      * The file will be named "recipe_yyyyMMdd_HHmmss.txt" to include a timestamp for uniqueness.
      * If the recipe is successfully saved, a success alert is displayed. If an error occurs, an error alert is shown.
      */
-    private void hyperlinkTXT() {
-        pdfHyperlink.setOnAction(e -> {
-            try {
-                // Get the path to the user's Downloads folder
-                String userHome = System.getProperty("user.home");
-                String downloadsPath = "";
-
-                // Check if we're on Windows or Mac/Linux
-                if (System.getProperty("os.name").toLowerCase().contains("win")) {
-                    // Windows "C:/Users/username/Downloads"
-                    downloadsPath = userHome + "\\Downloads\\recipe.txt";
-                } else {
-                    // Mac/Linux
-                    downloadsPath = userHome + "/Downloads/recipe.txt";
-                }
-
-                String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                downloadsPath += timestamp + ".txt";
-=======
-
-
-            try (PrintWriter writer = new PrintWriter(downloadsPath)) {
-                for (Node node : recipeTextArea.getChildren()) {
-                    if (node instanceof Text text) {
-                        writer.println(text.getText());
-                    }
-                }
-                showAlert("TXT Created", "Recipe saved to Downloads as recipe.txt.", Alert.AlertType.INFORMATION);
-            }
-        } catch (Exception ex) {
-            showAlert("Error", "Failed to generate TXT file. " + ex.getMessage(), Alert.AlertType.ERROR);
-        }
-    }
-
-
-
     /**
      * Displays a message alert to the user.
-     * @param title the title of the alert.
+     *
+     * @param title   the title of the alert.
      * @param message the content of the alert.
-     * @param type the type of alert to display.
+     * @param type    the type of alert to display.
      */
     private void showAlert(String title, String message, Alert.AlertType type) {
         Alert alert = new Alert(type);
@@ -428,7 +384,36 @@ public class MainController {
     @FXML
     public void CloseApplication(ActionEvent actionEvent) {
         System.exit(0);
-    }@FXML
+    }
+
+    @FXML
+    private void exportRecipe() {
+        try {
+            String userHome = System.getProperty("user.home");
+            String downloadsPath;
+            if (System.getProperty("os.name").toLowerCase().contains("win")) {
+                downloadsPath = userHome + "\\Downloads\\recipe";
+            } else {
+                downloadsPath = userHome + "/Downloads/recipe";
+            }
+
+            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            String fullPath = downloadsPath + timestamp + ".txt";
+
+            try (PrintWriter writer = new PrintWriter(fullPath)) {
+                for (Node node : recipeTextArea.getChildren()) {
+                    if (node instanceof Text text) {
+                        writer.println(text.getText());
+                    }
+                }
+                showAlert("Recipe Saved", "Recipe saved to: " + fullPath, Alert.AlertType.INFORMATION);
+            }
+        } catch (Exception e) {
+            showAlert("Error", "Failed to export recipe. " + e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
+    @FXML
     public void AboutApplication(ActionEvent actionEvent) {
         Stage aboutStage = new Stage();
         aboutStage.initModality(Modality.APPLICATION_MODAL);
