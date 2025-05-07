@@ -48,7 +48,7 @@ public class FridgeController {
         listView.getSelectionModel().selectedItemProperty().addListener((_, _, newSelection) -> {
             if (newSelection != null) {textField.setText(newSelection);}});
 
-        imageView.setImage(new Image(getClass().getResourceAsStream("/images/fridge.png")));
+//        imageView.setImage(new Image(getClass().getResourceAsStream("/images/fridge.png")));
         ImageView buttonImageView = new ImageView(new Image(getClass().getResourceAsStream("/images/light-bulb.png")));
         buttonImageView.setFitWidth(25);
         buttonImageView.setFitHeight(28);

@@ -165,27 +165,6 @@ public class LoginController {
         alert.showAndWait();
     }
 
-    private void openPreferencesWindow() {
-        try {
-            Stage loginStage = (Stage) loginButton.getScene().getWindow();
-            loginStage.close();
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/farmingdale/recipegenerator/preferences.fxml"));
-            Scene preferencesScene = new Scene(loader.load());
-
-            Stage prefStage = new Stage();
-            prefStage.setTitle("User Preferences");
-
-            // Let JavaFX handle fullscreen properly
-            prefStage.setScene(preferencesScene);
-            prefStage.setMaximized(true); // This keeps better proportions
-            prefStage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-            showAlert("Error", "Could not load preferences window.", Alert.AlertType.ERROR);
-        }
-    }
-
     private void openMainWindow() {
         try {
 
@@ -204,6 +183,7 @@ public class LoginController {
             scene.getStylesheets().add(getClass().getResource("/Styling/frosted-glass.css").toExternalForm());
 
             Stage newStage = new Stage();
+            newStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/icon.png"))));
             newStage.setScene(scene);
             newStage.setTitle("Flavor Bot");
             newStage.show();
@@ -233,7 +213,8 @@ public class LoginController {
             Scene signUpScene = new Scene(loader.load());
 
             Stage signUpStage = new Stage();
-            signUpStage.setTitle("Sign Up");
+            signUpStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/icon.png"))));
+            signUpStage.setTitle("Flavor Bot");
 
             // Set to full screen dimensions
             signUpStage.setX(screenBounds.getMinX());
