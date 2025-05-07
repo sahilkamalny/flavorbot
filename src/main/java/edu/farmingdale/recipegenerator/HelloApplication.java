@@ -13,8 +13,22 @@ import javafx.scene.control.Alert.AlertType;
 import java.io.IOException;
 import java.util.Objects;
 
-public class    HelloApplication extends Application {
 
+/**
+ * Main application class for the Flavor Bot Recipe Generator.
+ * This class launches the JavaFX application, sets up the main stage,
+ * and loads the login screen as the starting view.
+ */
+public class HelloApplication extends Application {
+
+    /**
+     * The entry point for the JavaFX application.
+     * Sets the window to full screen size, loads the login FXML,
+     * applies the application icon and title.
+     *
+     * @param stage the primary stage for this application
+     * @throws IOException if the FXML file cannot be loaded
+     */
     @Override
     public void start(Stage stage) throws IOException {
         Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/icon.png")));
@@ -44,6 +58,13 @@ public class    HelloApplication extends Application {
         stage.show();
     }
 
+    /**
+     * Utility method to display an alert dialog.
+     *
+     * @param title     the title of the alert window
+     * @param message   the message content of the alert
+     * @param alertType the type of alert (e.g., INFORMATION, ERROR, WARNING)
+     */
     // Method to show alerts
     private void showAlert(String title, String message, AlertType alertType) {
         Alert alert = new Alert(alertType);
@@ -53,7 +74,11 @@ public class    HelloApplication extends Application {
         alert.showAndWait();
     }
 
-
+    /**
+     * Main method. Launches the JavaFX application.
+     *
+     * @param args command-line arguments (not used)
+     */
     public static void main(String[] args) {
         launch();
     }

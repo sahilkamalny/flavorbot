@@ -21,6 +21,11 @@ import javafx.util.Duration;
 import java.sql.SQLException;
 import java.util.Objects;
 
+/**
+ * Controller for the login screen of the application.
+ * Handles user authentication, loading of the main window,
+ * and managing the user interface elements (login, sign-up, background image, etc.).
+ */
 public class LoginController {
 
     @FXML
@@ -44,6 +49,12 @@ public class LoginController {
     @FXML
     private Text titlePhrase;
 
+
+    /**
+     * Initializes the controller, loading the background image,
+     * binding the background image to the scene dimensions,
+     * and applying fade-in effects to the title texts.
+     */
     @FXML
     private void initialize() {
         try {
@@ -111,6 +122,10 @@ public class LoginController {
 
     }
 
+    /**
+     * Handles the login button click event. Attempts to authenticate the user
+     * and opens the main window if successful. Displays an error message if authentication fails.
+     */
     @FXML
     private void handleLoginButtonAction() {
         String username = usernameTextField.getText().trim();
@@ -151,12 +166,22 @@ public class LoginController {
         }
     }
 
+    /**
+     * Handles the sign-up button click event. Opens the sign-up window.
+     */
     @FXML
     private void handleSignUpButtonAction() {
         // Open the Sign Up window
         openSignUpWindow();
     }
 
+    /**
+     * Displays an alert with the given title, message, and alert type.
+     *
+     * @param title   the title of the alert
+     * @param message the content message of the alert
+     * @param type    the type of alert (e.g., ERROR, WARNING, etc.)
+     */
     private void showAlert(String title, String message, AlertType type) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
@@ -165,6 +190,10 @@ public class LoginController {
         alert.showAndWait();
     }
 
+
+    /**
+     * Opens the main window (the fridge management window) after a successful login.
+     */
     private void openMainWindow() {
         try {
 
@@ -196,6 +225,10 @@ public class LoginController {
     }
 
 
+
+    /**
+     * Opens the sign-up window.
+     */
     private void openSignUpWindow() {
         try {
             // Close the current (login) stage
