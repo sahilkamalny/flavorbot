@@ -209,7 +209,9 @@ public class SignUpController {
             Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
 
             Stage mainStage = new Stage();
-            mainStage.setTitle("Main App Window");
+            mainStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/icon.png"))));
+
+            mainStage.setTitle("Flavor Bot");
             mainStage.setScene(mainScene);
 
             // Set the window size to match the screen resolution
@@ -228,25 +230,6 @@ public class SignUpController {
         }
     }
 
-    private void openPreferencesWindow() {
-        try {
-            Stage loginStage = (Stage) loginButton.getScene().getWindow();
-            loginStage.close();
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/farmingdale/recipegenerator/preferences.fxml"));
-            Scene preferencesScene = new Scene(loader.load());
-
-            Stage prefStage = new Stage();
-            prefStage.setTitle("User Preferences");
-            prefStage.setScene(preferencesScene);
-            prefStage.setMaximized(true);
-            prefStage.show();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            showAlert("Error", "Could not load preferences window.", Alert.AlertType.ERROR);
-        }
-    }
 
     @FXML
     private void handleAlreadyHaveAccountButtonAction() {

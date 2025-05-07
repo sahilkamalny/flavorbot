@@ -2,7 +2,10 @@ package edu.farmingdale.recipegenerator;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -14,13 +17,19 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class MainController {
     @FXML
@@ -60,10 +69,12 @@ public class MainController {
     @FXML
     public void initialize() {
 
+        hyperlinkTXT();
+
         //Sets the lighbulb icon for the button
         ImageView buttonImageView = new ImageView(new Image(getClass().getResourceAsStream("/images/light-bulb.png")));
-        buttonImageView.setFitWidth(30);
-        buttonImageView.setFitHeight(35);
+        buttonImageView.setFitWidth(25);
+        buttonImageView.setFitHeight(28);
         questionButton.setGraphic(buttonImageView);
 
 
@@ -108,6 +119,11 @@ public class MainController {
         if (text.isEmpty()) {
             return;
         }
+        if (!text.matches("^[a-zA-Z\\s]+$")) {
+            showAlert("Invalid Input", "Only letters are allowed in ingredient names.", Alert.AlertType.ERROR);
+            return;
+        }
+
         ingredientListView.getItems().add(text);
         ingredientField.clear();
     }
@@ -184,6 +200,7 @@ public class MainController {
             scene.getStylesheets().add(getClass().getResource("/Styling/preference.css").toExternalForm());
 
             Stage newStage = new Stage();
+            newStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/icon.png"))));
             newStage.setScene(scene);
             newStage.setTitle("Flavor Bot");
             newStage.show();
@@ -196,13 +213,15 @@ public class MainController {
     @FXML
     private void openFridge() throws IOException {
        Stage stage = new Stage();
+       stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/icon.png"))));
 
-       FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/farmingdale/recipegenerator/fridge.fxml"));
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/edu/farmingdale/recipegenerator/fridge.fxml"));
        Scene fridgeScene = new Scene(loader.load());
        fridgeScene.getStylesheets().add(getClass().getResource("/Styling/fridge.css").toExternalForm());
 
        stage.setScene(fridgeScene);
-       stage.setTitle("Fridge");
+       stage.setTitle("Flavor Bot");
        stage.show();
 
     }
@@ -238,6 +257,29 @@ public class MainController {
         );
         fridgeView.getItems().addAll(commonIngredients);
         fridgeNum++;
+
+    }
+
+    @FXML
+    private void showTutorial(){
+        Stage popup = new Stage();
+        popup.initModality(Modality.APPLICATION_MODAL);
+        popup.setTitle("Dasboard Tutorial");
+
+        Image gifImage = new Image(getClass().getResourceAsStream("/images/.gif"));
+        ImageView imageView = new ImageView(gifImage);
+        imageView.setFitWidth(400);
+        imageView.setFitHeight(500);
+//        imageView.setPreserveRatio(true);
+
+        VBox layout = new VBox(imageView);
+        layout.setPadding(new Insets(10));
+        layout.setAlignment(Pos.CENTER);
+
+        Scene scene = new Scene(layout);
+        popup.setScene(scene);
+        popup.setResizable(false);
+        popup.show();
 
     }
     private void setupDragAndDrop() {
@@ -280,16 +322,38 @@ public class MainController {
         });
     }
 
-    private void hyperlinkPDF(){
+    private void hyperlinkTXT() {
+        pdfHyperlink.setOnAction(e -> {
+            try {
+                // Get the path to the user's Downloads folder
+                String userHome = System.getProperty("user.home");
+                String downloadsPath = "";
 
-//        pdfHyperlink.setOnAction(e -> {
-//            try {
-//                PdfUtils.generateRecipePDF(recipeTextArea.getChildren());
-//                showAlert("PDF Created", "Recipe saved as PDF.", Alert.AlertType.INFORMATION);
-//            } catch (Exception ex) {
-//                showAlert("Error", "Failed to generate PDF.", Alert.AlertType.ERROR);
-//            }
-//        });
+                // Check if we're on Windows or Mac/Linux
+                if (System.getProperty("os.name").toLowerCase().contains("win")) {
+                    // Windows "C:/Users/username/Downloads"
+                    downloadsPath = userHome + "\\Downloads\\recipe.txt";
+                } else {
+                    // Mac/Linux
+                    downloadsPath = userHome + "/Downloads/recipe.txt";
+                }
+
+                String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                downloadsPath += timestamp + ".txt";
+
+                try (PrintWriter writer = new PrintWriter(downloadsPath)) {
+                    for (Node node : recipeTextArea.getChildren()) {
+                        if (node instanceof Text text) {
+                            writer.println(text.getText());
+                        }
+                    }
+                    // Show success alert
+                    showAlert("TXT Created", "Recipe saved to Downloads as recipe.txt.", Alert.AlertType.INFORMATION);
+                }
+            } catch (Exception ex) {
+                showAlert("Error", "Failed to generate TXT file. " + ex.getMessage(), Alert.AlertType.ERROR);
+            }
+        });
     }
 
 

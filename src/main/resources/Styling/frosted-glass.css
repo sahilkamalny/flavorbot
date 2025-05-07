@@ -39,9 +39,11 @@
     -fx-background-color: #ff784e; /* Lighter orange */
 }
 #questionButton {
-    -fx-opacity: 1;
-    -fx-background-color: #0078d7;
-    -fx-text-fill: white;
+    -fx-background-color: #FF5733; /* FlavorBot orange */
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 5, 0.3, 1, 1);
 }
 
 /* Specific buttons reuse main style */

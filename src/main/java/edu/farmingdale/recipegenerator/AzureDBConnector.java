@@ -209,6 +209,7 @@ public class AzureDBConnector {
         );
         SessionManager.getInstance().setCurrentUser(user);
         return true;
+
     }
 
     public boolean refreshSession() {
