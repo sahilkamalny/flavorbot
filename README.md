@@ -16,7 +16,8 @@ The **Recipe Generator App** is a modern, AI-powered desktop application built u
 
 ## 📸 Screenshots
 
-*(Insert screenshots of the app here)*
+![image](https://github.com/user-attachments/assets/f4f757f0-a89f-49ad-b0c4-039590134ca2)
+
 
 ---
 
