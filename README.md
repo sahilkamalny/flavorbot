@@ -88,21 +88,10 @@ Ensure your OpenAI API key is kept private and **do not** commit it to source co
 
 ---
 
-## 🤝 Contributions
-
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
----
 
 ## 🙋‍♂️ Author
 
-- **Your Name** – [@yourgithub](https://github.com/yourgithub)
+- Haris Akbar – (https://github.com/ha.akbar03)
 
 ---
 
