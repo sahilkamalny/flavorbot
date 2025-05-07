@@ -38,6 +38,11 @@
 .button:hover {
     -fx-background-color: #ff784e; /* Lighter orange */
 }
+#questionButton {
+    -fx-opacity: 1;
+    -fx-background-color: #0078d7;
+    -fx-text-fill: white;
+}
 
 /* Specific buttons reuse main style */
 .preferences-button,
@@ -69,6 +74,34 @@
     -fx-text-fill: white !important;
     -fx-cell-hover-color: transparent !important;
 }
+#ingredientListView .list-cell {
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+}
+#ingredientListView .list-cell:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+
+}
+/* Fridge View the List on the Right*/
+#fridgeView{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-control-inner-background: transparent;
+}
+
+#fridgeView .list-cell{
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+
+}
+#fridgeView .list-cell:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+}
+
 
 /* TextArea transparent */
 .recipe-text-area {
@@ -103,4 +136,17 @@
 /* HBox general spacing */
 HBox {
     -fx-spacing: 10;
+}
+
+
+.hyperlink {
+    -fx-text-fill: #FF5733;
+    -fx-underline: false;
+    -fx-font-size: 14px;
+}
+
+
+.hyperlink:hover {
+    -fx-text-fill: #ff784e;
+    -fx-cursor: hand;
 }

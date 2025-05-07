@@ -8,6 +8,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -17,6 +20,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 
 public class MainController {
     @FXML
@@ -26,9 +30,11 @@ public class MainController {
     @FXML
     private Button addIngredientButton;
     @FXML
-    private Button preferencesButton,openFridgeButton,showFridgeButton;
+    private Button preferencesButton,openFridgeButton,showFridgeButton,questionButton;
     @FXML
     private TextField ingredientField;
+    @FXML
+    private Hyperlink pdfHyperlink;
 
 //    @FXML
 //    private TextArea recipeTextArea;
@@ -37,22 +43,38 @@ public class MainController {
     private TextFlow recipeTextArea;
 
     @FXML
-    private ImageView backgroundImage;
+    private ImageView backgroundImage,fridgeImageView;
 
     @FXML
     private BorderPane mainPane;
-
     @FXML
     private StackPane stackPane;
 
     private AzureDBConnector connector;
 
+    private Image fridgeImg;
+    private int fridgeNum;
+
+
 
     @FXML
     public void initialize() {
+
+        //Sets the lighbulb icon for the button
+        ImageView buttonImageView = new ImageView(new Image(getClass().getResourceAsStream("/images/light-bulb.png")));
+        buttonImageView.setFitWidth(30);
+        buttonImageView.setFitHeight(35);
+        questionButton.setGraphic(buttonImageView);
+
+
+        fridgeImageView = new ImageView();
+        fridgeImg = new Image(getClass().getResourceAsStream("/images/fridge.png"));
+
         connector = new AzureDBConnector();
+
         // Clear any existing items
         ingredientListView.getItems().clear();
+        fridgeView.getItems().clear();
 
         try {
             // Load the background image
@@ -72,6 +94,8 @@ public class MainController {
         // Wire up button handlers
         addIngredientButton.setOnAction(e -> handleAddIngredient());
         preferencesButton.setOnAction(e -> openPreferencesWindow());
+
+        setupDragAndDrop();
 
     }
 
@@ -185,8 +209,87 @@ public class MainController {
 
     @FXML
     private void showFridge() {
+        //only allows the user to add these ingredients once
+        if(fridgeNum > 0){
+            return;
+        }
+        fridgeImageView.setImage(fridgeImg);
+        List<String> commonIngredients = List.of(
+                "Milk",
+                "Eggs",
+                "Orange",
+                "Cheese",
+                "Lettuce",
+                "Tomatoes",
+                "Carrots",
+                "Chicken",
+                "Yogurt",
+                "Beef",
+                "Ham",
+                "Plantain",
+                "Avocados",
+                "Black Beans",
+                "Ricotta Cheese",
+                "Rice",
+                "American Cheese",
+                "Bacon",
+                "Ranch Dressing",
+                "Pickles"
+        );
+        fridgeView.getItems().addAll(commonIngredients);
+        fridgeNum++;
 
+    }
+    private void setupDragAndDrop() {
 
+        // Drag source set Up
+        fridgeView.setOnDragDetected(event -> {
+            String selectedItem = fridgeView.getSelectionModel().getSelectedItem();
+            if (selectedItem == null) return;
+
+            Dragboard db = fridgeView.startDragAndDrop(TransferMode.COPY);
+            ClipboardContent content = new ClipboardContent();
+            content.putString(selectedItem);
+            db.setContent(content);
+
+            event.consume();
+        });
+
+        // Accept the drag
+        ingredientListView.setOnDragOver(event -> {
+            if (event.getGestureSource() != ingredientListView &&
+                    event.getDragboard().hasString()) {
+                event.acceptTransferModes(TransferMode.COPY);
+            }
+            event.consume();
+        });
+
+        // Drop handling
+        ingredientListView.setOnDragDropped(event -> {
+            Dragboard db = event.getDragboard();
+            boolean success = false;
+            if (db.hasString()) {
+                String ingredient = db.getString();
+                if (!ingredientListView.getItems().contains(ingredient)) {
+                    ingredientListView.getItems().add(ingredient);
+                }
+                success = true;
+            }
+            event.setDropCompleted(success);
+            event.consume();
+        });
+    }
+
+    private void hyperlinkPDF(){
+
+//        pdfHyperlink.setOnAction(e -> {
+//            try {
+//                PdfUtils.generateRecipePDF(recipeTextArea.getChildren());
+//                showAlert("PDF Created", "Recipe saved as PDF.", Alert.AlertType.INFORMATION);
+//            } catch (Exception ex) {
+//                showAlert("Error", "Failed to generate PDF.", Alert.AlertType.ERROR);
+//            }
+//        });
     }
 
 
