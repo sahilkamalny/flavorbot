@@ -10,6 +10,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -35,9 +38,10 @@ public class FridgeController {
 
     @FXML
     private void initialize() {
+        dragAndDrop();
+
         session = SessionManager.getInstance();
         connector = new AzureDBConnector();
-
 
         UpdateFridge();
 
@@ -133,6 +137,20 @@ public class FridgeController {
         List<String> updatedList = connector.getFridgeItems(userId);
         listView.getItems().setAll(updatedList);
 
+    }
+
+    public void dragAndDrop(){
+        listView.setOnDragDetected(event -> {
+            String selectedItem = listView.getSelectionModel().getSelectedItem();
+            if (selectedItem == null) return;
+
+            Dragboard db = listView.startDragAndDrop(TransferMode.COPY);
+            ClipboardContent content = new ClipboardContent();
+            content.putString(selectedItem);
+            db.setContent(content);
+
+            event.consume();
+        });
     }
 
 
