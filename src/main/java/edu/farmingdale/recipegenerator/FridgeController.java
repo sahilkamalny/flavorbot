@@ -108,7 +108,7 @@ public class FridgeController {
 
         Stage popup = new Stage();
         popup.initModality(Modality.APPLICATION_MODAL);
-        popup.setTitle("Help / Info");
+        popup.setTitle("Fridge Tutorial");
 
 
         Image gifImage = new Image(getClass().getResourceAsStream("/images/help.gif"));
