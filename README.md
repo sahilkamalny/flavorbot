@@ -92,8 +92,8 @@ Ensure your OpenAI API key is kept private and **do not** commit it to source co
 ## 🙋‍♂️ Author
 
 - Haris Akbar – https://github.com/ha.akbar03
-- Jonatan Paulino - (https://github.com/JPR420)
-- Andrew Escorcia - (https://github.com/aescorcia65)
+- Jonatan Paulino - https://github.com/JPR420
+- Andrew Escorcia - https://github.com/aescorcia65
 
 ---
 
