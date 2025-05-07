@@ -35,9 +35,10 @@
                 <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="1667.0">
                     <children>
                         <Button fx:id="preferencesButton" styleClass="preferences-button" text="Preferences" />
+                        <Button fx:id="exportRecipe" layoutX="-38.0" layoutY="40.0" text="Export Recipe" onAction="#exportRecipe" styleClass="preferences-button"/>
                         <Button fx:id="logOut" styleClass="preferences-button" text="Log Out" onAction="#SignInWindow" />
                         <Button fx:id="Exit" styleClass="preferences-button" text="Exit" onAction="#CloseApplication" />
-                        <Button fx:id="exportRecipe" layoutX="-38.0" layoutY="40.0" text="Export Recipe" onAction="#exportRecipe" styleClass="preferences-button"/>
+                        <Button fx:id="About" styleClass="preferences-button" text="About" onAction="#AboutApplication" />
 
                     </children>
                     <HBox.margin>

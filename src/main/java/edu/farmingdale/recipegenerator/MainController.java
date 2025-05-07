@@ -40,6 +40,8 @@ public class MainController {
     @FXML
     public Button logOut;
     @FXML
+    public Button About;
+    @FXML
     private ListView<String> ingredientListView,fridgeView;
     @FXML
     private Button generateButton;
@@ -49,11 +51,6 @@ public class MainController {
     private Button preferencesButton,openFridgeButton,showFridgeButton,questionButton;
     @FXML
     private TextField ingredientField;
-    @FXML
-    private Hyperlink pdfHyperlink;
-
-//    @FXML
-//    private TextArea recipeTextArea;
 
     @FXML
     private TextFlow recipeTextArea;
@@ -364,5 +361,31 @@ public class MainController {
     @FXML
     public void CloseApplication(ActionEvent actionEvent) {
         System.exit(0);
+    }@FXML
+    public void AboutApplication(ActionEvent actionEvent) {
+        Stage aboutStage = new Stage();
+        aboutStage.initModality(Modality.APPLICATION_MODAL);
+        aboutStage.setTitle("About Flavor Bot");
+
+        Text aboutText = new Text(
+                "Flavor Bot v1.0\n\n" +
+                        "Created by the Recipe Generator Team at Farmingdale State College.\n\n" +
+                        "This application allows users to select ingredients, apply personal preferences, " +
+                        "and generate custom recipes using AI.\n\n" +
+                        "Special thanks to OpenAI for powering the recipe generation.\n\n" +
+                        "For feedback or bug reports, please contact: support@flavorbot.com"
+        );
+        aboutText.setWrappingWidth(400);
+
+        VBox layout = new VBox(aboutText);
+        layout.setPadding(new Insets(15));
+        layout.setAlignment(Pos.CENTER);
+
+        Scene scene = new Scene(layout, 450, 300);
+        aboutStage.setScene(scene);
+        aboutStage.setResizable(false);
+        aboutStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/icon.png"))));
+        aboutStage.showAndWait();
     }
+
 }

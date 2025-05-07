@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.farmingdale.recipegenerator.AboutController">
+    <!-- Background Image that resizes with the window -->
+    <ImageView fx:id="backgroundImage" fitWidth="Infinity" fitHeight="Infinity" preserveRatio="true" smooth="true" />
+
+    <!-- Text Area for Application Details -->
+    <Label fx:id="appDetails" layoutX="20.0" layoutY="20.0" prefWidth="660.0" prefHeight="460.0" text="Detailed information about the application..." wrapText="true">
+        <font>
+            <Font size="14.0" />
+        </font>
+    </Label>
+</StackPane>
