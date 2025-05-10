@@ -96,17 +96,21 @@ public class MainController {
         ingredientListView.getItems().clear();
         fridgeView.getItems().clear();
 
+
         try {
             // Load the background image
             Image image = new Image(getClass().getResourceAsStream("/images/b6.png"));
             backgroundImage.setImage(image);
-            backgroundImage.setPreserveRatio(true);
+            backgroundImage.setPreserveRatio(false);
             backgroundImage.setSmooth(true);
 
-
+            // Bind the image size to the stack pane size
             backgroundImage.fitWidthProperty().bind(stackPane.widthProperty());
             backgroundImage.fitHeightProperty().bind(stackPane.heightProperty());
 
+            // Make sure image fills the entire area
+            backgroundImage.setFitWidth(stackPane.getWidth());
+            backgroundImage.setFitHeight(stackPane.getHeight());
         } catch (Exception e) {
             System.out.println("Background image load failed: " + e.getMessage());
         }

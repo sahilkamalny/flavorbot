@@ -20,8 +20,7 @@
 <StackPane fx:id="stackPane" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.farmingdale.recipegenerator.MainController">
 
     <!-- Background image -->
-    <ImageView fx:id="backgroundImage" fitHeight="1080.0" fitWidth="1920" smooth="false" />
-
+    <ImageView fx:id="backgroundImage" preserveRatio="false" smooth="false" />
 
     <!-- Frosted Glass Content Pane -->
     <BorderPane fx:id="mainPane" styleClass="main-pane">
