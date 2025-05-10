@@ -1,83 +1,118 @@
 /* Base label style */
 .label {
-    -fx-text-fill: #FF5733; /* Orange color for label text */
+    -fx-text-fill: #FF5733;
     -fx-font-size: 16px;
     -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 3, 0, 0, 1);
 }
 
 /* Title Label */
 .label#titleLabel {
     -fx-font-size: 48px;
     -fx-font-weight: bold;
-    /*-fx-text-fill: #1e3a5f;*/
-    -fx-text-fill: #FFFFFF;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 5, 0, 0, 2);
     -fx-padding: 10;
 }
-.combo-box .text {
-    -fx-text-fill: white; /* White text on darker background */
-}
+
 /* ComboBox styling */
 .combo-box {
-    -fx-background-color: #1e3a5f; /* Dark blue for ComboBox background */
-    -fx-text-fill: #f6f4f4; /* Orange text for ComboBox */
-    -fx-border-color: #888888;
-    -fx-border-radius: 5;
-    -fx-background-radius: 5;
-    -fx-font-size: 14px;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 5, 0.3, 1, 1);
+    -fx-background-color: rgba(30, 58, 95, 0.6);
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-padding: 4;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 1);
+    -fx-border-color: rgba(255, 255, 255, 0.2);
 }
 
 .combo-box:hover {
-    -fx-border-color: #FF5733; /* Matching hover color to vibrant orange */
+    -fx-border-color: #FF5733;
 }
+
+.combo-box .text {
+    -fx-text-fill: white;
+}
+
 .combo-box .cell {
-    -fx-text-fill: #e6e6e6;       /*!* Text color *! ***  This changes the text on the ComoBox's default text *** */
-    -fx-font-size: 14px;          /* Font size */
-    -fx-font-weight: bold;        /* Font weight */
-    -fx-background-color: #1e3a5f;
+    -fx-text-fill: #e6e6e6;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-color: rgba(30, 58, 95, 0.6);
+    -fx-background-radius: 15;
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: white;
+    -fx-padding: 4 8;
+    -fx-background-radius: 15;
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: rgba(30, 58, 95, 0.95);
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 0);
 }
 
 .combo-box .label {
-    -fx-text-fill: #ffffff;       /* Ensures text inside button area is styled */
+    -fx-text-fill: white;
 }
 
 /* TextArea styling */
 .text-area {
-    -fx-background-color: #1e3a5f; /* Dark blue for TextArea background */
-    -fx-text-fill: #1e0d0c; /* Orange text for TextArea */
-    -fx-border-color: #888888;
-    -fx-border-radius: 5;
-    -fx-background-radius: 5;
+    -fx-background-color: rgba(30, 58, 95, 0.6);
+    -fx-text-fill: white;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-border-color: rgba(255, 255, 255, 0.2);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 1);
     -fx-font-size: 14px;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 5, 0.3, 1, 1);
+}
+
+.text-area .content {
+    -fx-background-color: rgba(30, 58, 95, 0.6);
 }
 
 .text-area:focused {
-    -fx-border-color: #FF5733; /* Vibrant orange when focused */
+    -fx-border-color: #FF5733;
+}
+
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .content {
+    -fx-background-color: transparent;
 }
 
 /* Update Button */
 #updateButton {
     -fx-font-size: 16px;
     -fx-font-weight: bold;
-    -fx-background-color: #FF5733; /* Vibrant orange */
+    -fx-background-color: rgba(255, 87, 51, 0.8);
     -fx-text-fill: white;
-    -fx-background-radius: 25px;
-    -fx-padding: 10px 20px;
+    -fx-background-radius: 20;
+    -fx-padding: 10 25;
     -fx-cursor: hand;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 5, 0.3, 1, 1);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 0, 2);
 }
 
 #updateButton:hover {
-    -fx-background-color: #ff784e; /* Lighter orange for hover */
+    -fx-background-color: rgba(255, 120, 78, 0.9);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 4);
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
 }
 
-/* VBox and HBox styling for spacing */
+/* VBox and HBox styling */
 .vbox, .hbox {
     -fx-spacing: 10px;
 }
 
-/* Background image view: optional enhancement */
+/* Background image view */
 #backgroundImageView {
     -fx-opacity: 0.3;
     -fx-background-size: cover;
@@ -87,7 +122,7 @@
 /* Tooltip styling */
 .tooltip {
     -fx-background-color: #1c1c1c;
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: white;
     -fx-font-size: 13px;
     -fx-border-radius: 5;
     -fx-background-radius: 5;
@@ -101,18 +136,46 @@
 
 /* Glass effect for the form container */
 #hBoxholder {
-    -fx-background-color: rgba(143, 214, 255, 0.25);
-    -fx-background-radius: 15;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 0);
-}
-
-/* Enhanced glass effect for inputs */
-.combo-box, .text-area {
-    -fx-background-color: rgba(30, 58, 95, 0.6);
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0, 0, 0);
+    -fx-background-color: rgba(143, 214, 255, 0.15);
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 2);
+    -fx-padding: 20;
 }
 
 /* Anchor pane background */
 #anchorPane {
     -fx-background-color: transparent;
+}
+
+/* Separator styling */
+.separator {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-opacity: 0.8;
+}
+
+/* Scroll Bar styling */
+.scroll-bar {
+    -fx-background-color: rgba(30, 58, 95, 0.6);
+    -fx-background-radius: 10;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: rgba(255, 87, 51, 0.8);
+    -fx-background-radius: 10;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+}
+
+/* Transition effects */
+.combo-box, .text-area, #updateButton {
+    -fx-transition: all 0.2s ease;
+}
+
+/* Focus styling */
+.combo-box:focused, .text-area:focused {
+    -fx-border-color: #FF5733;
+    -fx-border-width: 2;
 }
