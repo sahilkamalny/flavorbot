@@ -9,6 +9,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -130,15 +131,37 @@ public class PreferencesController {
         allergiesTextArea.setText(savedAllergies);
         notesTextArea.setText(savedAdditionalNotes);
 
-        // 5) (Optional) load & bind your background image
-        Image img = new Image(Objects.requireNonNull(
-                getClass().getResourceAsStream("/images/b6.png")));
-        backgroundImageView.setImage(img);
-        backgroundImageView.setPreserveRatio(false);
-        AnchorPane.setTopAnchor(backgroundImageView, 0.0);
-        AnchorPane.setBottomAnchor(backgroundImageView, 0.0);
-        AnchorPane.setLeftAnchor(backgroundImageView, 0.0);
-        AnchorPane.setRightAnchor(backgroundImageView, 0.0);
+        try {
+            Image img = new Image(Objects.requireNonNull(
+                    getClass().getResourceAsStream("/images/b6.png")));
+            backgroundImageView.setImage(img);
+
+            // Add a slight blur effect to the background
+            GaussianBlur blur = new GaussianBlur(2);
+            backgroundImageView.setEffect(blur);
+
+            // Set up background image properties
+            backgroundImageView.setPreserveRatio(false);
+            backgroundImageView.setSmooth(true);
+            backgroundImageView.setOpacity(0.9);
+
+            // Bind the image size to the anchor pane size
+            backgroundImageView.fitWidthProperty().bind(anchorPane.widthProperty());
+            backgroundImageView.fitHeightProperty().bind(anchorPane.heightProperty());
+
+            // Set the anchor constraints
+            AnchorPane.setTopAnchor(backgroundImageView, 0.0);
+            AnchorPane.setBottomAnchor(backgroundImageView, 0.0);
+            AnchorPane.setLeftAnchor(backgroundImageView, 0.0);
+            AnchorPane.setRightAnchor(backgroundImageView, 0.0);
+
+            // Make sure the background image is behind other elements
+            backgroundImageView.toBack();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("Error", "Could not load the background image.");
+        }
     }
 
     /**
