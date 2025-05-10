@@ -201,3 +201,83 @@
 .button, .text-field, .list-view {
     -fx-transition: all 0.3s ease;
 }
+
+/* Enhanced Focus Ring */
+.text-field:focused, .password-field:focused {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-border-width: 2;
+    -fx-border-color: rgba(155, 77, 255, 0.8);
+}
+
+/* Improved ScrollPane Styling */
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane > .corner {
+    -fx-background-color: transparent;
+}
+
+/* Enhanced ScrollBar */
+.scroll-bar:vertical,
+.scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical .thumb,
+.scroll-bar:horizontal .thumb {
+    -fx-background-color: rgba(155, 77, 255, 0.5);
+    -fx-background-radius: 10;
+}
+
+.scroll-bar:vertical .thumb:hover,
+.scroll-bar:horizontal .thumb:hover {
+    -fx-background-color: rgba(155, 77, 255, 0.8);
+}
+
+/* Button Press Effect */
+.button:pressed {
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 1);
+}
+
+/* Improved List Selection */
+.list-cell:filled:selected:focused {
+    -fx-background-color: rgba(155, 77, 255, 0.4);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0, 0, 1);
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: rgba(155, 77, 255, 0.2);
+    -fx-cursor: hand;
+}
+
+/* Split Pane Divider Enhancement */
+.split-pane:horizontal > .split-pane-divider:hover {
+    -fx-background-color: rgba(155, 77, 255, 0.3);
+    -fx-cursor: h-resize;
+}
+
+/* Text Selection Color */
+.text-field:selected,
+.text-area:selected {
+    -fx-highlight-fill: rgba(155, 77, 255, 0.3);
+    -fx-highlight-text-fill: white;
+}
+
+/* Disabled State Styling */
+.button:disabled {
+    -fx-opacity: 0.5;
+    -fx-cursor: default;
+}
+
+/* Loading State */
+.button.loading {
+    -fx-background-color: rgba(155, 77, 255, 0.5);
+    -fx-cursor: wait;
+}
