@@ -281,3 +281,84 @@
     -fx-background-color: rgba(155, 77, 255, 0.5);
     -fx-cursor: wait;
 }
+
+/* Gradient Overlays */
+.button {
+    -fx-background-color: linear-gradient(to bottom right,
+        rgba(155, 77, 255, 0.9),
+        rgba(155, 77, 255, 0.7));
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(to bottom right,
+        rgba(155, 77, 255, 1),
+        rgba(155, 77, 255, 0.8));
+}
+
+/* Improved Text Rendering */
+.label, .button, .text-field, .text-area {
+    -fx-font-smoothing-type: lcd;
+    -fx-text-fill: linear-gradient(to bottom, white, #e0e0e0);
+}
+
+/* Glass Morphism Effects */
+.list-view, .text-area, .text-field {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 0),
+                dropshadow(gaussian, rgba(255, 255, 255, 0.1), 10, 0, 0, 0);
+    -fx-border-color: linear-gradient(to bottom right,
+        rgba(255, 255, 255, 0.2),
+        rgba(255, 255, 255, 0.05));
+}
+
+/* Enhanced Top Bar */
+.hbox-top {
+    -fx-background-color: linear-gradient(to right,
+        rgba(31, 46, 59, 0.95),
+        rgba(31, 46, 59, 0.85));
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 15, 0, 0, 5);
+}
+
+/* Improved Generate Button */
+#generateButton {
+    -fx-background-color: linear-gradient(to bottom right,
+        rgba(230, 126, 34, 0.9),
+        rgba(211, 84, 0, 0.9));
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 0),
+                innershadow(gaussian, rgba(0, 0, 0, 0.2), 1, 0, 0, 1);
+}
+
+#generateButton:hover {
+    -fx-background-color: linear-gradient(to bottom right,
+        rgba(230, 126, 34, 1),
+        rgba(211, 84, 0, 1));
+}
+
+/* Recipe Text Area Enhancement */
+#recipeTextArea {
+    -fx-background-color: linear-gradient(to bottom,
+        rgba(0, 0, 0, 0.3),
+        rgba(0, 0, 0, 0.2));
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 15, 0, 0, 0);
+}
+
+/* List Cell Animations */
+.list-cell {
+    -fx-transition: all 0.15s ease-out;
+}
+
+.list-cell:hover {
+    -fx-translate-x: 2;
+    -fx-background-color: linear-gradient(to right,
+        rgba(155, 77, 255, 0.2),
+        rgba(155, 77, 255, 0.1));
+}
+
+/* Split Pane Divider */
+.split-pane > .split-pane-divider {
+    -fx-background-color: linear-gradient(to right,
+        rgba(255, 255, 255, 0.1),
+        rgba(255, 255, 255, 0.2),
+        rgba(255, 255, 255, 0.1));
+    -fx-padding: 0 0.5px 0 0.5px;
+}
