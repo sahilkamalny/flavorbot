@@ -70,6 +70,12 @@ public class LoginController {
         backgroundImageView.setSmooth(true);
         backgroundImageView.setCache(true);
 
+        passwordField.setOnKeyPressed(event -> {
+            if (event.getCode() == javafx.scene.input.KeyCode.ENTER) {
+                handleLoginButtonAction();
+            }
+        });
+
         backgroundImageView.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
                 backgroundImageView.fitWidthProperty().bind(newScene.widthProperty());
