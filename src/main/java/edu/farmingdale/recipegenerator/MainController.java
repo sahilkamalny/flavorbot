@@ -52,6 +52,8 @@ public class MainController {
     @FXML
     public Button ShareRecipe;
     @FXML
+    public Button RateRecipe;
+    @FXML
     private ListView<String> ingredientListView, fridgeView;
     @FXML
     private Button generateButton;
@@ -85,6 +87,7 @@ public class MainController {
     @FXML
     public void initialize() {
 
+        RateRecipe.setOnAction(e -> handleRateRecipe());
 
         //Sets the lighbulb icon for the button
         ImageView buttonImageView = new ImageView(new Image(getClass().getResourceAsStream("/images/light-bulb.png")));
@@ -513,6 +516,44 @@ public class MainController {
             e.printStackTrace();
             showAlert("Error", "An unexpected error occurred.", Alert.AlertType.ERROR);
         }
+    }
+
+    @FXML
+    private void handleRateRecipe() {
+        Stage popupStage = new Stage();
+        popupStage.initModality(Modality.APPLICATION_MODAL);
+        popupStage.setTitle("Rate This Recipe");
+
+        Label label = new Label("How would you rate this recipe?");
+        label.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
+
+        Slider ratingSlider = new Slider(1, 5, 3);
+        ratingSlider.setMajorTickUnit(1);
+        ratingSlider.setMinorTickCount(0);
+        ratingSlider.setShowTickLabels(true);
+        ratingSlider.setShowTickMarks(true);
+        ratingSlider.setSnapToTicks(true);
+
+        Label ratingValue = new Label("Selected: 3");
+        ratingSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            ratingValue.setText("Selected: " + newVal.intValue());
+        });
+
+        Button submitButton = new Button("Submit");
+        submitButton.setOnAction(e -> {
+            int selectedRating = (int) ratingSlider.getValue();
+            showAlert("Thank you!", "You rated this recipe " + selectedRating + " stars.", Alert.AlertType.INFORMATION);
+            popupStage.close();
+        });
+
+        VBox layout = new VBox(15, label, ratingSlider, ratingValue, submitButton);
+        layout.setAlignment(Pos.CENTER);
+        layout.setPadding(new Insets(20));
+
+        Scene scene = new Scene(layout, 350, 200);
+        popupStage.setScene(scene);
+        popupStage.setResizable(false);
+        popupStage.showAndWait();
     }
 
 }
