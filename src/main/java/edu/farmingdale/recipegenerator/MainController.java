@@ -1,5 +1,8 @@
 package edu.farmingdale.recipegenerator;
 
+import jakarta.mail.*;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeMessage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,7 +21,6 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -27,18 +29,14 @@ import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.*;
-import java.net.URI;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Properties;
 
 import static edu.farmingdale.recipegenerator.OpenAI.getDefaultIngredients;
-import static jdk.javadoc.internal.doclets.formats.html.markup.HtmlStyle.title;
 
 /**
  * The MainController class handles the user interaction for the main window of the Flavor Bot application.
@@ -454,6 +452,17 @@ public class MainController {
     @FXML
     private void shareRecipeByEmail() {
         try {
+            // Prompt for email address
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setTitle("Share Recipe");
+            dialog.setHeaderText("Enter recipient's email address:");
+            dialog.setContentText("Email:");
+
+            String recipientEmail = dialog.showAndWait().orElse("");
+            if (recipientEmail.isEmpty()) {
+                return; // User cancelled
+            }
+
             // Get the recipe text
             StringBuilder recipeText = new StringBuilder();
             for (javafx.scene.Node node : recipeTextArea.getChildren()) {
@@ -467,20 +476,43 @@ public class MainController {
                 return;
             }
 
-            // Build the mailto URI
-            String subject = "Check out this recipe from Flavor Bot!";
-            String body = recipeText.toString();
-            String uriString = String.format("mailto:?subject=%s&body=%s",
-                    URLEncoder.encode(subject, StandardCharsets.UTF_8),
-                    URLEncoder.encode(body, StandardCharsets.UTF_8));
-            URI mailto = new URI(uriString);
+            // Email credentials (replace with your own dummy sender credentials or prompt securely)
+            final String senderEmail = "s1lenthunt3r69@gmail.com";
+            final String senderPassword = "dysk ctfn lmbb ghhn"; // Use an app-specific password if using Gmail
 
-            // Launch the default mail client
-            Desktop.getDesktop().mail(mailto);
+            // SMTP Configuration
+            Properties props = new Properties();
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.host", "smtp.gmail.com");
+            props.put("mail.smtp.port", "587");
 
+            // Authenticate and create session
+            Session session = Session.getInstance(props, new Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(senderEmail, senderPassword);
+                }
+            });
+
+            // Compose message
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(senderEmail));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail));
+            message.setSubject("A Delicious Recipe from Flavor Bot!");
+            message.setText(recipeText.toString());
+
+            // Send message
+            Transport.send(message);
+
+            showAlert("Success", "Recipe shared successfully to " + recipientEmail, Alert.AlertType.INFORMATION);
+
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            showAlert("Email Error", "Failed to send email: " + e.getMessage(), Alert.AlertType.ERROR);
         } catch (Exception e) {
             e.printStackTrace();
-            showAlert("Error", "Failed to open mail client.", Alert.AlertType.ERROR);
+            showAlert("Error", "An unexpected error occurred.", Alert.AlertType.ERROR);
         }
     }
+
 }

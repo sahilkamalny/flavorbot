@@ -7,6 +7,7 @@ module edu.farmingdale.recipegenerator {
     requires mysql.connector.j;
     requires jdk.javadoc;
     requires java.desktop;
+    requires jakarta.mail;
 
 
     opens edu.farmingdale.recipegenerator to javafx.fxml;
