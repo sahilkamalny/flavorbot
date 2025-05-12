@@ -10,6 +10,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
@@ -25,7 +27,11 @@ import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.*;
+import java.net.URI;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -45,6 +51,8 @@ public class MainController {
     public Button logOut;
     @FXML
     public Button About;
+    @FXML
+    public Button ShareRecipe;
     @FXML
     private ListView<String> ingredientListView, fridgeView;
     @FXML
@@ -443,5 +451,36 @@ public class MainController {
         aboutStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/icon.png"))));
         aboutStage.showAndWait();
     }
+    @FXML
+    private void shareRecipeByEmail() {
+        try {
+            // Get the recipe text
+            StringBuilder recipeText = new StringBuilder();
+            for (javafx.scene.Node node : recipeTextArea.getChildren()) {
+                if (node instanceof Text) {
+                    recipeText.append(((Text) node).getText());
+                }
+            }
 
+            if (recipeText.length() == 0) {
+                showAlert("No Recipe", "Please generate a recipe before sharing.", Alert.AlertType.WARNING);
+                return;
+            }
+
+            // Build the mailto URI
+            String subject = "Check out this recipe from Flavor Bot!";
+            String body = recipeText.toString();
+            String uriString = String.format("mailto:?subject=%s&body=%s",
+                    URLEncoder.encode(subject, StandardCharsets.UTF_8),
+                    URLEncoder.encode(body, StandardCharsets.UTF_8));
+            URI mailto = new URI(uriString);
+
+            // Launch the default mail client
+            Desktop.getDesktop().mail(mailto);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to open mail client.", Alert.AlertType.ERROR);
+        }
+    }
 }

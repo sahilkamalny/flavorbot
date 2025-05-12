@@ -219,6 +219,7 @@ public class PreferencesController {
         );
 
         // Open next window
+        System.out.println("Before open window");
         openMainWindow();
     }
 
@@ -227,6 +228,7 @@ public class PreferencesController {
      * This method loads the FXML for the main window, applies an external CSS, and shows the window.
      */
     private void openMainWindow() {
+        System.out.println("After open window");
         try {
             Stage stage = (Stage) mealTypeComboBox.getScene().getWindow();
             stage.close();  // Close the login window
