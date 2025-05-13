@@ -78,9 +78,9 @@ mvn javafx:run
 
 1. Launch the app.
 2. Enter ingredients you have (e.g., "chicken, rice, garlic").
-3. Optionally add preferences (e.g., "gluten-free", "vegan").
+3. Add optional dietary preferences (e.g., "gluten-free", "vegan").
 4. Click **Generate Recipe**.
-5. View the output recipe with ingredients, steps, and cook time.
+5. View the generated recipe with ingredients, steps, and cook time.
 
 ---
 
@@ -96,6 +96,7 @@ Ensure your OpenAI API key is kept private and **do not** commit it to source co
 - Haris Akbar – https://github.com/ha.akbar03
 - Jonatan Paulino - https://github.com/JPR420
 - Andrew Escorcia - https://github.com/aescorcia65
+- Sahil Kamal - https://github.com/sahilkamalny
 
 ---
 
