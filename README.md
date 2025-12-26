@@ -1,6 +1,6 @@
-# 🍽️ Recipe Generator App
+# 🍽️ FlavorBot
 
-The **Recipe Generator App** is a modern, AI-powered desktop application built using **JavaFX** and integrates with the **OpenAI API** to help users generate creative and personalized recipes based on their preferences and available ingredients.
+**FlavorBot** is a modern, AI-powered desktop application built using **JavaFX** and integrates with the **OpenAI API** to help users generate creative and personalized recipes based on their preferences and available ingredients.
 
 ---
 
