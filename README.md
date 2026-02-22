@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🍽️ FlavorBot
+# 🍜 FlavorBot
 
 ### AI-Powered Recipe Generator
 
