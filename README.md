@@ -4,7 +4,7 @@
 
 ### AI-Powered Recipe Generator
 
-🧑‍🍳 **Smart Recipe Creation** — *Enter ingredients, set preferences, get personalized recipes instantly*
+*Enter ingredients, set preferences, get personalized recipes instantly*
 
 [![Java](https://img.shields.io/badge/Java-23-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://openjdk.org/)
 [![JavaFX](https://img.shields.io/badge/JavaFX-23-007396?style=for-the-badge&logo=java&logoColor=white)](https://openjfx.io/)
