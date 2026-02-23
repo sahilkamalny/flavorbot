@@ -17,7 +17,7 @@
 
 ## Overview
 
-FlavorBot is a JavaFX desktop application that generates AI-powered recipes from user-supplied ingredients. Users maintain a virtual fridge of available ingredients, drag items into the recipe generator, configure dietary and skill-level preferences, and receive a tailored recipe from GPT-3.5 Turbo. Recipes can be exported to file or shared via email. User accounts and preferences are persisted to a MySQL database hosted on Azure.
+FlavorBot is a JavaFX desktop application that generates AI-powered recipes from user-supplied ingredients. Users maintain a virtual fridge of available ingredients, drag items into the recipe generator, configure dietary and skill-level preferences, and receive a tailored recipe from GPT-3.5 Turbo. Recipes can be exported to file or shared via email. User accounts and preferences are persisted to a MySQL database hosted on Microsoft Azure.
 
 ---
 
